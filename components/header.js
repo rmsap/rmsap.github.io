@@ -64,8 +64,8 @@ headerTemplate.innerHTML = `
             <div class="dropdown">
               <a href="projects.html">Projects</a>
               <div class="dropdown-content">
-                <a href="#">SigLo</a>
-                <a href="#">Image Processor</a>
+                <a href="siglo.html">SigLo</a>
+                <a href="image_processor.html">Image Processor</a>
                 <a href="#">Link 3</a>
               </div>
             </div>
