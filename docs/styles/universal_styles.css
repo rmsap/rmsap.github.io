@@ -2,20 +2,29 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
+
+/* Define colors */
+:root {
+  --background-color: #8DEFF2;
+  --main-color: #86E3E6;
+  --main-dark: #3B6566;
+  --main-medium: #60A3A6;
+  --main-tint: #76C9CC;
+}
   
-  html, body {
-    height: 100%;
-  }
+html, body {
+  height: 100%;
+}
   
-  body {
-    color: #333;
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
-  }
+body {
+  color: #333;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+}
   
-  main {
-    flex: 1 0 auto;
-    background-color: #c8c8c8;
-  }
+main {
+  flex: 1 0 auto;
+  background-color: var(--background-color);
+}

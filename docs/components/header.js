@@ -7,7 +7,7 @@ headerTemplate.innerHTML = `
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color:  #0a0a23;
+            background-color:  #3B6566;
         }
 
         header {

@@ -10,7 +10,7 @@ footerTemplate.innerHTML = `
       flex-shrink: 0;
       justify-content: space-between;
       align-items: center;
-      background-color: #dfdfe2;
+      background-color: #4c6e70;
     }
 
     ul {

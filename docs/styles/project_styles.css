@@ -38,13 +38,21 @@ hr {
     padding: 5px;
 }
 
-/* Slideshow animation */
-.slideshow_container {
-    max-width: 1000px;
-    position: relative;
-    margin: auto;
+.text_container {
+    background-color: var(--main-medium);
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
 }
-  
+
+.image_container {
+    background-color: var(--main-medium);
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Slideshow animation */
 .my_slides {
     display: none;
 }
@@ -52,7 +60,7 @@ hr {
 .prev, .next {
     cursor: pointer;
     position: absolute;
-    top: 85%;
+    top: 80%;
     width: auto;
     margin-top: -22px;
     padding: 16px;
