@@ -6,9 +6,27 @@ headerTemplate.innerHTML = `
             height: 40px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             background-color:  #3B6566;
         }
+
+        ul {
+            padding: 0;
+          }
+          
+          ul li {
+            list-style: none;
+            display: inline;
+          }
+
+          ol {
+            padding: 0;
+          }
+          
+          ol li {
+            list-style: none;
+            display: inline;
+          }
 
         header {
             display: inline;
@@ -57,19 +75,33 @@ headerTemplate.innerHTML = `
             display: block;
         }
 
+        .social-row {
+            font-size: 20px;
+          }
+          
+          .social-row li a {
+            margin: 0 15px;
+          }
+
     </style>
     <header>
         <nav>
-            <a href="index.html">Home</a>
-            <div class="dropdown">
-              <a href="projects.html">Projects</a>
-              <div class="dropdown-content">
-                <a href="siglo.html">SigLo</a>
-                <a href="image_processor.html">Image Processor</a>
-                <a href="#">Link 3</a>
-              </div>
+            <div>
+                <a href="index.html">Home</a>
+                <div class="dropdown">
+                    <a href="projects.html">Projects</a>
+                    <div class="dropdown-content">
+                        <a href="siglo.html">SigLo</a>
+                        <a href="image_processor.html">Image Processor</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
+                <a href="about.html">About</a>
             </div>
-            <a href="about.html">About</a>
+            <ul class="social-row">
+                <li><a href="https://github.com/rmsap" target="_blank"><i class="fab fa-github"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+            </ul>
         </nav>
     </header>
 `;
@@ -80,7 +112,15 @@ class Header extends HTMLElement {
     }
 
     connectedCallback() {
+        // Query the main DOM for FA
+        const fontAwesome = document.querySelector('link[href*="font-awesome"]');
         const shadowRoot = this.attachShadow({ mode: 'closed' });
+
+        // Conditionally load FA to the component
+        if (fontAwesome) {
+            shadowRoot.appendChild(fontAwesome.cloneNode());
+        }
+
         shadowRoot.appendChild(headerTemplate.content);
     }
 }

@@ -1,10 +1,20 @@
 .row {
     display: flex;
+    margin-top: 5px;
   }
   
 .column {
-    flex: 33.33%;
+    flex: 30%;
     padding: 5px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.spacer {
+    flex: 5%;
+    padding: 5px;
+    margin-right: 10px;
 }
 
 h2 {
@@ -39,17 +49,35 @@ hr {
 }
 
 .text_container {
-    background-color: var(--main-medium);
+    background-color: #fff;
     height: 100%;
     width: 100%;
     border-radius: 10px;
 }
 
 .image_container {
-    background-color: var(--main-medium);
+    background-color: #fff;
     height: 100%;
     width: 100%;
     border-radius: 10px;
+}
+
+.links_container {
+    display: flex;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+  
+.link {
+    flex: 7.5%;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.link_spacer {
+    flex: 42.5%;
 }
 
 /* Slideshow animation */

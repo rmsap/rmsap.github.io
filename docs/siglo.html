@@ -47,8 +47,9 @@
     </head>
     <body onload="currentSlide(1)">
         <header-component></header-component>
-        <main>
+        <main style="background-color: #1573ff;">
             <div class="row">
+                <div class="spacer"></div>
                 <div class="column">
                     <img src="assets/opencv.png" alt="OpenCV" style="width:35%" class="header">
                 </div>
@@ -58,8 +59,22 @@
                 <div class="column">
                     <img src="assets/python.png" alt="Python" style="width:35%" class="header">
                 </div>
+                <div class="spacer"></div>
             </div>
-            <h2><a href="https://github.com/AndreyPiterkin/SigLo" target="_blank">GitHub</a> | <a href="https://devpost.com/software/siglo" target="_blank">Devpost</a></h2>
+            <div class="links_container">
+                <div class="link_spacer"></div>
+                <div class="link">
+                    <div class="link_image_container">
+                        <a href="https://github.com/AndreyPiterkin/SigLo" target="_blank"><img src="assets/github_logo.png" alt="GitHub" style="width: 100%;"></a>
+                    </div>
+                </div>
+                <div class="link">
+                    <div class="link_image_container">
+                        <a href="https://devpost.com/software/siglo" target="_blank"><img src="assets/devpost_logo.png" alt="Devpost" style="width: 100%;margin-top: 10px;"></a>
+                    </div>
+                </div>
+                <div class="link_spacer"></div>
+            </div>
             <hr />
             <div class="content">
                 <div class="split">
@@ -145,6 +160,6 @@
                 </div>
             </div>
         </main>
-        <footer-component></footer-component>
+        <!-- <footer-component></footer-component> -->
     </body>
 </html>
