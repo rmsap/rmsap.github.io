@@ -64,13 +64,19 @@
             <div class="links_container">
                 <div class="link_spacer"></div>
                 <div class="link">
-                    <div class="link_image_container">
-                        <a href="https://github.com/AndreyPiterkin/SigLo" target="_blank"><img src="assets/github_logo.png" alt="GitHub" style="width: 100%;"></a>
+                    <img src="assets/github_logo.png" alt="GitHub" style="width: 100%;" class="img_link">
+                    <div class="underneath_image">
+                        <div style="background-color: var(--main-color);">
+                            <a href="https://github.com/AndreyPiterkin/SigLo" target="_blank">View on GitHub</a>
+                        </div>
                     </div>
                 </div>
                 <div class="link">
-                    <div class="link_image_container">
-                        <a href="https://devpost.com/software/siglo" target="_blank"><img src="assets/devpost_logo.png" alt="Devpost" style="width: 100%;margin-top: 10px;"></a>
+                    <img src="assets/devpost_logo.png" alt="Devpost" style="width: 100%;margin-top: 10px;" class="img_link">
+                    <div class="underneath_image">
+                        <div style="background-color: var(--main-color);">
+                            <a href="https://devpost.com/software/siglo" target="_blank">View on Devpost</a>
+                        </div>
                     </div>
                 </div>
                 <div class="link_spacer"></div>
@@ -126,34 +132,38 @@
                     </div>
                     <div class="split-col" style="box-sizing:border-box">
                         <div class="image_container">
-                            <h3 style="margin-left: 5px;">See SigLo in action:</h3>
-                            <div class="my_slides fade">
-                                <p style="text-align: center;">1 / 4</p>
-                                <img src="assets/siglo_excel_scrolling.gif" alt="Scrolling spreadsheet" class="header" style="width: 90%;">
-                                <p style="text-align: center;">Scrolling through website with SigLo</p>
+                            <div>
+                                <h3>See SigLo in action:</h3>
                             </div>
-                            <div class="my_slides fade">
-                                <p style="text-align: center;">2 / 4</p>
-                                <img src="assets/siglo_website.gif" alt="Scrolling website" class="header" style="width: 90%;">
-                                <p style="text-align: center;">Scrolling through a spreadsheet with SigLo</p>
-                            </div>
-                            <div class="my_slides fade">
-                                <p style="text-align: center;">3 / 4</p>
-                                <img src="assets/siglo_video.gif" alt="Fast-forwarding/rewinding video" class="header" style="width: 90%;">
-                                <p style="text-align: center;">Using SigLo to seek a timestamp in a video</p>
-                            </div>
-                            <div class="my_slides fade">
-                                <p style="text-align: center;">4 / 4</p>
-                                <img src="assets/scaling_function.jpg" alt="Scaling function" class="header" style="width: 75%;">
-                                <p style="text-align: center;">Function to scale SigLo's scrolling speed</p>
-                            </div>
-                            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                            <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                            <div style="text-align:center">
-                                <span class="dot" onclick="currentSlide(1)"></span>
-                                <span class="dot" onclick="currentSlide(2)"></span>
-                                <span class="dot" onclick="currentSlide(3)"></span>
-                                <span class="dot" onclick="currentSlide(4)"></span>
+                            <div>
+                                <div class="my_slides fade">
+                                    <p style="text-align: center;">1 / 4</p>
+                                    <img src="assets/siglo_excel_scrolling.gif" alt="Scrolling spreadsheet" class="header" width="90%">
+                                    <p style="text-align: center;">Scrolling through website with SigLo</p>
+                                </div>
+                                <div class="my_slides fade">
+                                    <p style="text-align: center;">2 / 4</p>
+                                    <img src="assets/siglo_website.gif" alt="Scrolling website" class="header" style="width: 90%;">
+                                    <p style="text-align: center;">Scrolling through a spreadsheet with SigLo</p>
+                                </div>
+                                <div class="my_slides fade">
+                                    <p style="text-align: center;">3 / 4</p>
+                                    <img src="assets/siglo_video.gif" alt="Fast-forwarding/rewinding video" class="header" style="width: 90%;">
+                                    <p style="text-align: center;">Using SigLo to seek a timestamp in a video</p>
+                                </div>
+                                <div class="my_slides fade">
+                                    <p style="text-align: center;">4 / 4</p>
+                                    <img src="assets/scaling_function.jpg" alt="Scaling function" class="header" style="width: 75%;">
+                                    <p style="text-align: center;">Function to scale SigLo's scrolling speed</p>
+                                </div>
+                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                                <div style="text-align:center">
+                                    <span class="dot" onclick="currentSlide(1)"></span>
+                                    <span class="dot" onclick="currentSlide(2)"></span>
+                                    <span class="dot" onclick="currentSlide(3)"></span>
+                                    <span class="dot" onclick="currentSlide(4)"></span>
+                                </div>
                             </div>
                         </div>
                     </div>

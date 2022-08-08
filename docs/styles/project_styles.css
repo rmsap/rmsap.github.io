@@ -1,3 +1,39 @@
+.column_link {
+    flex: 30%;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-right: 10px;
+    max-height: 156px; /* This height is the max height of the image*/
+    overflow: clip;
+}
+
+.column_link:hover .img_link {
+    opacity: 0.3;
+}
+
+.img_link {
+    width: 100%;
+}
+
+.underneath_image {
+    transition: .5s ease;
+    opacity: 0;
+    position: relative;
+    bottom: 60%;
+    text-align: center;
+  }
+
+  .column_link:hover .underneath_image {
+    opacity: 1;
+  }
+
+  .underneath_image div {
+    display:inline-block;
+    border-radius: 5px;
+    padding: 5px;
+  }
+
 .row {
     display: flex;
     margin-top: 5px;
@@ -46,6 +82,8 @@ hr {
 .split-col {
     flex: 50%;
     padding: 5px;
+    align-items: center;
+    justify-content: center;
 }
 
 .text_container {
@@ -60,13 +98,17 @@ hr {
     height: 100%;
     width: 100%;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .links_container {
     display: flex;
     margin-bottom: 5px;
     margin-top: 5px;
-  }
+}
   
 .link {
     flex: 7.5%;
@@ -74,6 +116,15 @@ hr {
     border-radius: 10px;
     margin-left: 5px;
     margin-right: 5px;
+    max-height: 100px;
+}
+
+.link:hover .img_link {
+    opacity: 0.3;
+}
+
+.link:hover .underneath_image {
+    opacity: 1;
 }
 
 .link_spacer {
@@ -87,22 +138,24 @@ hr {
   
 .prev, .next {
     cursor: pointer;
-    position: absolute;
-    top: 80%;
     width: auto;
-    margin-top: -22px;
-    padding: 16px;
     color: #000;
     font-weight: bold;
     font-size: 18px;
     transition: 0.6s ease;
     border-radius: 0 3px 3px 0;
     user-select: none;
+    position: relative;
+    bottom: 50%;
 }
   
 .next {
-    right: 0;
+    left: 95%;
     border-radius: 3px 0 0 3px;
+}
+
+.prev {
+    left: 1%;
 }
   
 .prev:hover, .next:hover {

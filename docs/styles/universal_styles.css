@@ -6,7 +6,7 @@
 
 /* Define colors */
 :root {
-  --background-color: #8DEFF2;
+  --background-color: #c4c4c4 /* #8DEFF2 blue, delete if not using */;
   --main-color: #86E3E6;
   --main-dark: #3B6566;
   --main-medium: #60A3A6;
