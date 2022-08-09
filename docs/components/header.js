@@ -93,7 +93,7 @@ headerTemplate.innerHTML = `
                     <div class="dropdown-content">
                         <a href="siglo.html">SigLo</a>
                         <a href="image_processor.html">Image Processor</a>
-                        <a href="#">Link 3</a>
+                        <a href="apps.html">HELP/RecoverWE Apps</a>
                     </div>
                 </div>
                 <a href="about.html">About</a>

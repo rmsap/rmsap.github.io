@@ -16,6 +16,10 @@
     width: 100%;
 }
 
+.column_link:hover .header {
+    opacity: 0.3;
+}
+
 .underneath_image {
     transition: .5s ease;
     opacity: 0;
