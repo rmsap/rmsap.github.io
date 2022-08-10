@@ -4,16 +4,13 @@
     background-color: #fff;
     border-radius: 10px;
     margin-right: 10px;
-    max-height: 156px; /* This height is the max height of the image*/
-    overflow: clip;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .column_link:hover .img_link {
     opacity: 0.3;
-}
-
-.img_link {
-    width: 100%;
 }
 
 .column_link:hover .header {
@@ -23,20 +20,28 @@
 .underneath_image {
     transition: .5s ease;
     opacity: 0;
+    position: absolute;
+    bottom: 60%;
+  }
+
+.underneath_image_small {
+    transition: .5s ease;
+    opacity: 0;
     position: relative;
     bottom: 60%;
     text-align: center;
-  }
+    
+}
 
-  .column_link:hover .underneath_image {
+.column_link:hover .underneath_image {
     opacity: 1;
-  }
+}
 
-  .underneath_image div {
+.underneath_image div {
     display:inline-block;
     border-radius: 5px;
     padding: 5px;
-  }
+}
 
 .row {
     display: flex;
@@ -127,7 +132,7 @@ hr {
     opacity: 0.3;
 }
 
-.link:hover .underneath_image {
+.link:hover .underneath_image_small {
     opacity: 1;
 }
 
