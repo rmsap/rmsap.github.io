@@ -19,15 +19,6 @@ headerTemplate.innerHTML = `
             display: inline;
           }
 
-          ol {
-            padding: 0;
-          }
-          
-          ol li {
-            list-style: none;
-            display: inline;
-          }
-
         header {
             display: inline;
         }
