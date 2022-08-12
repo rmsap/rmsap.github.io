@@ -30,7 +30,14 @@
     position: relative;
     bottom: 60%;
     text-align: center;
-    
+}
+
+.underneath_image_single {
+    transition: .5s ease;
+    opacity: 0;
+    position: relative;
+    text-align: center;
+    right: 75%;
 }
 
 .column_link:hover .underneath_image {
@@ -128,11 +135,39 @@ hr {
     max-height: 100px;
 }
 
+.single_link {
+    background-color: #fff;
+    border-radius: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 7.5%;
+    height: fit-content;
+    position: relative;
+    left: 46.25%;
+    margin-top: 5px;
+}
+
 .link:hover .img_link {
     opacity: 0.3;
 }
 
+.single_link:hover .img_link {
+    opacity: 0.3;
+}
+
 .link:hover .underneath_image_small {
+    opacity: 1;
+}
+
+.single_link:hover .underneath_image_small {
+    opacity: 1;
+}
+
+.link:hover .underneath_image_single {
+    opacity: 1;
+}
+
+.single_link:hover .underneath_image_single {
     opacity: 1;
 }
 
@@ -166,7 +201,7 @@ h3 {
     border-radius: 0 3px 3px 0;
     user-select: none;
     position: relative;
-    bottom: 50%;
+    bottom: 50
 }
   
 .next {
