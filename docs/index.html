@@ -2,19 +2,76 @@
 
 <html>
     <head>
-        <title>Home</title>
+        <title>Ryan Saperstein</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
         <link href="styles/universal_styles.css" rel="stylesheet" type="text/css" />
+        <link href="styles/index_styles.css" rel="stylesheet" type="text/css" />
         <script src="components/header.js" type="text/javascript" defer></script>
         <script src="components/footer.js" type="text/javascript" defer></script>
     </head>
     <body>
         <header-component></header-component>
-        <main>
-            <p>Home</p>
+        <main style="display: flex; align-items: center; flex-direction: column">
+            <div class="header_container">
+                <p style="font-size: 32px; margin-bottom: 5px; font-weight: 600;">
+                    Hi, I'm Ryan!
+                </p>
+                <p style="font-size: 26px">
+                    I'm a second year student at Northeastern University majoring in Computer Science.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="text_container">
+                    <img src="assets/library_picture.jpg" style="margin: 5px; float: left; width: 20%">
+                    <h3 style="text-align: center">My Programming Experience</h3>
+                    <p style="text-align: justify;">
+                        I started programming when I was in eighth grade on my middle school's robotics team, I and continued to
+                        program throughout high school on my school's FIRST Robotics Competition team. However, I quickly became
+                        interested in programming applications outside of robotics, so I joined my school's Code Club and was able to
+                        work on many different projects, from creating snowflakes out of LED lights that turned on an off to designing
+                        mobile apps. After graduating high school, I started studying computer science at Northeastern University,
+                        where I learned principles of object oriented and functional program design.
+                        <br />
+                        <br />
+                        <h3 style="text-align: center">About Me</h3>
+                        Outside of programming, I enjoy reading and watching TV/movies. My favorite books are <i>Frankenstein</i>
+                        by Mary Shelley and <i>The Hobbit</i> by J.R.R. Tolkien, and my favorite movie is <i>Interstellar</i>. 
+                        I also like to play wiffle ball and go rock climbing with my friends. My favorite genre of music is rock,
+                        and my favorite bands are Metallica, ACDC, and Weezer.
+                    </p>
+                </div>
+                <div class="skills_container">
+                    <h3 style="text-align: center;">Skills</h3>
+                    <br />
+                    <ul>
+                        <li><i class="fab fa-java"></i> Java</li>
+                        <br />
+                        <br />
+                        <li><i class="fab fa-python"></i> Python</li>
+                        <br />
+                        <br />
+                        <li><i class="fab fa-js-square fa-lg"></i> JavaScript</li>
+                        <br />
+                        <br />
+                        <li><i class="fab fa-react"></i> React</li>
+                        <br />
+                        <br />
+                        <li><i class="fab fa-github"></i> GitHub</li>
+                        <br />
+                        <br />
+                        <li><i class="fab fa-linux"></i> Linux</li>
+                        <br />
+                        <br />
+                        <li><img src="assets/mysql_logo.png" style="width: 13%;"> MySQL</li>
+                    </ul>
+                </div>
+            </div>
+
+
         </main>
     </body>
 </html>

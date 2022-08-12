@@ -87,7 +87,6 @@ headerTemplate.innerHTML = `
                         <a href="apps.html">HELP/RecoverWE Apps</a>
                     </div>
                 </div>
-                <a href="about.html">About</a>
             </div>
             <ul class="social-row">
                 <li><a href="https://github.com/rmsap" target="_blank"><i class="fab fa-github"></i></a></li>
