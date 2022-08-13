@@ -37,7 +37,7 @@
     opacity: 0;
     position: relative;
     text-align: center;
-    right: 75%;
+    right: 50%;
 }
 
 .column_link:hover .underneath_image {
@@ -45,7 +45,13 @@
 }
 
 .underneath_image div {
-    display:inline-block;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.underneath_image_single div {
+    display: inline-block;
     border-radius: 5px;
     padding: 5px;
 }
@@ -138,13 +144,14 @@ hr {
 .single_link {
     background-color: #fff;
     border-radius: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
     width: 7.5%;
     height: fit-content;
     position: relative;
     left: 46.25%;
     margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
 }
 
 .link:hover .img_link {
@@ -186,6 +193,10 @@ h3 {
     margin-bottom: 2px;
 }
 
+code {
+    font-family: monospace;
+}
+
 /* Slideshow animation */
 .my_slides {
     display: none;
@@ -201,7 +212,7 @@ h3 {
     border-radius: 0 3px 3px 0;
     user-select: none;
     position: relative;
-    bottom: 50
+    bottom: 50%;
 }
   
 .next {

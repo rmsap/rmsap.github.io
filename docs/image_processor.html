@@ -14,7 +14,7 @@
         <script src="components/slides.js" type="text/javascript" defer></script>
 
     </head>
-    <body>
+    <body onload="currentSlide(1)">
         <header-component></header-component>
         <main>
             <div class="row">
@@ -30,8 +30,8 @@
                 </div>
                 <div class="spacer"></div>
             </div>
-            <div class="single_link" style="display: flex">
-                <img src="assets/github_logo.png" alt="GitHub" style="width: 100%;" class="img_link">
+            <div class="single_link">
+                <img src="assets/github_logo.png" alt="GitHub" style="width: 100%; position: relative; left: 33%;" class="img_link">
                 <div class="underneath_image_single">
                     <div style="background-color: var(--main-color);">
                         <a href="https://github.com/rmsap/ImageProcessor" target="_blank">View on GitHub</a>
@@ -45,22 +45,58 @@
                         <div class="text_container">
                             <h3>Description</h3>
                             <p>
+                                Image Processor is a stand-alone Java application that can load in ppm, jpg, png, and bmp images,
+                                manipulate them (e.g. greyscale an image or blur an image), and save them. It has both a graphical
+                                user interface and a text-based user interface. The GUI displays a frequency histogram of values
+                                for red, green, blue, and intensity (average of the red, green, and blue values of a pixel). Image
+                                Processor was developed for an assignment in Northeastern CS 3500, Object-Oriented Design.
                             </p>
                             <br />
                             <h3>Development Process</h3>
                             <p>
+                                From start to finish, Image Processor was developed with object-oriented design principles in mind.
+                                It initially only supported the text-based view and a limited number of operations on images (for 
+                                example, blur and sharpen were not initially supported), but my partner and I knew that the program
+                                would eventually expand beyond that. So, we used the model-view-controller pattern to make it easier
+                                to later develop additional features (like the GUI). Additionally, we employed the command design
+                                pattern to implement image operations so that more could be added later without changing any 
+                                previously written code. We also employed the command design pattern to implement loading and 
+                                saving different image formats because only ppm files were supported at first.
+                                <br />
+                                In the next iteration of the project, new operations (sharpen, blur, greyscale, and sepia) were 
+                                added, as was support for additional image formats (jpg, png, and bmp). Throughout this process,
+                                operations were abstracted when possible, such as sharpen and blur being in the same class
+                                and just employing a different filtration matrix.
+                                <br />
+                                In the final version of ImageProcessor, the GUI was created, which involved creating a new view 
+                                and controller. Both views implement a single view interface and both controllers implement a single
+                                controller interface so that they can be used interchangeably, however. Also, the downscale operation
+                                was implemented at this point.
                             </p>
                             <br />
                             <h3>Tech Stack</h3>
                             <p>
+                                Image Processor is programmed entirely in Java with its GUI programmed in Java Swing.
                             </p>
                             <br />
                             <h3>Installation</h3>
                             <p>
+                                1. Clone the repository on GitHub (linked above).
+                                <br />
+                                2. To run the GUI: run the JAR file in res.
+                                <br />
+                                To run the GUI from the terminal: cd into the res folder and then type the command 
+                                <code>java -jar ImageProcessor.jar</code>.
+                                <br />
+                                To run the text-based interface: cd into res and then type the command <code>java -jar
+                                ImageProcessor.jar -text</code>. For how to use this interface, see the USEME.txt file in the root
+                                directory of the project.
                             </p>
                             <br />
                             <h3>Fun Fact</h3>
                             <p style="padding-bottom: 10px;">
+                                Image Processor is completely self-contained; it doesn't need to access any external databases
+                                or programs in order to function.
                             </p>
                         </div>
                     </div>
@@ -71,24 +107,34 @@
                             </div>
                             <div>
                                 <div class="my_slides fade">
-                                    <p style="text-align: center;">1 / 4</p>
-                                    <img src="assets/image_processor.PNG" alt="Scrolling spreadsheet" class="header" width="90%">
-                                    <p style="text-align: center;">Image Processor with default image loaded in</p>
+                                    <p style="text-align: center;">1 / 6</p>
+                                    <img src="assets/image_processor_no_image.PNG" alt="Image Processor after booting" class="header" width="90%">
+                                    <p style="text-align: center;">Image Processor without an image</p>
                                 </div>
                                 <div class="my_slides fade">
-                                    <p style="text-align: center;">2 / 4</p>
-                                    <img src="assets/siglo_website.gif" alt="Scrolling website" class="header" style="width: 90%;">
-                                    <p style="text-align: center;">Scrolling through a spreadsheet with SigLo</p>
+                                    <p style="text-align: center;">2 / 6</p>
+                                    <img src="assets/image_processor.PNG" alt="Image Processor with image loaded" class="header" style="width: 90%;">
+                                    <p style="text-align: center;">Image Processor with koala image loaded</p>
                                 </div>
                                 <div class="my_slides fade">
-                                    <p style="text-align: center;">3 / 4</p>
-                                    <img src="assets/siglo_video.gif" alt="Fast-forwarding/rewinding video" class="header" style="width: 90%;">
-                                    <p style="text-align: center;">Using SigLo to seek a timestamp in a video</p>
+                                    <p style="text-align: center;">3 / 6</p>
+                                    <img src="assets/image_processor_koala_downscaled.PNG" alt="Previous image downscaled" class="header" style="width: 90%;">
+                                    <p style="text-align: center;">Downscaling an image</p>
                                 </div>
                                 <div class="my_slides fade">
-                                    <p style="text-align: center;">4 / 4</p>
-                                    <img src="assets/scaling_function.jpg" alt="Scaling function" class="header" style="width: 75%;">
-                                    <p style="text-align: center;">Function to scale SigLo's scrolling speed</p>
+                                    <p style="text-align: center;">4 / 6</p>
+                                    <img src="assets/image_processor_koala_flipped.PNG" alt="Previous image flipped vertically" class="header" style="width: 90%;">
+                                    <p style="text-align: center;">Vertically flipping an image</p>
+                                </div>
+                                <div class="my_slides fade">
+                                    <p style="text-align: center;">5 / 6</p>
+                                    <img src="assets/image_processor_text_menu.PNG" alt="Text interface before commands" class="header" style="width: 90%;">
+                                    <p style="text-align: center;">Text interface immediately after running</p>
+                                </div>
+                                <div class="my_slides fade">
+                                    <p style="text-align: center;">6 / 6</p>
+                                    <img src="assets/image_processor_text_with_commands.PNG" alt="Text interface after running commands" class="header" style="width: 90%;">
+                                    <p style="text-align: center;">Text interface with commands</p>
                                 </div>
                                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -97,6 +143,8 @@
                                     <span class="dot" onclick="currentSlide(2)"></span>
                                     <span class="dot" onclick="currentSlide(3)"></span>
                                     <span class="dot" onclick="currentSlide(4)"></span>
+                                    <span class="dot" onclick="currentSlide(5)"></span>
+                                    <span class="dot" onclick="currentSlide(6)"></span>
                                 </div>
                             </div>
                         </div>
