@@ -7,11 +7,8 @@
 
 /* Define colors */
 :root {
-  --background-color: #c4c4c4 /* #8DEFF2 blue, delete if not using */;
+  --background-color: #c4c4c4;
   --main-color: #86E3E6;
-  --main-dark: #3B6566;
-  --main-medium: #60A3A6;
-  --main-tint: #76C9CC;
 }
   
 html, body {
