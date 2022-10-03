@@ -167,15 +167,7 @@ hr {
     opacity: 1;
 }
 
-.single_link:hover .underneath_image_small {
-    opacity: 1;
-}
-
 .link:hover .underneath_image_single {
-    opacity: 1;
-}
-
-.single_link:hover .underneath_image_single {
     opacity: 1;
 }
 
