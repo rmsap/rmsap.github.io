@@ -79,14 +79,10 @@ headerTemplate.innerHTML = `
         <nav>
             <div>
                 <a href="index.html">Home</a>
-                <div class="dropdown">
-                    <a href="projects.html">Projects</a>
-                    <div class="dropdown-content">
-                        <a href="siglo.html">SigLo</a>
-                        <a href="image_processor.html">Image Processor</a>
-                        <a href="apps.html">HELP/RecoverWE Apps</a>
-                    </div>
-                </div>
+                <a href="siglo.html">SigLo</a>
+                <a href="image_processor.html">Image Processor</a>
+                <a href="apps.html">HELP/RecoverWE Apps</a>
+                <a href="about.html">About</a>
             </div>
             <ul class="social-row">
                 <li><a href="https://github.com/rmsap" target="_blank"><i class="fab fa-github"></i></a></li>
