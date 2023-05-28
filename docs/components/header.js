@@ -86,7 +86,7 @@ headerTemplate.innerHTML = `
             </div>
             <ul class="social-row">
                 <li><a href="https://github.com/rmsap" target="_blank"><i class="fab fa-github"></i></a></li>
-                <li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                <li><a href="https://www.linkedin.com/in/ryansaperstein/" target="_blank"><i class="fab fa-linkedin"></i></a></li>
             </ul>
         </nav>
     </header>
