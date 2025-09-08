@@ -2,7 +2,7 @@
   "name": "portfolio",
   "private": true,
   "version": "1.0.0",
-  "homepage": "https://gitname.github.io/react-gh-pages",
+  "homepage": "https://rmsap.github.io/react-gh-pages",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
