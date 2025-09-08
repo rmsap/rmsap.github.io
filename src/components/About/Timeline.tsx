@@ -7,7 +7,17 @@ const iconMap = {
   Briefcase: Briefcase,
 };
 
-function Timeline({ events }) {
+interface Step {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface TimelineProps {
+  events: Step[];
+}
+
+function Timeline({ events }: TimelineProps) {
   return (
     <div className="space-y-4">
       <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
@@ -15,7 +25,7 @@ function Timeline({ events }) {
       </h3>
       <div className="space-y-3">
         {events.map((step, index) => {
-          const IconComponent = iconMap[step.icon];
+          const IconComponent = iconMap[step.icon as keyof typeof iconMap];
           return (
             <div key={index} className="flex items-start space-x-4 group">
               <div className="flex-shrink-0">

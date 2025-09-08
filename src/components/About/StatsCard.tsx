@@ -1,4 +1,18 @@
-function StatsCard({ icon: IconComponent, value, label, colorClass }) {
+import type { LucideIcon } from "lucide-react";
+
+interface StatsCardProps {
+  icon: LucideIcon;
+  value: string;
+  label: string;
+  colorClass: string;
+}
+
+function StatsCard({
+  icon: IconComponent,
+  value,
+  label,
+  colorClass,
+}: StatsCardProps) {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg border border-gray-100 dark:border-gray-700">
       <IconComponent className={`w-8 h-8 ${colorClass} mb-2`} />

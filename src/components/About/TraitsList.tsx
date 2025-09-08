@@ -1,4 +1,8 @@
-function TraitsList({ traits }) {
+interface TraitsListProps {
+  traits: string[];
+}
+
+function TraitsList({ traits }: TraitsListProps) {
   return (
     <div className="mt-16 text-center">
       <div className="mt-8 flex flex-wrap justify-center gap-3">

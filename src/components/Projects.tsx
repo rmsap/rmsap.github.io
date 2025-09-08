@@ -27,7 +27,7 @@ interface Project {
   longDescription: string;
   technologies: string[];
   images?: string[];
-  captions?: string[];
+  captions?: (string | null)[];
   github?: string;
   live?: string;
   websites?: WebLink[];
@@ -41,7 +41,6 @@ function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Load projects from the imported JSON data
   const projects: Project[] = projectsData;
 
   const featuredProjects = projects.filter((p) => p.featured);

@@ -1,5 +1,5 @@
 import { BookOpen, ChefHat, Music, Film } from "lucide-react";
-import interestsData from "../data/interests.json";
+import interestsData from "../../data/interests.json";
 
 // Map icon names to actual components
 const iconMap = {
@@ -17,7 +17,7 @@ function Interests() {
       </h3>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {interestsData.map((interest, index) => {
-          const IconComponent = iconMap[interest.icon];
+          const IconComponent = iconMap[interest.icon as keyof typeof iconMap];
           return (
             <div
               key={index}

@@ -6,7 +6,7 @@ import {
   Award,
   Users,
 } from "lucide-react";
-import Interests from "../Interests";
+import Interests from "./Interests";
 import StatsCard from "./StatsCard";
 import aboutData from "../../data/aboutData.json";
 import Timeline from "./Timeline";
@@ -58,7 +58,7 @@ function About() {
             <div className="grid grid-cols-2 gap-4">
               {stats.map((stat) => (
                 <StatsCard
-                  icon={iconMap[stat.icon]}
+                  icon={iconMap[stat.icon as keyof typeof iconMap]}
                   value={stat.value}
                   label={stat.label}
                   colorClass={
