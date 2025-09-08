@@ -1,0 +1,24 @@
+{
+  "journey": [
+    {
+      "icon": "Rocket",
+      "title": "The Beginning",
+      "description": "Started programming in 8th grade on my middle school's robotics team"
+    },
+    {
+      "icon": "Cpu",
+      "title": "High School",
+      "description": "FIRST Robotics Competition team member, Code Club projects from LED snowflakes to mobile apps"
+    },
+    {
+      "icon": "GraduationCap",
+      "title": "Northeastern University",
+      "description": "B.S. Computer Science with AI concentration, Summa Cum Laude (3.93 GPA)"
+    },
+    {
+      "icon": "Briefcase",
+      "title": "Professional Experience",
+      "description": "Tech Lead at Generate, Software Engineer Co-op at Broad Institute & VMware"
+    }
+  ]
+}

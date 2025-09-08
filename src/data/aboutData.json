@@ -1,0 +1,59 @@
+{
+  "header": {
+    "title": "About Me",
+    "subtitle": "Summa Cum Laude Computer Science graduate from Northeastern University with a passion for building innovative solutions and leading technical teams"
+  },
+  "profile": {
+    "image": "/ryanPhoto.jpg",
+    "imageAlt": "Ryan Saperstein"
+  },
+  "stats": [
+    {
+      "icon": "Award",
+      "value": "3.93",
+      "label": "GPA (Summa Cum Laude)",
+      "color": "purple"
+    },
+    {
+      "icon": "Users",
+      "value": "6+",
+      "label": "Team Members Led",
+      "color": "blue"
+    }
+  ],
+  "bio": [
+    "My journey into programming began in eighth grade when I joined my middle school's robotics team. What started as curiosity evolved into a 9+ year passion that has taken me from building Arduino projects to leading engineering teams at cutting-edge tech companies.",
+    "At Northeastern University, I graduated Summa Cum Laude with a B.S. in Computer Science and a concentration in Artificial Intelligence. My coursework spanned from fundamental algorithms to advanced machine learning, preparing me for the complex challenges I've tackled in my professional roles.",
+    "Through co-ops at VMware and the Broad Institute of MIT and Harvard, plus my role as Tech Lead at Generate Product Development, I've gained hands-on experience in enterprise software development, distributed systems, and team leadership. I've also founded my own software consultancy, delivering mobile solutions for non-profit organizations."
+  ],
+  "journey": [
+    {
+      "icon": "Rocket",
+      "title": "The Beginning",
+      "description": "Started programming in 8th grade on my middle school's robotics team"
+    },
+    {
+      "icon": "Cpu",
+      "title": "High School",
+      "description": "FIRST Robotics Competition team member, Code Club projects from LED snowflakes to mobile apps"
+    },
+    {
+      "icon": "GraduationCap",
+      "title": "Northeastern University",
+      "description": "B.S. Computer Science with AI concentration, Summa Cum Laude (3.93 GPA)"
+    },
+    {
+      "icon": "Briefcase",
+      "title": "Professional Experience",
+      "description": "Tech Lead at Generate, Software Engineer Co-op at Broad Institute & VMware"
+    }
+  ],
+  "traits": [
+    "Problem Solver",
+    "Team Leader",
+    "Continuous Learner",
+    "Detail Oriented",
+    "Full-Stack Developer",
+    "AI Enthusiast"
+  ]
+}
