@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface CarouselProps {
   images: string[];
-  captions?: string[];
+  captions?: (string | null)[];
   interval?: number;
   showControls?: boolean;
   showIndicators?: boolean;
