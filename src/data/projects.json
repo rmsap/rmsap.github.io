@@ -1,0 +1,201 @@
+[
+  {
+    "id": "bazaar",
+    "title": "Bazaar Game",
+    "description": "Distributed multiplayer board game with client-server architecture",
+    "longDescription": "Implemented the complete board game Bazaar including automated gameplay with deterministic player strategies. Built a distributed system using client-server architecture, allowing players to interact in real-time across nodes.",
+    "technologies": [
+      "Clojure",
+      "Distributed Systems",
+      "Game Development",
+      "Client-Server"
+    ],
+    "images": [
+      "/dataDiagram.png",
+      "/communication.png",
+      "/game-state-example.png",
+      "/observer.png",
+      "/state-machine.png"
+    ],
+    "captions": [
+      "Overall data diagram",
+      "Client-server communication diagram",
+      "An example game state for visualizing tests",
+      "Diagram of communication between referee, player, and observer components",
+      "Diagram of state machine that turns follow"
+    ],
+    "github": "https://github.com/rmsap/swdev/tree/main/Bazaar",
+    "websites": [],
+    "highlights": [
+      "Real-time multiplayer gameplay",
+      "Deterministic AI strategies",
+      "Distributed architecture",
+      "Network protocol design"
+    ],
+    "date": "Sep - Dec 2024",
+    "featured": true
+  },
+  {
+    "id": "siglo",
+    "title": "SigLo",
+    "description": "Computer vision system for gesture-based computer control",
+    "longDescription": "Adapted a pre-trained neural network to identify hand motions to control a computer from afar. Uses OpenCV and MediaPipe for real-time hand tracking and gesture recognition.",
+    "technologies": [
+      "Python",
+      "OpenCV",
+      "MediaPipe",
+      "Machine Learning",
+      "Computer Vision"
+    ],
+    "images": [
+      "/siglo.png",
+      "/siglo_website.gif",
+      "/siglo_excel_scrolling.gif",
+      "/siglo_video.gif",
+      "/siglo_slides.gif",
+      "/scaling_function.jpg",
+      "/siglo_math.jpg"
+    ],
+    "github": "https://github.com/AndreyPiterkin/SigLo",
+    "websites": [
+      {
+        "label": "Devpost",
+        "url": "https://devpost.com/software/siglo",
+        "icon": "globe"
+      }
+    ],
+    "highlights": [
+      "Real-time gesture recognition",
+      "Touchless computer control",
+      "Neural network adaptation",
+      "Low-latency processing"
+    ],
+    "date": "February 2022",
+    "featured": true,
+    "award": "HackBeanpot 2022 Most Technically Challenging Project"
+  },
+  {
+    "id": "help-app",
+    "title": "RecoverWE & Help App",
+    "description": "Mobile apps providing recovery resources for a New Jersey non-profit",
+    "longDescription": "Developed two mobile applications for a New Jersey based non-profit to provide addiction recovery resources in an easily accessible format. Built with React Native for cross-platform compatibility and Python backend and SQL database for data management.",
+    "technologies": ["React Native", "MySQL", "REST API", "Mobile Development"],
+    "images": [
+      "/recover_we_logo.jpg",
+      "/recover_we_home.jpg",
+      "/recover_we_about.jpg",
+      "/recover_we_one_resource.jpg",
+      "/recover_we_table.jpg",
+      "/help_app_logo.jpg",
+      "/help_app_home.jpg",
+      "/help_app_drugs_alcohol.jpg",
+      "/help_app_screen_sample.jpg",
+      "/help_app_prescription_drug.jpg",
+      "/help_app_description_sample.jpg"
+    ],
+    "websites": [
+      {
+        "label": "RecoverWe Website",
+        "url": "https://njprevent.com/recoverwe/",
+        "icon": "globe"
+      },
+      {
+        "label": "Help App Website",
+        "url": "https://njprevent.com/help-app/",
+        "icon": "globe"
+      }
+    ],
+    "highlights": [
+      "Cross-platform mobile apps",
+      "Resource management system",
+      "User-friendly interface",
+      "Real social impact"
+    ],
+    "date": "March 2022 - Present",
+    "featured": true
+  },
+  {
+    "id": "image-processor",
+    "title": "Image Processing Application",
+    "description": "Advanced image manipulation tool with custom filters and effects",
+    "longDescription": "Built a comprehensive image processing application that enables users to load, save, and manipulate images with various operations including flipping, resizing, and applying custom filters.",
+    "technologies": [
+      "Java",
+      "Java Swing",
+      "Image Processing",
+      "MVC Architecture"
+    ],
+    "images": [
+      "/image_processor.PNG",
+      "/image_processor_no_image.PNG",
+      "/image_processor_koala_downscaled.PNG",
+      "/image_processor_koala_flipped.PNG",
+      "/image_processor_text_menu.PNG",
+      "/image_processor_text_with_commands.PNG"
+    ],
+    "captions": [
+      null,
+      null,
+      "Downscaling an image",
+      "Vertically flipping an image",
+      "Text UI",
+      "Text UI after commands"
+    ],
+    "github": "https://github.com/rmsap/image-processor",
+    "websites": [
+      {
+        "label": "Tutorial",
+        "url": "https://example.com/image-processor-tutorial",
+        "icon": "docs"
+      }
+    ],
+    "highlights": [
+      "Custom filter algorithms",
+      "Real-time preview",
+      "Batch processing",
+      "GUI with Java Swing"
+    ],
+    "date": "June 2022"
+  },
+  {
+    "id": "workflow-debugger",
+    "title": "VMware Workflow Debugger",
+    "description": "Internal tool for parsing and analyzing log bundles",
+    "longDescription": "Developed a workflow debugging tool at VMware that parses internal and external log bundles, gathers key analytics, assesses long-term performance, and helps locate bugs and regressions.",
+    "technologies": [
+      "Python",
+      "Log Analysis",
+      "Data Processing",
+      "VMware Cloud"
+    ],
+    "highlights": [
+      "Increased debugging efficiency",
+      "Automated log parsing",
+      "Performance analytics",
+      "Bug detection system"
+    ],
+    "date": "Sept - Dec 2023"
+  },
+  {
+    "id": "cromwell",
+    "title": "Cromwell",
+    "description": "Implementation of new WDL spec on Cromwell",
+    "longDescription": "Implemented support for a new WDL (Workflow Descriptor Language) specification in Cromwell, a workflow execution engine at the Broad Institute. Also discovered and fixed a bug in the integration testing framework.",
+    "technologies": ["Scala", "WDL", "Testing Frameworks", "Bioinformatics"],
+    "github": "https://github.com/broadinstitute/cromwell",
+    "websites": [
+      {
+        "label": "Cromwell Docs",
+        "url": "https://cromwell.readthedocs.io/en/latest/",
+        "icon": "docs"
+      }
+    ],
+    "highlights": [
+      "New spec implementation",
+      "Testing framework rewrite",
+      "Frontend feature development",
+      "User feedback integration"
+    ],
+    "date": "Jan - June 2024"
+  }
+]

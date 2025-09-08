@@ -1,0 +1,22 @@
+[
+  {
+    "icon": "BookOpen",
+    "category": "Reading",
+    "items": ["Frankenstein - Mary Shelley", "The Hobbit - J.R.R. Tolkien"]
+  },
+  {
+    "icon": "Film",
+    "category": "Movies & TV",
+    "items": ["Interstellar", "Sci-fi enthusiast"]
+  },
+  {
+    "icon": "ChefHat",
+    "category": "Activities",
+    "items": ["Cooking", "Wiffle Ball"]
+  },
+  {
+    "icon": "Music",
+    "category": "Music",
+    "items": ["Rock classics", "Metallica, AC/DC, Weezer"]
+  }
+]
