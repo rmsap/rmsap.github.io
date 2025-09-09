@@ -3,31 +3,54 @@
     "company": "Generate Product Development",
     "role": "Tech Lead",
     "period": "Aug 2024 - Dec 2024",
+    "logo": "/generateLogo.png",
     "highlights": [
       "Led a team of 6 engineers on mobile app development",
       "Implemented CI/CD through GitHub Actions",
       "Planned software architecture and managed sprint tickets"
+    ],
+    "location": "Boston, MA",
+    "technologies": [
+      "React Native",
+      "TypeScript",
+      "Go",
+      "GitHub Actions",
+      "RESTful APIs"
     ]
   },
   {
     "company": "Broad Institute of MIT and Harvard",
     "role": "Software Engineer Co-op",
     "period": "Jan 2024 - Jun 2024",
+    "logo": "/broadLogo.jpeg",
     "highlights": [
       "Implemented support for new WDL spec in execution engine",
       "Discovered and fixed critical bugs in integration testing framework",
       "Developed front-end features based on user feedback"
+    ],
+    "location": "Cambridge, MA",
+    "technologies": [
+      "React",
+      "TypeScript",
+      "Scala",
+      "PostgreSQL",
+      "GCP",
+      "Azure",
+      "WDL"
     ]
   },
   {
     "company": "VMware",
     "role": "Co-op Member of Technical Staff",
     "period": "Jan 2023 - Dec 2023",
+    "logo": "/vmwareLogo.webp",
     "highlights": [
       "Developed workflow debugging tool for log analysis",
       "Enhanced VMware Cloud Director platform",
       "Worked with RESTful APIs and PostgreSQL databases"
-    ]
+    ],
+    "location": "Boston, MA",
+    "technologies": ["Java", "PostgreSQL", "RESTful APIs", "Git", "Jenkins"]
   },
   {
     "company": "Saperstein Software Solutions",
@@ -35,8 +58,10 @@
     "period": "Mar 2022 - Present",
     "highlights": [
       "Built two mobile apps for NJ non-profit: Help App and RecoverWE",
-      "Full-stack development with React Native and PHP",
+      "Full-stack development with React Native, Python, and SQL",
       "Delivered accessible resources to community users"
-    ]
+    ],
+    "location": "Remote",
+    "technologies": ["React Native", "JavaScript", "Python", "SQL", "AWS"]
   }
 ]

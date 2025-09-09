@@ -50,14 +50,20 @@ const Header: React.FC = () => {
     const elementId = href.substring(1);
     setIsMobileMenuOpen(false);
 
-    // Scroll to element
     const element = document.getElementById(elementId);
-    element?.scrollIntoView({ behavior: "smooth" });
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
 
-    // Update URL without causing navigation
-    window.history.pushState(null, "", href);
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
 
-    setIsMobileMenuOpen(false);
+    window.location.hash = elementId;
   };
 
   return (
@@ -114,24 +120,31 @@ const Header: React.FC = () => {
             <div className="hidden lg:flex items-center space-x-4">
               <div className="flex items-center space-x-3">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/rmsap"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 text-gray-600 hover:text-purple-600 transition-colors duration-300 hover:-translate-y-0.5 transform"
                   aria-label="GitHub"
                 >
                   <Github size={20} />
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href="http://www.linkedin.com/in/ryansaperstein"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 text-gray-600 hover:text-purple-600 transition-colors duration-300 hover:-translate-y-0.5 transform"
                   aria-label="LinkedIn"
                 >
                   <Linkedin size={20} />
                 </a>
               </div>
-              <button className="relative px-6 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-full overflow-hidden group hover:shadow-lg transform transition-all duration-300 hover:-translate-y-0.5">
+              <a
+                href="mailto:rmsaperstein@gmail.com"
+                className="relative px-6 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-full overflow-hidden group hover:shadow-lg transform transition-all duration-300 hover:-translate-y-0.5"
+              >
                 <span className="relative z-10">Get in Touch</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </button>
+              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -147,7 +160,7 @@ const Header: React.FC = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md shadow-xl transition-all duration-300 transform ${
+          className={`lg:hidden absolute top-full left-0 right-0 bg-white/95 dark:bg-[#242424]/95 backdrop-blur-md shadow-xl transition-all duration-300 transform ${
             isMobileMenuOpen
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-full pointer-events-none"
@@ -173,6 +186,8 @@ const Header: React.FC = () => {
               <div className="flex items-center justify-center space-x-4 mb-4">
                 <a
                   href="https://github.com/rmsap"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 text-gray-600 hover:text-purple-600 transition-colors duration-300"
                   aria-label="GitHub"
                 >
@@ -180,6 +195,8 @@ const Header: React.FC = () => {
                 </a>
                 <a
                   href="http://www.linkedin.com/in/ryansaperstein"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 text-gray-600 hover:text-purple-600 transition-colors duration-300"
                   aria-label="LinkedIn"
                 >
@@ -193,13 +210,50 @@ const Header: React.FC = () => {
                   <Mail size={24} />
                 </a>
               </div>
-              <button className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-full hover:shadow-lg transform transition-all duration-300 hover:scale-105">
+              <a
+                href="mailto:rmsaperstein@gmail.com"
+                className="block w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-full hover:shadow-lg transform transition-all duration-300 text-center"
+              >
                 Get in Touch
-              </button>
+              </a>
             </div>
           </nav>
         </div>
       </header>
+
+      {/* Side Navigation Progress Indicator - NEW */}
+      <div className="fixed left-4 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
+        <nav className="flex flex-col gap-3 p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg">
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href.substring(1);
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="group relative flex items-center"
+                aria-label={link.label}
+              >
+                <span
+                  className={`block transition-all duration-300 rounded-full ${
+                    isActive
+                      ? "w-8 h-2 bg-gradient-to-r from-purple-600 to-blue-600"
+                      : "w-2 h-2 bg-gray-400 hover:bg-gray-600 hover:scale-125"
+                  }`}
+                />
+                {/* Tooltip on hover */}
+                <span
+                  className={`absolute left-12 px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap pointer-events-none transition-opacity duration-200 ${
+                    isActive ? "opacity-0" : "opacity-0 group-hover:opacity-100"
+                  }`}
+                >
+                  {link.label}
+                </span>
+              </a>
+            );
+          })}
+        </nav>
+      </div>
     </>
   );
 };

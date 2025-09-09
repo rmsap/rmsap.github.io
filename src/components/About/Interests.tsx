@@ -1,7 +1,6 @@
 import { BookOpen, ChefHat, Music, Film } from "lucide-react";
 import interestsData from "../../data/interests.json";
 
-// Map icon names to actual components
 const iconMap = {
   BookOpen: BookOpen,
   ChefHat: ChefHat,

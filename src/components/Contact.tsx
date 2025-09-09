@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Github,
   Linkedin,
@@ -12,12 +12,38 @@ import {
 
 function Contact() {
   const [copied, setCopied] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const email = "rmsaperstein@gmail.com";
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  // Email feedback handler (Suggestion 4)
+  const handleEmailClick = () => {
+    setEmailSent(true);
+    setTimeout(() => setEmailSent(false), 3000);
   };
 
   const socialLinks = [
@@ -40,7 +66,12 @@ function Contact() {
       id="contact"
       className="min-h-screen scroll-mt-10 py-10 px-4 sm:px-6 lg:px-8"
     >
-      <div className="max-w-6xl mx-auto">
+      <div
+        ref={sectionRef}
+        className={`max-w-6xl mx-auto transition-all duration-700 transform ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+      >
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
@@ -55,7 +86,14 @@ function Contact() {
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left Column - Contact Options */}
-          <div className="space-y-8">
+          <div
+            className={`space-y-8 transition-all duration-700 transform ${
+              isVisible
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 -translate-x-8"
+            }`}
+            style={{ transitionDelay: "200ms" }}
+          >
             {/* Email Card */}
             <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
               <div className="flex items-start justify-between mb-4">
@@ -73,6 +111,7 @@ function Contact() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
                   href={`mailto:${email}`}
+                  onClick={handleEmailClick}
                   className="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:shadow-lg transform transition-all duration-300 hover:-translate-y-0.5"
                 >
                   <Send className="w-4 h-4 mr-2" />
@@ -80,6 +119,7 @@ function Contact() {
                 </a>
                 <button
                   onClick={handleCopyEmail}
+                  aria-label={copied ? "Email copied" : "Copy email address"}
                   className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300"
                 >
                   {copied ? (
@@ -95,6 +135,11 @@ function Contact() {
                   )}
                 </button>
               </div>
+              {emailSent && (
+                <p className="text-sm text-green-600 dark:text-green-400 mt-2">
+                  Opening your email client...
+                </p>
+              )}
             </div>
 
             {/* Social Links */}
@@ -108,6 +153,7 @@ function Contact() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`Visit my ${link.name} profile`}
                   className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 group"
                 >
                   <div className="flex items-center space-x-4">
@@ -127,21 +173,17 @@ function Contact() {
                 </a>
               ))}
             </div>
-
-            {/* Availability Status */}
-            <div className="flex items-center space-x-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-800">
-              <div className="relative">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <div className="absolute inset-0 w-3 h-3 bg-green-500 rounded-full animate-ping"></div>
-              </div>
-              <p className="text-green-800 dark:text-green-300 font-medium">
-                Available for opportunities
-              </p>
-            </div>
           </div>
 
-          {/* Right Column - Quick Message Form or Additional Info */}
-          <div className="lg:pl-8">
+          {/* Right Column */}
+          <div
+            className={`lg:pl-8 transition-all duration-700 transform ${
+              isVisible
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 translate-x-8"
+            }`}
+            style={{ transitionDelay: "400ms" }}
+          >
             <div className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-2xl p-8 border border-purple-100 dark:border-purple-800">
               <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">
                 What I'm Looking For
@@ -192,11 +234,13 @@ function Contact() {
         </div>
 
         {/* Footer Message */}
-        <div className="mt-20 text-center">
-          <p className="text-lg text-gray-500 dark:text-gray-400 italic">
-            "Start by doing what's necessary; then do what's possible; and
-            suddenly you are doing the impossible"
-          </p>
+        <div className="mt-20 text-center px-4">
+          <blockquote className="relative">
+            <p className="text-lg text-gray-500 dark:text-gray-400 italic mx-auto">
+              "Start by doing what's necessary; then do what's possible; and
+              suddenly you are doing the impossible"
+            </p>
+          </blockquote>
         </div>
       </div>
     </section>
