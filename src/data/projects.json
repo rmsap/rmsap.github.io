@@ -142,13 +142,6 @@
       "Text UI after commands"
     ],
     "github": "https://github.com/rmsap/image-processor",
-    "websites": [
-      {
-        "label": "Tutorial",
-        "url": "https://example.com/image-processor-tutorial",
-        "icon": "docs"
-      }
-    ],
     "highlights": [
       "Custom filter algorithms",
       "Real-time preview",

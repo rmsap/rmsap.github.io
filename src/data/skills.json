@@ -1,34 +1,41 @@
 {
-  "skills": {
-    "proficient": [
-      "Java",
-      "Python",
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "React Native",
-      "Git",
-      "Linux",
-      "Racket",
-      "HTML/CSS"
-    ],
-    "familiar": [
-      "Clojure",
-      "Scala",
-      "C",
-      "Kubernetes",
-      "PostgreSQL",
-      "MySQL",
-      "MongoDB",
-      "Arduino"
-    ],
-    "interested": [
-      "Go",
-      "Rust",
-      "Machine Learning",
-      "Neural Networks",
-      "NLP",
-      "Robotics"
-    ]
-  }
+  "proficient": [
+    "Java",
+    "Python",
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "React Native",
+    "Git",
+    "Linux",
+    "Racket",
+    "HTML/CSS"
+  ],
+  "familiar": [
+    "Clojure",
+    "Scala",
+    "C",
+    "Kubernetes",
+    "PostgreSQL",
+    "MySQL",
+    "MongoDB",
+    "Arduino"
+  ],
+  "interested": [
+    "Go",
+    "Rust",
+    "Machine Learning",
+    "Neural Networks",
+    "NLP",
+    "Robotics"
+  ],
+  "soft": [
+    "Team Leadership",
+    "Agile/Scrum",
+    "Technical Communication",
+    "Problem Solving",
+    "Continous Learner",
+    "Detail Oriented",
+    "Cross-functional Collaboration"
+  ]
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { PaginationDots } from "./PaginationDots";
 
 interface CarouselProps {
   images: string[];
@@ -23,6 +24,11 @@ const Carousel: React.FC<CarouselProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoplay);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const minSwipeDistance = 50;
 
   // Preload images
   useEffect(() => {
@@ -72,31 +78,87 @@ const Carousel: React.FC<CarouselProps> = ({
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, [goToNext, goToPrevious]);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null); // Reset touch end
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsDragging(true);
+
+    // Pause autoplay while user is interacting
+    setIsPlaying(false);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      goToNext();
+    }
+    if (isRightSwipe) {
+      goToPrevious();
+    }
+
+    setIsDragging(false);
+
+    // Resume autoplay if it was originally enabled
+    if (autoplay) {
+      setIsPlaying(true);
+    }
+  };
+
+  // Calculate swipe progress for visual feedback
+  const getSwipeTransform = () => {
+    if (!isDragging || !touchStart || !touchEnd) return 0;
+    const distance = touchStart - touchEnd;
+    // Limit the transform to prevent excessive movement
+    return Math.max(-100, Math.min(100, distance * 0.2));
+  };
+
   const currentCaption = captions?.[currentIndex];
 
   return (
     <div className={`relative w-full max-w-4xl mx-auto ${className}`}>
-      {/* Main carousel container */}
-      <div className="relative aspect-video bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
+      <div
+        className="relative aspect-video bg-gray-900 rounded-lg overflow-hidden shadow-2xl"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         {/* Images */}
         {images.map((image, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            className={`absolute inset-0 transition-all ${
+              isDragging ? "duration-0" : "duration-1000"
+            } ease-in-out ${
               index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
+            style={{
+              transform:
+                index === currentIndex && isDragging
+                  ? `translateX(${getSwipeTransform()}px)`
+                  : "translateX(0)",
+            }}
           >
             {loadedImages.has(index) && (
               <img
                 src={image}
                 alt={`Slide ${index + 1}`}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain select-none"
+                draggable={false}
               />
             )}
           </div>
         ))}
 
-        {/* Gradient overlays for better text visibility */}
+        {/* Gradient overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent pointer-events-none" />
 
@@ -131,24 +193,14 @@ const Carousel: React.FC<CarouselProps> = ({
 
         {/* Indicators */}
         {showIndicators && (
-          <div
+          <PaginationDots
+            total={images.length}
+            current={currentIndex}
+            onSelect={goToSlide}
             className={`absolute left-1/2 -translate-x-1/2 flex gap-2 ${
               currentCaption ? "bottom-20" : "bottom-4"
             }`}
-          >
-            {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  index === currentIndex
-                    ? "w-8 bg-purple-600"
-                    : "w-2 bg-gray-400 hover:bg-gray-500"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
+          />
         )}
       </div>
 
