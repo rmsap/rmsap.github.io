@@ -3,12 +3,10 @@ import { Star, TrendingUp, Lightbulb, Users } from "lucide-react";
 import skillsData from "../data/skills.json";
 
 interface SkillsData {
-  skills: {
-    proficient: string[];
-    familiar: string[];
-    interested: string[];
-    soft: string[];
-  };
+  proficient: string[];
+  familiar: string[];
+  interested: string[];
+  soft: string[];
 }
 
 function TechnicalSkills() {
