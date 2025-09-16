@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { Menu, X, Github, Linkedin, Mail } from "lucide-react";
 import { useActiveSection } from "../hooks/useActiveSection";
 
@@ -10,7 +9,6 @@ interface NavLink {
 }
 
 const Header: React.FC = () => {
-  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -34,18 +32,11 @@ const Header: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Handle hash changes for smooth scrolling
-  useEffect(() => {
-    if (location.hash) {
-      const element = document.querySelector(location.hash);
-      element?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [location]);
-
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
   ) => {
+    console.log(href);
     e.preventDefault();
     const elementId = href.substring(1);
     setIsMobileMenuOpen(false);
@@ -62,8 +53,6 @@ const Header: React.FC = () => {
         behavior: "smooth",
       });
     }
-
-    window.location.hash = elementId;
   };
 
   return (

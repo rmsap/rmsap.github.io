@@ -1,16 +1,26 @@
-import { HashRouter, Navigate, Route, Routes } from "react-router";
-import Home from "./home";
-import ScrollToHash from "./components/ScrollToHash";
+import About from "./components/About/About";
+import Contact from "./components/Contact";
+import Header from "./components/Header";
+import Projects from "./components/Projects";
+import Hero from "./components/Hero";
+import Experience from "./components/Experience";
+import TechnicalSkills from "./components/TechnicalSkills";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <HashRouter>
-      <ScrollToHash />
-      <Routes>
-        <Route path="/" element={<Navigate to="Home" />} />
-        <Route path="/Home/*" element={<Home />} />
-      </Routes>
-    </HashRouter>
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <Projects />
+        <Experience />
+        <TechnicalSkills />
+        <About />
+      </main>
+      <Contact />
+      <Footer />
+    </>
   );
 }
 
