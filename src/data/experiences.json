@@ -1,5 +1,28 @@
 [
   {
+    "company": "Playbook Sports",
+    "role": "Mobile App Developer",
+    "period": "Nov 2025 - Present",
+    "logo": "/playbookLogo.png",
+    "highlights": [
+      "Build and maintain an all-in-one sports management app for leagues, coaches, and parents",
+      "Improved in-app chat: implemented message reactions, archiving, and muting",
+      "Implemented calendar subscriptions through ICS feeds",
+      "Improved push notification reliability and specificity"
+    ],
+    "location": "Hoboken, NJ",
+    "technologies": [
+      "React Native",
+      "Django",
+      "TypeScript",
+      "JavaScript",
+      "Python",
+      "PostgreSQL",
+      "Heroku",
+      "GitHub Actions"
+    ]
+  },
+  {
     "company": "Generate Product Development",
     "role": "Tech Lead",
     "period": "Aug 2024 - Dec 2024",

@@ -64,7 +64,7 @@ function Contact() {
   return (
     <section
       id="contact"
-      className="min-h-screen scroll-mt-10 py-10 px-4 sm:px-6 lg:px-8"
+      className="scroll-mt-10 py-10 px-4 sm:px-6 lg:px-8"
     >
       <div
         ref={sectionRef}
@@ -78,9 +78,8 @@ function Contact() {
             Let's Connect
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            I'm always interested in hearing about new opportunities,
-            collaborating on exciting projects, or just having a great
-            conversation
+            I'm always happy to connect — whether it's collaborating on projects,
+            discussing ideas, or just having a great conversation
           </p>
         </div>
 
@@ -186,27 +185,24 @@ function Contact() {
           >
             <div className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-2xl p-8 border border-purple-100 dark:border-purple-800">
               <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">
-                What I'm Looking For
+                What I'm Up To
               </h3>
               <div className="space-y-4 text-gray-600 dark:text-gray-300 justify-start">
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-purple-600 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Full-time opportunities in software engineering</p>
+                  <p>Building the Playbook Sports app—helping leagues, coaches, and parents stay organized and connected</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-purple-600 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>
-                    Interesting projects involving web development, AI, or data
-                    visualization
-                  </p>
+                  <p>Still passionate about web development, AI, and data visualization</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-purple-600 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Collaborative teams working on impactful products</p>
+                  <p>Open to collaboration, open source, and side projects</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-purple-600 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Open source contributions and side projects</p>
+                  <p>Always happy to connect and chat about tech</p>
                 </div>
               </div>
 

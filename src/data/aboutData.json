@@ -24,7 +24,7 @@
   "bio": [
     "My journey into programming began in eighth grade when I joined my middle school's robotics team. What started as curiosity evolved into a 9+ year passion that has taken me from building Arduino projects to leading engineering teams at cutting-edge tech companies.",
     "At Northeastern University, I graduated Summa Cum Laude with a B.S. in Computer Science and a concentration in Artificial Intelligence. My coursework spanned from fundamental algorithms to advanced machine learning, preparing me for the complex challenges I've tackled in my professional roles.",
-    "Through co-ops at VMware and the Broad Institute of MIT and Harvard, plus my role as Tech Lead at Generate Product Development, I've gained hands-on experience in enterprise software development, distributed systems, and team leadership. I've also founded my own software consultancy, delivering mobile solutions for non-profit organizations."
+    "I'm currently a Mobile App Developer at Playbook Sports, building an all-in-one sports management app for leagues, coaches, and parents. I've also gained hands-on experience through co-ops at VMware and the Broad Institute of MIT and Harvard, my role as Tech Lead at Generate Product Development, and my own software consultancy delivering mobile solutions for non-profit organizations."
   ],
   "journey": [
     {
@@ -45,7 +45,7 @@
     {
       "icon": "Briefcase",
       "title": "Professional Experience",
-      "description": "Tech Lead at Generate, Software Engineer Co-op at Broad Institute & VMware"
+      "description": "Mobile App Developer at Playbook Sports; Tech Lead at Generate; Co-op at Broad Institute & VMware"
     }
   ]
 }

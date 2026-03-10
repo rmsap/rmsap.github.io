@@ -53,16 +53,14 @@ function Hero() {
 
             {/* Description */}
             <p className="text-lg lg:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-              Recent Northeastern graduate with experience at the{" "}
               <span className="font-semibold text-gray-900 dark:text-gray-100">
-                Broad Institute
+                Mobile App Developer
               </span>{" "}
-              and{" "}
+              at{" "}
               <span className="font-semibold text-gray-900 dark:text-gray-100">
-                VMware
+                Playbook Sports
               </span>
-              . Passionate about building scalable solutions, exploring AI
-              applications, and creating impactful software.
+              , building an all-in-one sports management app for leagues, coaches, and parents. Northeastern grad with experience at the Broad Institute and VMware. Passionate about building scalable solutions and creating impactful software.
             </p>
 
             {/* Tech Stack Icons */}
