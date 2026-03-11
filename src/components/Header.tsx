@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X, Github, Linkedin, Mail } from "lucide-react";
+import { Menu, X, Github, Linkedin } from "lucide-react";
 import { useActiveSection } from "../hooks/useActiveSection";
 
 interface NavLink {
@@ -128,7 +128,8 @@ const Header: React.FC = () => {
                 </a>
               </div>
               <a
-                href="mailto:REDACTED"
+                href="#contact"
+                onClick={(e) => handleNavClick(e, "#contact")}
                 className="relative px-6 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-full overflow-hidden group hover:shadow-lg transform transition-all duration-300 hover:-translate-y-0.5"
               >
                 <span className="relative z-10">Get in Touch</span>
@@ -191,16 +192,10 @@ const Header: React.FC = () => {
                 >
                   <Linkedin size={24} />
                 </a>
-                <a
-                  href="mailto:REDACTED"
-                  className="p-2 text-gray-600 hover:text-purple-600 transition-colors duration-300"
-                  aria-label="Email"
-                >
-                  <Mail size={24} />
-                </a>
               </div>
               <a
-                href="mailto:REDACTED"
+                href="#contact"
+                onClick={(e) => handleNavClick(e, "#contact")}
                 className="block w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-full hover:shadow-lg transform transition-all duration-300 text-center"
               >
                 Get in Touch
@@ -210,7 +205,6 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* Side Navigation Progress Indicator - NEW */}
       <div className="fixed left-4 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
         <nav className="flex flex-col gap-3 p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg">
           {navLinks.map((link) => {

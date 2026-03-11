@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   Github,
   Linkedin,
-  Mail,
   Download,
   Code,
   Brain,
@@ -114,13 +113,6 @@ function Hero() {
                   aria-label="LinkedIn"
                 >
                   <Linkedin className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-                </a>
-                <a
-                  href={SOCIAL_LINKS.email}
-                  className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 hover:-translate-y-1"
-                  aria-label="Email"
-                >
-                  <Mail className="w-6 h-6 text-gray-700 dark:text-gray-300" />
                 </a>
               </div>
             </div>
