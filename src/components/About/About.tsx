@@ -33,7 +33,7 @@ const iconMap: Record<IconName, LucideIcon> = {
 function About() {
   const { header, profile, stats, bio, journey } = aboutData;
   const [visibleSections, setVisibleSections] = useState<Set<string>>(
-    new Set()
+    new Set(),
   );
   const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
@@ -47,7 +47,7 @@ function About() {
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
     );
 
     Object.values(sectionRefs.current).forEach((ref) => {

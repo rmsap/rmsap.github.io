@@ -6,11 +6,15 @@ import Hero from "./components/Hero";
 import Experience from "./components/Experience";
 import TechnicalSkills from "./components/TechnicalSkills";
 import Footer from "./components/Footer";
+import BlogIndex from "./components/blog/BlogIndexPage";
+import BlogPostPage from "./components/blog/BlogPostPage";
+import { HelmetProvider, Helmet } from "react-helmet-async";
+import { AnimatePresence } from "framer-motion";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
-function App() {
+function Portfolio() {
   return (
     <>
-      <Header />
       <main>
         <Hero />
         <Projects />
@@ -19,8 +23,33 @@ function App() {
         <About />
       </main>
       <Contact />
-      <Footer />
     </>
+  );
+}
+
+function App() {
+  return (
+    <HelmetProvider>
+      <Helmet>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Ryan Saperstein's Blog"
+          href="/rss.xml"
+        />
+      </Helmet>
+      <HashRouter>
+        <Header />
+        <AnimatePresence mode="wait">
+          <Routes>
+            <Route path="/" element={<Portfolio />} />
+            <Route path="/blog" element={<BlogIndex />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
+          </Routes>
+        </AnimatePresence>
+        <Footer />
+      </HashRouter>
+    </HelmetProvider>
   );
 }
 

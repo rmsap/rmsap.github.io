@@ -16,7 +16,7 @@ export const useActiveSection = (sectionIds: string[], offset = 100) => {
       {
         rootMargin: `-${offset}px 0px -50% 0px`,
         threshold: 0,
-      }
+      },
     );
 
     const sections = sectionIds

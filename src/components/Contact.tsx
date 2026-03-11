@@ -12,12 +12,17 @@ import {
   AlertCircle,
 } from "lucide-react";
 
-const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+const WEB3FORMS_ACCESS_KEY = import.meta.env
+  .VITE_WEB3FORMS_ACCESS_KEY as string;
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
 function Contact() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -29,7 +34,7 @@ function Contact() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
@@ -92,10 +97,7 @@ function Contact() {
   ];
 
   return (
-    <section
-      id="contact"
-      className="scroll-mt-10 py-10 px-4 sm:px-6 lg:px-8"
-    >
+    <section id="contact" className="scroll-mt-10 py-10 px-4 sm:px-6 lg:px-8">
       <div
         ref={sectionRef}
         className={`max-w-6xl mx-auto transition-all duration-700 transform ${
@@ -108,8 +110,8 @@ function Contact() {
             Let's Connect
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            I'm always happy to connect — whether it's collaborating on projects,
-            discussing ideas, or just having a great conversation
+            I'm always happy to connect — whether it's collaborating on
+            projects, discussing ideas, or just having a great conversation
           </p>
         </div>
 
@@ -139,7 +141,10 @@ function Contact() {
               </p>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="contact-name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="contact-name"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  >
                     Name
                   </label>
                   <input
@@ -147,14 +152,19 @@ function Contact() {
                     type="text"
                     required
                     value={formData.name}
-                    onChange={(e) => setFormData((d) => ({ ...d, name: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((d) => ({ ...d, name: e.target.value }))
+                    }
                     className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow"
                     placeholder="Your name"
                     disabled={formStatus === "submitting"}
                   />
                 </div>
                 <div>
-                  <label htmlFor="contact-email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="contact-email"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  >
                     Email
                   </label>
                   <input
@@ -162,14 +172,19 @@ function Contact() {
                     type="email"
                     required
                     value={formData.email}
-                    onChange={(e) => setFormData((d) => ({ ...d, email: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((d) => ({ ...d, email: e.target.value }))
+                    }
                     className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow"
                     placeholder="your@email.com"
                     disabled={formStatus === "submitting"}
                   />
                 </div>
                 <div>
-                  <label htmlFor="contact-message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label
+                    htmlFor="contact-message"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  >
                     Message
                   </label>
                   <textarea
@@ -177,16 +192,25 @@ function Contact() {
                     required
                     rows={4}
                     value={formData.message}
-                    onChange={(e) => setFormData((d) => ({ ...d, message: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((d) => ({ ...d, message: e.target.value }))
+                    }
                     className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow resize-y min-h-[100px]"
                     placeholder="Your message..."
                     disabled={formStatus === "submitting"}
                   />
                 </div>
-                <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  className="hidden"
+                  style={{ display: "none" }}
+                />
                 <button
                   type="submit"
-                  disabled={formStatus === "submitting" || !WEB3FORMS_ACCESS_KEY}
+                  disabled={
+                    formStatus === "submitting" || !WEB3FORMS_ACCESS_KEY
+                  }
                   className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:shadow-lg transform transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   {formStatus === "submitting" ? (
@@ -235,7 +259,10 @@ function Contact() {
               <div className="space-y-4 text-gray-600 dark:text-gray-300 justify-start">
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-purple-600 rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Building the Playbook Sports app—helping leagues, coaches, and parents stay organized and connected</p>
+                  <p>
+                    Building the Playbook Sports app—helping leagues, coaches,
+                    and parents stay organized and connected
+                  </p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-purple-600 rounded-full mt-2 flex-shrink-0"></div>

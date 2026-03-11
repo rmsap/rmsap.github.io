@@ -47,7 +47,7 @@ const Carousel: React.FC<CarouselProps> = ({
 
   const goToPrevious = useCallback(() => {
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
+      (prevIndex) => (prevIndex - 1 + images.length) % images.length,
     );
   }, [images.length]);
 

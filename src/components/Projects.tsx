@@ -76,7 +76,7 @@ function Projects() {
       {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px",
-      }
+      },
     );
 
     // Observe header
@@ -107,7 +107,7 @@ function Projects() {
 
   const currentProjects = otherProjects.slice(
     currentIndex * itemsPerPage,
-    (currentIndex + 1) * itemsPerPage
+    (currentIndex + 1) * itemsPerPage,
   );
 
   const getLinkIcon = (icon?: string) => {

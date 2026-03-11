@@ -1,5 +1,5 @@
-import { BookOpen, ChefHat, Music, Film } from "lucide-react";
-import interestsData from "../../data/interests.json";
+import { BookOpen, ChefHat, Music, Film } from 'lucide-react';
+import interestsData from '../../data/interests.json';
 
 const iconMap = {
   BookOpen: BookOpen,

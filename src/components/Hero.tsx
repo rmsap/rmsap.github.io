@@ -59,7 +59,10 @@ function Hero() {
               <span className="font-semibold text-gray-900 dark:text-gray-100">
                 Playbook Sports
               </span>
-              , building an all-in-one sports management app for leagues, coaches, and parents. Northeastern grad with experience at the Broad Institute and VMware. Passionate about building scalable solutions and creating impactful software.
+              , building an all-in-one sports management app for leagues,
+              coaches, and parents. Northeastern grad with experience at the
+              Broad Institute and VMware. Passionate about building scalable
+              solutions and creating impactful software.
             </p>
 
             {/* Tech Stack Icons */}

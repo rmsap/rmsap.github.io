@@ -29,7 +29,7 @@ function Experience() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const index = parseInt(
-              entry.target.getAttribute("data-index") || "0"
+              entry.target.getAttribute("data-index") || "0",
             );
             setVisibleCards((prev) => new Set(prev).add(index));
           }
@@ -38,7 +38,7 @@ function Experience() {
       {
         threshold: 0.1, // Trigger when 10% visible
         rootMargin: "0px 0px -50px 0px", // Trigger slightly before fully in view
-      }
+      },
     );
 
     cardRefs.current.forEach((ref) => {

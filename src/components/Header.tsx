@@ -35,7 +35,7 @@ const Header: React.FC = () => {
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
+    href: string,
   ) => {
     console.log(href);
     e.preventDefault();
