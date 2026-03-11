@@ -1,0 +1,61 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /blog_comments/{commentId} {
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly([
+          "authorName",
+          "body",
+          "postSlug",
+          "authorUid",
+          "createdAt"
+        ])
+        && request.resource.data.authorName is string
+        && request.resource.data.authorName.size() > 0
+        && request.resource.data.authorName.size() <= 50
+        && request.resource.data.body is string
+        && request.resource.data.body.size() > 0
+        && request.resource.data.body.size() <= 2000
+        && request.resource.data.postSlug is string
+        && request.resource.data.postSlug.size() > 0
+        && request.resource.data.postSlug.size() <= 100
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+
+    match /blog_reactions/{postSlug} {
+      // Reaction counts per type (e.g., { like: 5, love: 3 })
+      // Only allow updates to increment/decrement counts, not direct client creates.
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly([
+          "like", "love", "fire", "clap", "insight"
+        ])
+        && request.resource.data.keys().size() > 0;
+      allow update: if request.auth != null
+        && request.resource.data.keys().hasOnly([
+          "like", "love", "fire", "clap", "insight"
+        ])
+        && request.resource.data.keys().size() > 0;
+      allow delete: if false;
+
+      match /users/{userId} {
+        allow read: if true;
+        allow create: if request.auth != null
+          && request.auth.uid == userId
+          && request.resource.data.keys().hasOnly(["reaction"])
+          && request.resource.data.reaction is string
+          && request.resource.data.reaction in ["like", "love", "fire", "clap", "insight"];
+        allow update: if request.auth != null
+          && request.auth.uid == userId
+          && request.resource.data.keys().hasOnly(["reaction"])
+          && request.resource.data.reaction is string
+          && request.resource.data.reaction in ["like", "love", "fire", "clap", "insight"];
+        allow delete: if request.auth != null
+          && request.auth.uid == userId;
+      }
+    }
+  }
+}
