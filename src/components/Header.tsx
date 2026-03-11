@@ -11,6 +11,7 @@ interface NavLink {
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hoveredDot, setHoveredDot] = useState<number | null>(null);
 
   const navLinks: NavLink[] = [
     { label: "Home", href: "#home" },
@@ -205,32 +206,64 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      <div className="fixed left-4 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
-        <nav className="flex flex-col gap-3 p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full shadow-lg">
-          {navLinks.map((link) => {
+      <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
+        <nav className="flex flex-col items-center gap-4">
+          {navLinks.map((link, i) => {
             const isActive = activeSection === link.href.substring(1);
+            const isHovered = hoveredDot === i;
             return (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="group relative flex items-center"
+                className="relative flex items-center"
                 aria-label={link.label}
+                onMouseEnter={() => setHoveredDot(i)}
+                onMouseLeave={() => setHoveredDot(null)}
               >
+                {/* Tooltip */}
                 <span
-                  className={`block transition-all duration-300 rounded-full ${
-                    isActive
-                      ? "w-8 h-2 bg-gradient-to-r from-purple-600 to-blue-600"
-                      : "w-2 h-2 bg-gray-400 hover:bg-gray-600 hover:scale-125"
-                  }`}
-                />
-                {/* Tooltip on hover */}
-                <span
-                  className={`absolute left-12 px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap pointer-events-none transition-opacity duration-200 ${
-                    isActive ? "opacity-0" : "opacity-0 group-hover:opacity-100"
-                  }`}
+                  className="absolute left-8 px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap pointer-events-none transition-all duration-200"
+                  style={{
+                    opacity: isHovered ? 1 : 0,
+                    transform: isHovered ? "translateX(0)" : "translateX(-8px)",
+                    background: "rgba(139, 92, 246, 0.15)",
+                    color: "#c4b5fd",
+                    border: "1px solid rgba(139, 92, 246, 0.3)",
+                  }}
                 >
                   {link.label}
+                </span>
+
+                {/* Dot */}
+                <span
+                  className="relative flex items-center justify-center transition-all duration-300"
+                  style={{ width: 20, height: 20 }}
+                >
+                  {/* Active ring */}
+                  {isActive && (
+                    <span
+                      className="absolute rounded-full"
+                      style={{
+                        width: 20,
+                        height: 20,
+                        border: "2px solid rgba(139, 92, 246, 0.4)",
+                      }}
+                    />
+                  )}
+                  {/* Dot itself */}
+                  <span
+                    className="rounded-full transition-all duration-300"
+                    style={{
+                      width: isActive ? 10 : isHovered ? 8 : 6,
+                      height: isActive ? 10 : isHovered ? 8 : 6,
+                      backgroundColor: isActive
+                        ? "#a78bfa"
+                        : isHovered
+                          ? "rgba(167, 139, 250, 0.6)"
+                          : "rgba(167, 139, 250, 0.25)",
+                    }}
+                  />
                 </span>
               </a>
             );
