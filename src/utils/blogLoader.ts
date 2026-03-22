@@ -1,10 +1,10 @@
 import type { ComponentType } from "react";
 import type { BlogPostMeta } from "../types/blog";
-import { estimateReadingTime } from "./readingTime";
 
 interface MdxModule {
   default: ComponentType;
   frontmatter?: Record<string, unknown>;
+  readingTime?: number;
 }
 
 // Import compiled MDX components (path relative to this file: src/utils/)
@@ -12,58 +12,26 @@ const postModules = import.meta.glob<MdxModule>("../posts/*.mdx", {
   eager: true,
 });
 
-const postRaw = import.meta.glob("../posts/*.mdx", {
-  query: "?raw",
-  import: "default",
-  eager: true,
-});
-
-/** Get raw file content by slug; glob keys may differ between postModules and postRaw */
-function getRawBySlug(slug: string): string {
-  const key = Object.keys(postRaw).find(
-    (k) => k.replace(/^.*\//, "").replace(".mdx", "") === slug,
-  );
-  if (!key) return "";
-  const rawVal = postRaw[key];
-  if (typeof rawVal === "string") return rawVal;
-  if (rawVal && typeof rawVal === "object" && "default" in rawVal)
-    return typeof rawVal.default === "string" ? rawVal.default : "";
-  return "";
-}
-
 function buildMeta(
   filepath: string,
-  fm: Record<string, unknown>,
+  mod: MdxModule,
 ): BlogPostMeta {
   const slug = filepath.replace("../posts/", "").replace(".mdx", "");
-  let rawText = getRawBySlug(slug);
-  if (!rawText) {
-    const v = postRaw[filepath];
-    rawText =
-      typeof v === "string"
-        ? v
-        : v &&
-            typeof v === "object" &&
-            "default" in v &&
-            typeof (v as { default: unknown }).default === "string"
-          ? (v as { default: string }).default
-          : "";
-  }
-  // Use frontmatter from compiled MDX (remark-mdx-frontmatter)
+  const fm = mod.frontmatter ?? {};
   return {
     slug,
     title: (fm.title as string)?.trim() || slug,
     date: (fm.date as string) ?? "",
     description: (fm.description as string) ?? "",
     tags: Array.isArray(fm.tags) ? (fm.tags as string[]) : [],
-    readingTime: estimateReadingTime(rawText),
+    readingTime: mod.readingTime ?? 1,
     thumbnail: (fm.thumbnail as string) || undefined,
   };
 }
 
 export function getAllPosts(): BlogPostMeta[] {
   return Object.entries(postModules)
-    .map(([fp, mod]) => buildMeta(fp, mod.frontmatter ?? {}))
+    .map(([fp, mod]) => buildMeta(fp, mod))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
@@ -83,7 +51,7 @@ export function getPostComponent(
   const [filepath, mod] = entry;
   return {
     Component: mod.default,
-    meta: buildMeta(filepath, mod.frontmatter ?? {}),
+    meta: buildMeta(filepath, mod),
   };
 }
 
