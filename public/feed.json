@@ -1,0 +1,27 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Notes to Self",
+    "home_page_url": "https://rmsap.github.io/#/blog",
+    "description": "Thoughts on software engineering, learning in public, and everything in between.",
+    "author": {
+        "name": "Ryan Saperstein",
+        "url": "https://rmsap.github.io"
+    },
+    "items": [
+        {
+            "id": "https://rmsap.github.io/#/blog/why-am-i-making-a-blog",
+            "content_html": "The obligatory first post: why I'm writing, what I'm building, and where this is headed.",
+            "url": "https://rmsap.github.io/#/blog/why-am-i-making-a-blog",
+            "title": "Why am I making a blog?",
+            "date_modified": "2026-03-21T00:00:00.000Z",
+            "author": {
+                "name": "Ryan Saperstein",
+                "url": "https://rmsap.github.io"
+            },
+            "tags": [
+                "personal",
+                "meta"
+            ]
+        }
+    ]
+}

@@ -1,13 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Github,
-  Linkedin,
-  Download,
-  Code,
-  Brain,
-  Rocket,
-  Sparkles,
-} from "lucide-react";
+import { Github, Linkedin, Download, Code, Brain, Rocket } from "lucide-react";
 import { SOCIAL_LINKS } from "../constants/socialLinks";
 
 function Hero() {
