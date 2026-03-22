@@ -4,7 +4,7 @@
         <title>Notes to Self</title>
         <link>https://rmsap.github.io/#/blog</link>
         <description>Thoughts on software engineering, learning in public, and everything in between.</description>
-        <lastBuildDate>Sun, 22 Mar 2026 23:22:21 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 22 Mar 2026 23:39:52 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -13,7 +13,7 @@
             <title><![CDATA[Why am I making a blog?]]></title>
             <link>https://rmsap.github.io/#/blog/why-am-i-making-a-blog</link>
             <guid isPermaLink="false">https://rmsap.github.io/#/blog/why-am-i-making-a-blog</guid>
-            <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
+            <pubDate>Sun, 22 Mar 2026 00:00:00 GMT</pubDate>
             <description><![CDATA[The obligatory first post: why I'm writing, what I'm building, and where this is headed.]]></description>
             <author>Ryan Saperstein</author>
             <category>personal</category>
