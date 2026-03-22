@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Github, Linkedin } from "lucide-react";
 import { useActiveSection } from "../hooks/useActiveSection";
 
@@ -9,20 +10,48 @@ interface NavLink {
 }
 
 const Header: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredDot, setHoveredDot] = useState<number | null>(null);
 
+  const isHomePage = !location.pathname.startsWith("/blog");
+
   const navLinks: NavLink[] = [
     { label: "Home", href: "#home" },
     { label: "Projects", href: "#projects" },
+    { label: "Blog", href: "/blog" },
     { label: "Experience and Skills", href: "#experience" },
     { label: "About", href: "#about" },
     { label: "Contact", href: "#contact" },
   ];
 
-  const sectionIds = navLinks.map((link) => link.href.substring(1));
-  const activeSection = useActiveSection(sectionIds, 80); // 80px offset for header
+  // Sidebar dots: third dot is "Featured Posts" and scrolls to section (not Blog page)
+  const sidebarLinks: NavLink[] = navLinks.map((link, i) =>
+    i === 2 ? { label: "Featured Posts", href: "#featured-posts" } : link,
+  );
+
+  const sectionIds = [
+    ...navLinks
+      .filter((link) => link.href.startsWith("#"))
+      .map((link) => link.href.substring(1)),
+    "featured-posts",
+  ];
+  const formatHash = useCallback(
+    (id: string) => (id === "featured-posts" ? "#/featured-posts" : `#${id}`),
+    [],
+  );
+  const activeSection = useActiveSection(sectionIds, 80, formatHash); // 80px offset for header
+  const displayActiveSection = isHomePage ? activeSection : null;
+  const isBlogActive =
+    location.pathname.startsWith("/blog") ||
+    (isHomePage && activeSection === "featured-posts");
+
+  const isLinkActive = (link: NavLink) => {
+    if (link.href === "/blog") return isBlogActive;
+    return displayActiveSection === link.href.substring(1);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,26 +62,65 @@ const Header: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
-    console.log(href);
-    e.preventDefault();
-    const elementId = href.substring(1);
-    setIsMobileMenuOpen(false);
-
+  const scrollToSection = useCallback((elementId: string) => {
     const element = document.getElementById(elementId);
     if (element) {
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition =
         elementPosition + window.pageYOffset - headerOffset;
-
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth",
       });
+      return true;
+    }
+    return false;
+  }, []);
+
+  // When navigating from blog to home with a scroll target, wait for DOM then scroll
+  useEffect(() => {
+    const scrollTo = (location.state as { scrollTo?: string } | null)?.scrollTo;
+    if (!scrollTo || !location.pathname.startsWith("/")) return;
+
+    const attemptScroll = () => {
+      if (scrollToSection(scrollTo)) {
+        void navigate(".", { replace: true, state: {} });
+        return true;
+      }
+      return false;
+    };
+
+    if (attemptScroll()) return;
+    let attempts = 0;
+    const id = setInterval(() => {
+      if (attemptScroll() || ++attempts > 40) clearInterval(id);
+    }, 50);
+    return () => clearInterval(id);
+  }, [location.pathname, location.state, navigate, scrollToSection]);
+
+  // Direct navigation to #/featured-posts: scroll to section (path stays /featured-posts so URL is correct)
+  useEffect(() => {
+    if (location.pathname !== "/featured-posts") return;
+    scrollToSection("featured-posts");
+  }, [location.pathname, scrollToSection]);
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+
+    if (href.startsWith("/")) {
+      void navigate(href);
+      return;
+    }
+    const elementId = href.substring(1);
+    if (location.pathname.startsWith("/blog")) {
+      void navigate("/", { state: { scrollTo: elementId } });
+    } else {
+      scrollToSection(elementId);
     }
   };
 
@@ -89,15 +157,13 @@ const Header: React.FC = () => {
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
                   className={`relative py-2 text-sm font-medium transition-colors duration-300 hover:text-purple-600 group ${
-                    activeSection === link.href.substring(1)
-                      ? "text-purple-600"
-                      : "text-[#646cff]"
+                    isLinkActive(link) ? "text-purple-600" : "text-[#646cff]"
                   }`}
                 >
                   {link.label}
                   <span
                     className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-600 to-blue-600 transform origin-left transition-transform duration-300 ${
-                      activeSection === link.href.substring(1)
+                      isLinkActive(link)
                         ? "scale-x-100"
                         : "scale-x-0 group-hover:scale-x-100"
                     }`}
@@ -164,7 +230,7 @@ const Header: React.FC = () => {
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ${
-                  activeSection === link.href.substring(1)
+                  isLinkActive(link)
                     ? "bg-gradient-to-r from-purple-50 to-blue-50 text-purple-600"
                     : "text-gray-700 hover:bg-gray-50 hover:text-purple-600"
                 }`}
@@ -206,70 +272,77 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
-        <nav className="flex flex-col items-center gap-4">
-          {navLinks.map((link, i) => {
-            const isActive = activeSection === link.href.substring(1);
-            const isHovered = hoveredDot === i;
-            return (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="relative flex items-center"
-                aria-label={link.label}
-                onMouseEnter={() => setHoveredDot(i)}
-                onMouseLeave={() => setHoveredDot(null)}
-              >
-                {/* Tooltip */}
-                <span
-                  className="absolute left-8 px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap pointer-events-none transition-all duration-200"
-                  style={{
-                    opacity: isHovered ? 1 : 0,
-                    transform: isHovered ? "translateX(0)" : "translateX(-8px)",
-                    background: "rgba(139, 92, 246, 0.15)",
-                    color: "#c4b5fd",
-                    border: "1px solid rgba(139, 92, 246, 0.3)",
-                  }}
+      {isHomePage && (
+        <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
+          <nav className="flex flex-col items-center gap-4">
+            {sidebarLinks.map((link, i) => {
+              const isActive =
+                link.href === "#featured-posts"
+                  ? displayActiveSection === "featured-posts"
+                  : displayActiveSection === link.href.substring(1);
+              const isHovered = hoveredDot === i;
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="relative flex items-center"
+                  aria-label={link.label}
+                  onMouseEnter={() => setHoveredDot(i)}
+                  onMouseLeave={() => setHoveredDot(null)}
                 >
-                  {link.label}
-                </span>
+                  {/* Tooltip */}
+                  <span
+                    className="absolute left-8 px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap pointer-events-none transition-all duration-200"
+                    style={{
+                      opacity: isHovered ? 1 : 0,
+                      transform: isHovered
+                        ? "translateX(0)"
+                        : "translateX(-8px)",
+                      background: "rgba(139, 92, 246, 0.15)",
+                      color: "#c4b5fd",
+                      border: "1px solid rgba(139, 92, 246, 0.3)",
+                    }}
+                  >
+                    {link.label}
+                  </span>
 
-                {/* Dot */}
-                <span
-                  className="relative flex items-center justify-center transition-all duration-300"
-                  style={{ width: 20, height: 20 }}
-                >
-                  {/* Active ring */}
-                  {isActive && (
+                  {/* Dot */}
+                  <span
+                    className="relative flex items-center justify-center transition-all duration-300"
+                    style={{ width: 20, height: 20 }}
+                  >
+                    {/* Active ring */}
+                    {isActive && (
+                      <span
+                        className="absolute rounded-full"
+                        style={{
+                          width: 20,
+                          height: 20,
+                          border: "2px solid rgba(139, 92, 246, 0.4)",
+                        }}
+                      />
+                    )}
+                    {/* Dot itself */}
                     <span
-                      className="absolute rounded-full"
+                      className="rounded-full transition-all duration-300"
                       style={{
-                        width: 20,
-                        height: 20,
-                        border: "2px solid rgba(139, 92, 246, 0.4)",
+                        width: isActive ? 10 : isHovered ? 8 : 6,
+                        height: isActive ? 10 : isHovered ? 8 : 6,
+                        backgroundColor: isActive
+                          ? "#a78bfa"
+                          : isHovered
+                            ? "rgba(167, 139, 250, 0.6)"
+                            : "rgba(167, 139, 250, 0.25)",
                       }}
                     />
-                  )}
-                  {/* Dot itself */}
-                  <span
-                    className="rounded-full transition-all duration-300"
-                    style={{
-                      width: isActive ? 10 : isHovered ? 8 : 6,
-                      height: isActive ? 10 : isHovered ? 8 : 6,
-                      backgroundColor: isActive
-                        ? "#a78bfa"
-                        : isHovered
-                          ? "rgba(167, 139, 250, 0.6)"
-                          : "rgba(167, 139, 250, 0.25)",
-                    }}
-                  />
-                </span>
-              </a>
-            );
-          })}
-        </nav>
-      </div>
+                  </span>
+                </a>
+              );
+            })}
+          </nav>
+        </div>
+      )}
     </>
   );
 };

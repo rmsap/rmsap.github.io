@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-export const useActiveSection = (sectionIds: string[], offset = 100) => {
+export const useActiveSection = (
+  sectionIds: string[],
+  offset = 100,
+  formatHash?: (id: string) => string,
+) => {
   const [activeSection, setActiveSection] = useState(sectionIds[0]);
 
   useEffect(() => {
@@ -9,7 +13,10 @@ export const useActiveSection = (sectionIds: string[], offset = 100) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveSection(entry.target.id);
-            window.history.replaceState(null, "", `#${entry.target.id}`);
+            const hash = formatHash
+              ? formatHash(entry.target.id)
+              : `#${entry.target.id}`;
+            window.history.replaceState(null, "", hash);
           }
         });
       },
@@ -28,7 +35,7 @@ export const useActiveSection = (sectionIds: string[], offset = 100) => {
     return () => {
       sections.forEach((section) => observer.unobserve(section));
     };
-  }, [sectionIds, offset]);
+  }, [sectionIds, offset, formatHash]);
 
   return activeSection;
 };

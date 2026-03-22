@@ -35,11 +35,6 @@ function Hero() {
           >
             {/* Greeting */}
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 dark:bg-purple-900/30 rounded-full text-purple-700 dark:text-purple-300 text-sm font-medium">
-                <Sparkles className="w-4 h-4" />
-                <span>Welcome to my portfolio</span>
-              </div>
-
               <h1 className="text-5xl lg:text-7xl font-bold">
                 <span className="text-gray-900 dark:text-gray-100">
                   Hello, I'm

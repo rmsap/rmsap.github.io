@@ -4,13 +4,14 @@ import tailwindcss from '@tailwindcss/vite';
 import mdx from '@mdx-js/rollup';
 import remarkGfm from 'remark-gfm';
 import remarkFrontmatter from 'remark-frontmatter';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import rehypeShiki from 'rehype-shiki';
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     mdx({
-      remarkPlugins: [remarkGfm, remarkFrontmatter],
+      remarkPlugins: [remarkGfm, remarkFrontmatter, remarkMdxFrontmatter],
       rehypePlugins: [
         [
           rehypeShiki,
