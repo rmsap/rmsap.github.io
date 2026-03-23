@@ -11,10 +11,13 @@ import PostHead from "./PostHead";
 import PageTransition from "./PageTransition";
 import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
+import { useBlogAnalytics } from "../../hooks/useBlogAnalytics";
 
 export default function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? getPostComponent(slug) : null;
+
+  useBlogAnalytics(post?.meta.slug ?? "");
 
   useEffect(() => {
     window.scrollTo(0, 0);

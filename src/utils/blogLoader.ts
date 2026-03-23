@@ -12,10 +12,7 @@ const postModules = import.meta.glob<MdxModule>("../posts/*.mdx", {
   eager: true,
 });
 
-function buildMeta(
-  filepath: string,
-  mod: MdxModule,
-): BlogPostMeta {
+function buildMeta(filepath: string, mod: MdxModule): BlogPostMeta {
   const slug = filepath.replace("../posts/", "").replace(".mdx", "");
   const fm = mod.frontmatter ?? {};
   return {
