@@ -1,1 +1,4 @@
-declare module 'rehype-shiki';
+declare module "*.tmLanguage.json" {
+  const value: Record<string, unknown>;
+  export default value;
+}

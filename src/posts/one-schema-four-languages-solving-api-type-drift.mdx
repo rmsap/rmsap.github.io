@@ -1,0 +1,294 @@
+---
+title: "One Schema, Four Languages: Solving API Type Drift"
+date: "2026-04-11"
+description: "Define your API once in Phoenix and generate TypeScript, Python, Go, and OpenAPI"
+tags: ["phoenix", "rust", "programming languages", "web dev", "code generation"]
+thumbnail: "oneSchemaFourLanguages.png"
+---
+
+I encountered a bug where one of the tabs on our app's bottom tab
+navigator disappeared. This tab was set to only appear if a certain field was set to `false`
+in the database (which was the default), and at first I couldn't wrap my head around why
+it seemed to stop working so suddenly. Talking to another engineer, I finally found the culprit:
+the field in the database was changed from a boolean to a string to allow another value, 
+and when the frontend checked the value of the field, `"false"` was truthy.
+The database had been intentionally changed, but that caused a bug to be released to production
+in a part of the code that my coworker knew nothing about.
+
+The backend changed a type, the frontend didn't know, and users hit a broken feature.
+This is API type drift -- a problem that plagues full stack developers everywhere.
+This bug got me thinking about how I could prevent this class of error entirely.
+
+There are already some solutions for this, like tRPC, GraphQL codegen, gRPC, and protobuf. These
+solutions are all good, but you have to stick with their assumptions; for example, tRPC locks
+you into TypeScript for both the frontend and backend, protobuf and gRPC are oriented toward
+service-to-service communication rather than REST APIs with web frontends, and GraphQL codegen
+requires you to adopt GraphQL for your API layer, so you have to buy into the whole GraphQL
+system.
+
+But what if you could define your schema once and then typed code was generated for every layer
+of your stack, without locking you into a single language or requiring you to buy into a whole
+ecosystem?
+
+## Introducing: Phoenix Gen
+
+Phoenix Gen lets you define your API schema once and then generates typed code for every layer
+of your stack. Let's fly right into the code, with a Phoenix schema for a blog API:
+
+```phoenix
+struct Author {
+    Int id
+    String name where self.length > 0 && self.length <= 100
+    String email where self.contains("@") && self.length > 3
+    Option<String> avatarUrl
+}
+
+enum PostStatus { Draft  Published  Archived }
+
+struct Post {
+    Int id
+    String title where self.length > 0 && self.length <= 200
+    String body where self.length > 0
+    Author author
+    PostStatus status
+    List<String> tags
+}
+
+/** List published posts with pagination and optional tag filter */
+endpoint listPosts: GET "/api/posts" {
+    query {
+        Int page = 1
+        Int limit = 20
+        Option<String> tag
+        Option<String> search
+    }
+    response List<Post>
+}
+```
+
+I chose to have Phoenix use in-line `where` constraints. The alternative was having validation
+as a separate function, instead of a part of the struct definition. One of the goals of Phoenix was
+to write as little boilerplate code as possible, so the in-line `where` constraints eliminate
+the need for a separate validation layer, and it adds an ergonomic way to see all
+constraints directly in the definition of the object.
+
+I also wanted endpoint definitions to be self-contained. In many languages, the information about
+an endpoint is spread across decorators, handler functions, and separate route files. Phoenix's
+`endpoint` syntax puts all of that in one block, so you see everything about an endpoint at a
+glance.
+
+The endpoint declarations also support `pick`, `omit`, and `partial`
+keywords. For example, if we wanted to have a createAuthor endpoint, we could write it as
+
+```phoenix
+endpoint createAuthor: POST "/api/author" {
+    body Author omit { id }
+    response Author
+    error { Conflict(409) }
+}
+```
+
+which is saying "the post body is the struct `Author`, but don't
+include `id`. `pick` says that only the specified fields are included, and `partial` says that
+the specified fields (or all fields, if none are specified) are optional (and `partial` can be
+combined with `pick` and `omit`). Without this syntax, we would have had to define a unique struct
+for every endpoint, because, for example, IDs will almost never be included on a POST but should
+be included on a GET. The endpoints are working with the same data, and this representation allows
+them to work with the same struct under the hood, again avoiding unnecessary boilerplate.
+
+From this schema, Phoenix Gen will output the following types and client methods 
+(only signatures written here):
+
+```typescript
+export interface Author {
+  id: number;
+  name: string;
+  email: string;
+  avatarUrl?: string | undefined;
+}
+
+export type PostStatus = "Draft" | "Published" | "Archived";
+
+export interface Post {
+  id: number;
+  title: string;
+  body: string;
+  author: Author;
+  status: PostStatus;
+  tags: string[];
+}
+
+/** List published posts with pagination and optional tag filter */
+async listPosts(opts?: { page?: number; limit?: number; tag?: string | undefined; search?: string | undefined }): Promise<Post[]> {
+    // ... builds query params, calls fetch, returns typed response
+},
+```
+
+```python
+class Author(BaseModel):
+    id: int
+    name: str = Field(..., min_length=1, max_length=100)
+    email: str = Field(..., min_length=4)
+    avatar_url: str | None = None
+
+class PostStatus(str, Enum):
+    DRAFT = "Draft"
+    PUBLISHED = "Published"
+    ARCHIVED = "Archived"
+
+class Post(BaseModel):
+    id: int
+    title: str = Field(..., min_length=1, max_length=200)
+    body: str = Field(..., min_length=1)
+    author: Author
+    status: PostStatus
+    tags: list[str]
+
+async def list_posts(self, *, page: int = 1, limit: int = 20, tag: str | None = None, search: str | None = None) -> list[Post]:
+    # ... builds query params, calls httpx, returns typed response
+```
+
+```go
+type Author struct {
+	Id int64 `json:"id"`
+	Name string `json:"name"`
+	Email string `json:"email"`
+	AvatarUrl *string `json:"avatarUrl"`
+}
+
+type PostStatus string
+
+const (
+	PostStatusDraft PostStatus = "Draft"
+	PostStatusPublished PostStatus = "Published"
+	PostStatusArchived PostStatus = "Archived"
+)
+
+type Post struct {
+	Id int64 `json:"id"`
+	Title string `json:"title"`
+	Body string `json:"body"`
+	Author Author `json:"author"`
+	Status PostStatus `json:"status"`
+	Tags []string `json:"tags"`
+}
+
+// ListPosts list published posts with pagination and optional tag filter.
+func (c *ApiClient) ListPosts(page int64, limit int64, tag *string, search *string) (*[]Post, error) {
+	// ... builds query params, calls net/http, returns typed response
+```
+
+The `where` constraints in the schema automatically become Pydantic `Field` validators in
+Python and validation functions in Go and TypeScript - your validation logic is 
+defined once and enforced in every target language. 
+
+Phoenix Gen can also generate a full OpenAPI spec.
+
+## What if my frontend and backend are in different languages?
+
+The Phoenix Gen command supports generating just the client functions and types or just the 
+server functions and types through `--client` and `--server` flags. So, if your frontend is
+in TypeScript and your backend is in Python, you can just run 
+
+```bash
+phoenix gen schema.phx --target typescript --client
+```
+
+and 
+
+```bash
+phoenix gen schema.phx --target python --server
+```
+
+and the appropriate functions will be generated for each language.
+
+Phoenix Gen also supports `--watch` to automatically regenerate when your schema changes. Pair it
+with a `phoenix.toml` config file and you don't need to remember any flags at all:
+
+```toml
+[gen.targets.typescript]
+out_dir = "frontend/src/generated"
+mode = "client"                     # types + client SDK only
+
+[gen.targets.python]
+out_dir = "backend/generated"
+mode = "server"                     # types + handlers + router only
+
+[gen.targets.openapi]
+out_dir = "docs"
+```
+
+## Try it out
+
+Install Phoenix Gen with the command 
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/rmsap/phoenixlang/main/install.sh | sudo sh
+```
+
+or 
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/rmsap/phoenixlang/main/install.sh | PHOENIX_INSTALL_DIR=~/.local/bin sh
+```
+
+if you want to avoid using `sudo`.
+
+You can also download directly from [GitHub Releases](https://github.com/rmsap/phoenixlang/releases).
+
+And if you want to follow Phoenix, the full repo is [here](https://github.com/rmsap/phoenixlang).
+
+## How it works
+
+And if you've stuck with me this long, your reward is an explanation for how this actually works!
+Under the hood, Phoenix Gen uses the same pipeline as a compiler: there's a lexer that breaks
+the `.phx` file into tokens, each with a type like "keyword", "identifier", "number" etc. and a
+span that points its position in the source.
+
+Then, the parser takes the tokens and builds an abstract syntax tree (AST) where each construct
+is a node in the tree; for example, `endpoint listPosts: GET "/api/posts" { ... }` becomes an
+endpoint node in the tree, with the method, path, query parameters, and response type as nested
+nodes. At this stage, we don't know if everything is valid, we just know what constructs are in
+the parsed file.
+
+The next step is semantic analysis, which does two passes over the AST: the first pass walks all
+declarations and records every struct, enum, function, and trait to a symbols table. The second
+pass validates everything, e.g., do referenced types exist, are `where` constraints boolean
+expressions, etc.
+
+And the final step is code generation, where the original AST and the `CheckResult` are both
+walked to emit target-language code. Each target language has its own generator that reads
+the same resolved types and endpoints but emits idiomatic code for that language. For example,
+the Python backend maps `Option<String>` to `str | None`, converts field names to snake_case, 
+and translates where constraints into `Pydantic Field()` kwargs. The Go backend maps the same
+`Option<String>` to `*string` and generates a `Validate() error` method.
+
+Codegen never re-interprets the source, so if the semantic analysis says the program is valid
+then every backend can trust the types without re-checking.
+
+All of this machinery exists so that no one has to worry about entire screens of their app
+becoming inaccessible because of a tiny schema change. In the end, I hope it makes things
+a little bit simpler.
+
+## Where we're flying
+
+Phoenix Gen is usable today, but Phoenix is also a full-fledged programming language;
+right now, Phoenix is fully functional using a tree-walk interpreter, and the next step is to
+create a compiler that will
+enable Phoenix to truly become a full-stack language for web development. Compilation will
+allow Phoenix backends to compile to native binaries and have performance competitive with Go, while
+the frontend will be able to compile to Web Assembly and JavaScript, enabling interop and near
+native speed on the web. And because Phoenix will be fully typed end-to-end from the frontend
+to the database (the endpoint syntax above is an example of how that's done), schema
+mismatches between the frontend and backend will be flagged at compile time instead of at
+runtime -- this will make API drift practically impossible. In the docs folder of the GitHub
+repo, there is a full [roadmap](https://github.com/rmsap/phoenixlang/blob/main/docs/roadmap.md)
+with future features, creating a package manager and additional tooling, etc.
+
+For Phoenix Gen, the only current language targets are TypeScript, Python, and Go, so the next
+steps would be to continue to add more language targets, with Rust being the next logical choice
+since Phoenix itself is written in Rust.
+
+Phoenix and Phoenix Gen are both open to feedback and contributions, so I'd love to hear from
+you if you're interested in solving API drift or language design. And I'd love to see you
+open a PR on the repo too.
