@@ -9,6 +9,24 @@
     },
     "items": [
         {
+            "id": "https://rmsap.github.io/#/blog/one-schema-four-languages-solving-api-type-drift",
+            "content_html": "Define your API once in Phoenix and generate TypeScript, Python, Go, and OpenAPI",
+            "url": "https://rmsap.github.io/#/blog/one-schema-four-languages-solving-api-type-drift",
+            "title": "One Schema, Four Languages: Solving API Type Drift",
+            "date_modified": "2026-04-11T00:00:00.000Z",
+            "author": {
+                "name": "Ryan Saperstein",
+                "url": "https://rmsap.github.io"
+            },
+            "tags": [
+                "phoenix",
+                "rust",
+                "programming languages",
+                "web dev",
+                "code generation"
+            ]
+        },
+        {
             "id": "https://rmsap.github.io/#/blog/why-am-i-making-a-blog",
             "content_html": "The obligatory first post: why I'm writing, what I'm building, and where this is headed.",
             "url": "https://rmsap.github.io/#/blog/why-am-i-making-a-blog",

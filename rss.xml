@@ -4,11 +4,24 @@
         <title>Notes to Self</title>
         <link>https://rmsap.github.io/#/blog</link>
         <description>Thoughts on software engineering, learning in public, and everything in between.</description>
-        <lastBuildDate>Mon, 23 Mar 2026 15:15:58 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 13 Apr 2026 01:48:50 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>© 2026 Ryan Saperstein</copyright>
+        <item>
+            <title><![CDATA[One Schema, Four Languages: Solving API Type Drift]]></title>
+            <link>https://rmsap.github.io/#/blog/one-schema-four-languages-solving-api-type-drift</link>
+            <guid isPermaLink="false">https://rmsap.github.io/#/blog/one-schema-four-languages-solving-api-type-drift</guid>
+            <pubDate>Sat, 11 Apr 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Define your API once in Phoenix and generate TypeScript, Python, Go, and OpenAPI]]></description>
+            <author>Ryan Saperstein</author>
+            <category>phoenix</category>
+            <category>rust</category>
+            <category>programming languages</category>
+            <category>web dev</category>
+            <category>code generation</category>
+        </item>
         <item>
             <title><![CDATA[Why am I making a blog?]]></title>
             <link>https://rmsap.github.io/#/blog/why-am-i-making-a-blog</link>
