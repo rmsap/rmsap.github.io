@@ -4,11 +4,23 @@
         <title>Notes to Self</title>
         <link>https://rmsap.github.io/#/blog</link>
         <description>Thoughts on software engineering, learning in public, and everything in between.</description>
-        <lastBuildDate>Mon, 13 Apr 2026 13:20:53 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 27 Apr 2026 01:37:23 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>© 2026 Ryan Saperstein</copyright>
+        <item>
+            <title><![CDATA[The Anatomy of Push Notifications: How They Really Work]]></title>
+            <link>https://rmsap.github.io/#/blog/the-anatomy-of-push-notifications-how-they-really-work</link>
+            <guid isPermaLink="false">https://rmsap.github.io/#/blog/the-anatomy-of-push-notifications-how-they-really-work</guid>
+            <pubDate>Sun, 26 Apr 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Ever wondered how push notifications really work? This post breaks down the anatomy of push notifications, exploring everything from FCM and Apple Push to the backend systems that keep them running.]]></description>
+            <author>Ryan Saperstein</author>
+            <category>react native</category>
+            <category>mobile apps</category>
+            <category>push notifications</category>
+            <category>backend development</category>
+        </item>
         <item>
             <title><![CDATA[One Schema, Four Languages: Solving API Type Drift]]></title>
             <link>https://rmsap.github.io/#/blog/one-schema-four-languages-solving-api-type-drift</link>

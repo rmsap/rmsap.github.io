@@ -9,6 +9,23 @@
     },
     "items": [
         {
+            "id": "https://rmsap.github.io/#/blog/the-anatomy-of-push-notifications-how-they-really-work",
+            "content_html": "Ever wondered how push notifications really work? This post breaks down the anatomy of push notifications, exploring everything from FCM and Apple Push to the backend systems that keep them running.",
+            "url": "https://rmsap.github.io/#/blog/the-anatomy-of-push-notifications-how-they-really-work",
+            "title": "The Anatomy of Push Notifications: How They Really Work",
+            "date_modified": "2026-04-26T00:00:00.000Z",
+            "author": {
+                "name": "Ryan Saperstein",
+                "url": "https://rmsap.github.io"
+            },
+            "tags": [
+                "react native",
+                "mobile apps",
+                "push notifications",
+                "backend development"
+            ]
+        },
+        {
             "id": "https://rmsap.github.io/#/blog/one-schema-four-languages-solving-api-type-drift",
             "content_html": "Define your API once in Phoenix and generate TypeScript, Python, Go, and OpenAPI",
             "url": "https://rmsap.github.io/#/blog/one-schema-four-languages-solving-api-type-drift",
