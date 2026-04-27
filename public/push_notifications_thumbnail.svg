@@ -1,0 +1,105 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" font-family="'SF Pro Display', -apple-system, 'Helvetica Neue', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1d24"/>
+      <stop offset="100%" stop-color="#0f1116"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.06)"/>
+    </linearGradient>
+
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#ffffff" stroke-opacity="0.018" stroke-width="1"/>
+    </pattern>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="18"/>
+      <feOffset dx="0" dy="12" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4a9eff" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#4a9eff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+
+  <!-- Ambient glow -->
+  <ellipse cx="800" cy="450" rx="700" ry="380" fill="url(#glow)"/>
+
+  <!-- Lock screen header: date + time, centered -->
+  <g>
+    <text x="800" y="130" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="22" font-weight="500" letter-spacing="3">SUNDAY, APRIL 26</text>
+    <text x="800" y="245" text-anchor="middle" fill="rgba(255,255,255,0.95)" font-size="120" font-weight="200" letter-spacing="-3">9:41</text>
+  </g>
+
+  <!-- Notification stack, centered horizontally below the time -->
+  <!-- Cards are 600 wide, x-positioned at (1600-600)/2 = 500 -->
+
+  <!-- Bottom card (oldest, faded) -->
+  <g transform="translate(520, 660)" opacity="0.4">
+    <rect x="0" y="0" width="560" height="98" rx="26" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    <rect x="22" y="22" width="54" height="54" rx="12" fill="rgba(255,255,255,0.12)"/>
+    <rect x="92" y="28" width="120" height="10" rx="4" fill="rgba(255,255,255,0.35)"/>
+    <rect x="92" y="50" width="380" height="8" rx="4" fill="rgba(255,255,255,0.18)"/>
+    <rect x="92" y="68" width="280" height="8" rx="4" fill="rgba(255,255,255,0.18)"/>
+  </g>
+
+  <!-- Middle card -->
+  <g transform="translate(510, 535)" opacity="0.7">
+    <rect x="0" y="0" width="580" height="106" rx="26" fill="url(#cardGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <rect x="22" y="22" width="58" height="58" rx="13" fill="rgba(255,255,255,0.16)"/>
+    <rect x="96" y="28" width="150" height="11" rx="4" fill="rgba(255,255,255,0.55)"/>
+    <text x="554" y="38" text-anchor="end" fill="rgba(255,255,255,0.4)" font-size="14" font-weight="500">5m ago</text>
+    <rect x="96" y="52" width="400" height="9" rx="4" fill="rgba(255,255,255,0.28)"/>
+    <rect x="96" y="70" width="320" height="9" rx="4" fill="rgba(255,255,255,0.28)"/>
+  </g>
+
+  <!-- Top/active card -->
+  <g transform="translate(500, 390)" filter="url(#shadow)">
+    <rect x="0" y="0" width="600" height="120" rx="28" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>
+
+    <!-- App icon -->
+    <g transform="translate(24, 24)">
+      <rect x="0" y="0" width="68" height="68" rx="16" fill="#4a9eff"/>
+      <g transform="translate(15, 15) scale(1.55)" fill="#ffffff">
+        <path d="M 12 2 C 7.5 2 4.5 5 4.5 9.5 L 4.5 14 L 3 17 L 21 17 L 19.5 14 L 19.5 9.5 C 19.5 5 16.5 2 12 2 Z"/>
+        <path d="M 10 19 C 10 20.5 11 21.5 12 21.5 C 13 21.5 14 20.5 14 19 Z"/>
+      </g>
+    </g>
+
+    <text x="108" y="38" fill="rgba(255,255,255,0.95)" font-size="17" font-weight="600" letter-spacing="0.4">YOUR APP</text>
+    <text x="572" y="38" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="14" font-weight="500">now</text>
+
+    <text x="108" y="68" fill="#ffffff" font-size="20" font-weight="600">New message</text>
+    <text x="108" y="94" fill="rgba(255,255,255,0.75)" font-size="17">Tap to see how it got here.</text>
+
+    <circle cx="572" cy="60" r="5" fill="#4a9eff"/>
+  </g>
+
+  <!-- Subtle technical annotations in the corners -->
+  <g font-size="13" font-weight="500" letter-spacing="2.5" fill="rgba(255,255,255,0.28)">
+    <text x="60" y="60">// APNs</text>
+    <text x="1540" y="60" text-anchor="end">FCM //</text>
+    <text x="60" y="850">HTTPS · TOKEN · PAYLOAD</text>
+    <text x="1540" y="850" text-anchor="end">PUSH NOTIFICATIONS</text>
+  </g>
+
+  <!-- Faint dashed connection lines hinting at routing into the active card -->
+  <g stroke="rgba(74, 158, 255, 0.18)" stroke-width="1" fill="none" stroke-dasharray="2 5">
+    <path d="M 80 80 Q 280 240 500 400"/>
+    <path d="M 1520 80 Q 1320 240 1100 400"/>
+  </g>
+</svg>
