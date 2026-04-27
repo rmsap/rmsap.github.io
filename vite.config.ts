@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import mdx from "@mdx-js/rollup";
 import remarkGfm from "remark-gfm";
+import remarkSmartypants from "remark-smartypants";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import rehypeShiki from "@shikijs/rehype";
@@ -22,6 +23,7 @@ export default defineConfig({
       providerImportSource: "@mdx-js/react",
       remarkPlugins: [
         remarkGfm,
+        remarkSmartypants,
         remarkFrontmatter,
         remarkMdxFrontmatter,
         remarkReadingTime,
