@@ -1,0 +1,82 @@
+---
+title: "Benefit of the Doubt"
+date: "2026-05-10"
+description: "Six months in, and the patterns I've stopped taking on faith."
+tags: ["personal", "career", "new grad"]
+thumbnail: "benefit-of-the-doubt-thumbnail.svg"
+---
+
+I was looking at a block of code in our Django serializer the other day, and all I could think
+was, *Who wrote this? This doesn't belong in the serializer*. Then I checked the git blame.
+And sure enough, I was the one who wrote it.
+
+I tried to remember why I'd written it that way: business logic in a layer that should only
+shape data. Then I looked at the code around it, code I didn't write.
+That was the pattern. If there was a pattern, it must have been there for a reason.
+
+Last week marked my six-month anniversary as a full-time engineer. When I started this job, I
+would have just scrolled past that code. It looked like it fit.
+The surrounding code was following the same bad pattern. Now, I've
+stopped giving patterns the benefit of the doubt.
+
+## Three copies of every bug
+
+One of the main features of our app is real-time chat. Chat comes in a few forms:
+direct messages, group chats, and (for us) team chats. All of these are, effectively, the same:
+a user sending a message to other users. We have three parallel implementations, one for
+each type. A bug came in where chat messages were
+disappearing in direct messages. Two weeks later, the same bug showed up in team chats.
+Every time I touched one chat file, I found myself opening the other two to implement the same
+features and fixes. But when I started, I assumed that there must have been a reason
+why these had to be represented differently.
+
+I asked my manager. He explained the real difference:
+team chats are linked to a specific team, giving them a foreign key that the other two chat
+types lack. Then I had to implement a chat muting feature
+three times, and the implementations had drifted enough that I couldn't just copy and paste. 
+The foreign key justified the schema split, but not the three copies of every method built on
+top of it. So I filed a ticket.
+
+I haven't finished the refactor yet. At the time of this writing, it's clocking around 
+20,000 deletions and 15,000 insertions (mostly tests). I better understand why the three 
+implementations existed; a foreign key that's null on two-thirds of all rows is uncomfortable.
+
+But schemas are inert. Bugs live in duplicated logic.
+
+## The cost wasn't the subscription
+
+When a problem is solved, we stop watching it. Attention is finite, but "solved" and
+"good enough" aren't the same thing, and the gap between them is where assumptions turn into
+constraints.
+
+Our third-party deep linking API is expensive
+and a little clunky, but it was getting the job done -- until we hit the vendor's
+deep link limit. Once we deleted several thousand old deep links, the problem almost went quiet.
+But I didn't let it.
+
+Our app has been growing fast; it's only a matter of time until we hit
+the limit again, even with automated link deletion running daily. We started thinking about how
+we can produce fewer deep links or delete them faster, but they didn't even have a mass
+deletion feature. The vendor's constraints became our constraints. So I started replacing it.
+
+Maybe this is the wrong decision. The third-party API handles deferred deep linking, but our V1
+won't. New users clicking an email link will just
+land on the home screen, and in the gap we'll lose some of them. I think we can live with it for
+now; most of our deep link traffic is existing users, and we can build deferred linking back in
+once the core replacement is stable.
+
+It's a real cost, and I'm the one who'll own it when
+someone notices the drop-off. The monthly subscription was the cheap part.
+It was the things we couldn't do with their software that were expensive.
+
+## Six months from now
+
+In six months, or one year, or five, someone's going to look at the code I've been writing
+these past months and think, *Why did someone write this? This makes no sense*.
+Maybe that person will be me. Maybe it will be a colleague. Maybe it will be someone
+I've never even met.
+
+Codebases are a record of decisions. I decided that some decisions made years ago were wrong.
+Someday, someone will decide that my decisions today were wrong too. They'll probably be right,
+in the same partial way I was right about the code I inherited. That's not a failure mode.
+That's the job.
