@@ -1,0 +1,99 @@
+<svg width="100%" viewBox="0 0 960 540" role="img" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<title>Phoenix compilation pipeline</title>
+<desc>A .phx source file flows through the Lexer, Parser, Sema, and IR stages, then fans out to four backends: the tree-walk interpreter, the IR round-trip interpreter, Cranelift native compilation, and the multi-target code generator.</desc>
+<style>
+  .t  { font-size: 14px; fill: #2C2C2A; }
+  .ts { font-size: 12px; fill: #5F5E5A; }
+  .th { font-size: 14px; font-weight: 500; fill: #2C2C2A; }
+  .tmono { font-size: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #5F5E5A; }
+  .arr { stroke: #5F5E5A; stroke-width: 1.5; fill: none; }
+  .c-gray rect   { fill: #F1EFE8; stroke: #5F5E5A; }
+  .c-blue rect   { fill: #E6F1FB; stroke: #185FA5; }
+  .c-teal rect   { fill: #E1F5EE; stroke: #0F6E56; }
+  .c-purple rect { fill: #EEEDFE; stroke: #534AB7; }
+  .c-amber rect  { fill: #FBEFD9; stroke: #9A6B11; }
+  .c-gray .th   { fill: #2C2C2A; }  .c-gray .ts   { fill: #444441; }
+  .c-blue .th   { fill: #0C447C; }  .c-blue .ts   { fill: #185FA5; }
+  .c-teal .th   { fill: #085041; }  .c-teal .ts   { fill: #0F6E56; }
+  .c-purple .th { fill: #3C3489; }  .c-purple .ts { fill: #534AB7; }
+  .c-amber .th  { fill: #6B4A0B; }  .c-amber .ts  { fill: #9A6B11; }
+</style>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<rect x="0" y="0" width="960" height="540" fill="#FAF9F4"/>
+
+<text class="th" x="480" y="36" text-anchor="middle">.phx source</text>
+<line x1="480" y1="48" x2="480" y2="80" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-gray">
+<rect x="60" y="90" width="160" height="56" rx="8" stroke-width="0.5"/>
+<text class="th" x="140" y="112" text-anchor="middle" dominant-baseline="central">Lexer</text>
+<text class="ts" x="140" y="130" text-anchor="middle" dominant-baseline="central">Tokenization</text>
+</g>
+
+<line x1="220" y1="118" x2="260" y2="118" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-gray">
+<rect x="260" y="90" width="160" height="56" rx="8" stroke-width="0.5"/>
+<text class="th" x="340" y="112" text-anchor="middle" dominant-baseline="central">Parser</text>
+<text class="ts" x="340" y="130" text-anchor="middle" dominant-baseline="central">AST construction</text>
+</g>
+
+<line x1="420" y1="118" x2="460" y2="118" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-gray">
+<rect x="460" y="90" width="160" height="56" rx="8" stroke-width="0.5"/>
+<text class="th" x="540" y="112" text-anchor="middle" dominant-baseline="central">Sema</text>
+<text class="ts" x="540" y="130" text-anchor="middle" dominant-baseline="central">Types &amp; visibility</text>
+</g>
+
+<line x1="620" y1="118" x2="660" y2="118" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-gray">
+<rect x="660" y="90" width="160" height="56" rx="8" stroke-width="0.5"/>
+<text class="th" x="740" y="112" text-anchor="middle" dominant-baseline="central">IR</text>
+<text class="ts" x="740" y="130" text-anchor="middle" dominant-baseline="central">SSA-style lowering</text>
+</g>
+
+<path d="M 740 146 L 740 200" class="arr"/>
+<path d="M 145 200 L 805 200" class="arr"/>
+<path d="M 145 200 L 145 240" class="arr" marker-end="url(#arrow)"/>
+<path d="M 365 200 L 365 240" class="arr" marker-end="url(#arrow)"/>
+<path d="M 585 200 L 585 240" class="arr" marker-end="url(#arrow)"/>
+<path d="M 805 200 L 805 240" class="arr" marker-end="url(#arrow)"/>
+
+<g class="c-teal">
+<rect x="40" y="240" width="210" height="86" rx="8" stroke-width="0.5"/>
+<text class="th" x="145" y="262" text-anchor="middle" dominant-baseline="central">Tree-walk interpreter</text>
+<text class="ts" x="145" y="284" text-anchor="middle" dominant-baseline="central">Fast iteration</text>
+<text class="tmono" x="145" y="306" text-anchor="middle" dominant-baseline="central">phoenix run</text>
+</g>
+
+<g class="c-blue">
+<rect x="260" y="240" width="210" height="86" rx="8" stroke-width="0.5"/>
+<text class="th" x="365" y="262" text-anchor="middle" dominant-baseline="central">IR round-trip interp</text>
+<text class="ts" x="365" y="284" text-anchor="middle" dominant-baseline="central">Lowering verification</text>
+<text class="tmono" x="365" y="306" text-anchor="middle" dominant-baseline="central">phoenix run-ir</text>
+</g>
+
+<g class="c-purple">
+<rect x="480" y="240" width="210" height="86" rx="8" stroke-width="0.5"/>
+<text class="th" x="585" y="262" text-anchor="middle" dominant-baseline="central">Cranelift native</text>
+<text class="ts" x="585" y="284" text-anchor="middle" dominant-baseline="central">Compiled binaries</text>
+<text class="tmono" x="585" y="306" text-anchor="middle" dominant-baseline="central">phoenix build</text>
+</g>
+
+<g class="c-amber">
+<rect x="700" y="240" width="210" height="86" rx="8" stroke-width="0.5"/>
+<text class="th" x="805" y="262" text-anchor="middle" dominant-baseline="central">Codegen</text>
+<text class="ts" x="805" y="284" text-anchor="middle" dominant-baseline="central">TS · Python · Go · OpenAPI</text>
+<text class="tmono" x="805" y="306" text-anchor="middle" dominant-baseline="central">phoenix gen</text>
+</g>
+
+<text class="ts" x="480" y="370" text-anchor="middle">Frontend stages are shared; each backend consumes the same verified IR.</text>
+<text class="ts" x="480" y="390" text-anchor="middle">The IR round-trip interpreter exists so the IR has an executable spec independent of the native backend.</text>
+</svg>

@@ -36,6 +36,51 @@
     "featured": true
   },
   {
+    "id": "phoenix",
+    "title": "Phoenix",
+    "description": "A strict, statically typed programming language for full-stack web development",
+    "longDescription": "Phoenix is a programming language built from scratch in Rust as a 14-crate Cargo workspace. It runs via a tree-walk interpreter for fast iteration and compiles to native binaries through a Cranelift backend, with an SSA-style IR and a round-trip IR interpreter for verification. The language combines functional and object-oriented programming with a modern type system: generics with trait bounds, dyn Trait dynamic dispatch, algebraic data types, pattern matching, closures, and first-class Option/Result error handling. It includes a multi-file module system with public/private visibility, a full Language Server Protocol implementation, a VS Code extension, and a multi-target codegen tool (Phoenix Gen) that generates typed clients and servers in TypeScript, Python, Go, and OpenAPI 3.1 from .phx schemas.",
+    "technologies": [
+      "Rust",
+      "Cranelift",
+      "Compilers",
+      "LSP",
+      "Type Systems",
+      "Code Generation"
+    ],
+    "images": [
+      "/phoenix_pipeline.svg",
+      "/phoenix_gen.svg",
+      "/phxSchema.png",
+      "/phxDyn.png"
+    ],
+    "captions": [
+      "Compilation pipeline: shared frontend, four backends",
+      "Phoenix Gen: one schema, four target languages",
+      "A Phoenix schema with `where` constraints and endpoint declarations",
+      "Traits, generics, and `dyn` dispatch"
+    ],
+    "github": "https://github.com/rmsap/phoenixlang",
+    "websites": [
+      {
+        "label": "VS Code Extension",
+        "url": "https://marketplace.visualstudio.com/items?itemName=rmsap.phoenixlang",
+        "icon": "globe"
+      }
+    ],
+    "highlights": [
+      "Tree-walk interpreter and Cranelift-backed native compilation",
+      "SSA-style IR with a standalone round-trip interpreter",
+      "Multi-target codegen: TypeScript, Python, Go, and OpenAPI 3.1",
+      "Full LSP server with diagnostics, hover, autocomplete, go-to-definition, and rename",
+      "Modern type system with generics, trait bounds, dyn Trait, ADTs, and pattern matching",
+      "Multi-file modules with public/private visibility and lazy import-driven discovery",
+      "2,900+ tests with CI enforcing fmt, clippy, and the full test suite"
+    ],
+    "date": "March 2026 - Present",
+    "featured": true
+  },
+  {
     "id": "siglo",
     "title": "SigLo",
     "description": "Computer vision system for gesture-based computer control",
@@ -111,8 +156,7 @@
       "User-friendly interface",
       "Real social impact"
     ],
-    "date": "March 2022 - Present",
-    "featured": true
+    "date": "March 2022 - Present"
   },
   {
     "id": "image-processor",
