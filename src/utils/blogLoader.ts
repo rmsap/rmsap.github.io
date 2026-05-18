@@ -12,6 +12,15 @@ const postModules = import.meta.glob<MdxModule>("../posts/*.mdx", {
   eager: true,
 });
 
+// Force /public assets to root-relative URLs. Frontmatter often lists them as
+// bare filenames; without a leading slash they resolve against the current
+// route, so /blog/ ends up requesting /blog/foo.png (404).
+function toRootAsset(value: unknown): string | undefined {
+  if (typeof value !== "string" || value.length === 0) return undefined;
+  if (/^(https?:)?\/\//.test(value)) return value;
+  return value.startsWith("/") ? value : `/${value}`;
+}
+
 function buildMeta(filepath: string, mod: MdxModule): BlogPostMeta {
   const slug = filepath.replace("../posts/", "").replace(".mdx", "");
   const fm = mod.frontmatter ?? {};
@@ -22,8 +31,8 @@ function buildMeta(filepath: string, mod: MdxModule): BlogPostMeta {
     description: (fm.description as string) ?? "",
     tags: Array.isArray(fm.tags) ? (fm.tags as string[]) : [],
     readingTime: mod.readingTime ?? 1,
-    thumbnail: (fm.thumbnail as string) || undefined,
-    ogImage: (fm.ogImage as string) || undefined,
+    thumbnail: toRootAsset(fm.thumbnail),
+    ogImage: toRootAsset(fm.ogImage),
   };
 }
 
