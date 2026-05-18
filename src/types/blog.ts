@@ -5,7 +5,8 @@ export interface BlogPostMeta {
   description: string;
   tags: string[];
   readingTime: number; // minutes
-  thumbnail?: string; // optional image URL or path
+  thumbnail?: string; // optional image URL or path (shown in-app)
+  ogImage?: string; // optional PNG/JPG override for OG/Twitter cards (LinkedIn etc. don't render SVG)
 }
 
 export interface Comment {

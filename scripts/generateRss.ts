@@ -16,7 +16,7 @@ const feed = new Feed({
   description:
     "Thoughts on software engineering, learning in public, and everything in between.",
   id: SITE_URL,
-  link: `${SITE_URL}/#/blog`,
+  link: `${SITE_URL}/blog`,
   language: "en",
   copyright: `© ${new Date().getFullYear()} Ryan Saperstein`,
   author: AUTHOR,
@@ -41,7 +41,7 @@ const posts = files
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 posts.forEach((p) => {
-  const postUrl = `${SITE_URL}/#/blog/${p.slug}`;
+  const postUrl = `${SITE_URL}/blog/${p.slug}`;
   feed.addItem({
     title: p.title,
     id: postUrl,

@@ -23,6 +23,7 @@ function buildMeta(filepath: string, mod: MdxModule): BlogPostMeta {
     tags: Array.isArray(fm.tags) ? (fm.tags as string[]) : [],
     readingTime: mod.readingTime ?? 1,
     thumbnail: (fm.thumbnail as string) || undefined,
+    ogImage: (fm.ogImage as string) || undefined,
   };
 }
 
