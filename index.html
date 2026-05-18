@@ -5,6 +5,22 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ryan Saperstein</title>
+    <!-- Static OG/Twitter tags for the homepage. Crawlers don't execute JS,
+         so react-helmet-async additions won't reach them — these have to live
+         in the served HTML. Per-blog-post tags are injected by
+         scripts/prerenderBlog.ts on top of this shell. -->
+    <meta name="description" content="Mobile App Developer at Playbook Sports. Northeastern grad with experience at the Broad Institute and VMware — building scalable, impactful software." />
+    <link rel="canonical" href="https://rmsap.github.io/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ryan Saperstein" />
+    <meta property="og:title" content="Ryan Saperstein" />
+    <meta property="og:description" content="Mobile App Developer at Playbook Sports. Northeastern grad with experience at the Broad Institute and VMware — building scalable, impactful software." />
+    <meta property="og:url" content="https://rmsap.github.io/" />
+    <meta property="og:image" content="https://rmsap.github.io/ryanPhoto.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ryan Saperstein" />
+    <meta name="twitter:description" content="Mobile App Developer at Playbook Sports. Northeastern grad with experience at the Broad Institute and VMware — building scalable, impactful software." />
+    <meta name="twitter:image" content="https://rmsap.github.io/ryanPhoto.jpg" />
     <!-- Must run before React mounts; see public/spa-redirect.js.
          Served verbatim from public/ — do not move under src/ or Vite will rewrite the path. -->
     <script src="/spa-redirect.js"></script>

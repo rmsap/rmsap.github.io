@@ -77,11 +77,46 @@ function buildMetaTags(slug: string, fm: Frontmatter): string {
   return tags.map((t) => `    ${t}`).join("\n");
 }
 
-// Replace the placeholder <title> from the shell with the post-specific head,
-// so we don't leave a duplicate generic title sitting above the OG tags.
+// Strip the homepage's static <title>, description, canonical, and OG/Twitter/article
+// tags from the shell before injecting page-specific ones — otherwise crawlers see
+// duplicate (and conflicting, since most pick the first occurrence) metadata.
+function stripHomepageMeta(html: string): string {
+  return html
+    .replace(/\n?\s*<title>[^<]*<\/title>/i, "")
+    .replace(/\n?\s*<meta\s+name="description"[^>]*\/?>/gi, "")
+    .replace(/\n?\s*<link\s+rel="canonical"[^>]*\/?>/gi, "")
+    .replace(/\n?\s*<meta\s+property="og:[^"]+"[^>]*\/?>/gi, "")
+    .replace(/\n?\s*<meta\s+name="twitter:[^"]+"[^>]*\/?>/gi, "")
+    .replace(/\n?\s*<meta\s+property="article:[^"]+"[^>]*\/?>/gi, "");
+}
+
 function injectHead(shellHtml: string, metaBlock: string): string {
-  const withoutTitle = shellHtml.replace(/\n?\s*<title>[^<]*<\/title>/i, "");
-  return withoutTitle.replace("</head>", `${metaBlock}\n  </head>`);
+  return stripHomepageMeta(shellHtml).replace(
+    "</head>",
+    `${metaBlock}\n  </head>`,
+  );
+}
+
+function buildIndexMetaTags(): string {
+  const url = `${SITE_URL}/blog`;
+  const title = "Notes to Self";
+  const description =
+    "Thoughts on software engineering, learning in public, and everything in between.";
+  return [
+    `<title>${title} — ${SITE_NAME}</title>`,
+    `<meta name="description" content="${description}" />`,
+    `<link rel="canonical" href="${url}" />`,
+    `<meta property="og:type" content="website" />`,
+    `<meta property="og:title" content="${title}" />`,
+    `<meta property="og:description" content="${description}" />`,
+    `<meta property="og:url" content="${url}" />`,
+    `<meta property="og:site_name" content="${SITE_NAME}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:title" content="${title}" />`,
+    `<meta name="twitter:description" content="${description}" />`,
+  ]
+    .map((t) => `    ${t}`)
+    .join("\n");
 }
 
 const files = fs.readdirSync(postsDir).filter((f) => f.endsWith(".mdx"));
@@ -102,4 +137,12 @@ for (const file of files) {
   count += 1;
 }
 
-console.log(`✅ Prerendered ${count} blog post page(s) into dist/blog/<slug>/`);
+// Blog index — so /blog itself gets a real 200 with its own OG card when shared.
+const indexHtml = injectHead(shell, buildIndexMetaTags());
+const indexOutDir = path.join(distDir, "blog");
+fs.mkdirSync(indexOutDir, { recursive: true });
+fs.writeFileSync(path.join(indexOutDir, "index.html"), indexHtml);
+
+console.log(
+  `✅ Prerendered ${count} blog post page(s) + blog index into dist/blog/`,
+);
