@@ -5,6 +5,9 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ryan Saperstein</title>
+    <!-- Must run before React mounts; see public/spa-redirect.js.
+         Served verbatim from public/ — do not move under src/ or Vite will rewrite the path. -->
+    <script src="/spa-redirect.js"></script>
   </head>
   <body>
     <div id="root"></div>

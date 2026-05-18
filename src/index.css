@@ -17,6 +17,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  /* So native anchor jumps (e.g. landing on /#projects) don't fire under the header.
+     --header-offset is set from JS at startup (see src/main.tsx); the fallback
+     matches HEADER_OFFSET so this still works if the JS hasn't run yet. */
+  scroll-padding-top: var(--header-offset, 80px);
+}
+
 body {
   margin: 0;
   min-height: 100vh;

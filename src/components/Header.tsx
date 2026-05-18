@@ -1,13 +1,39 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Github, Linkedin } from "lucide-react";
+import { HEADER_OFFSET } from "../constants/layout";
 import { useActiveSection } from "../hooks/useActiveSection";
+import { useHashSync } from "../hooks/useHashSync";
+import { useScrollWhenReady } from "../hooks/useScrollWhenReady";
 
 interface NavLink {
   label: string;
   href: string;
   isActive?: boolean;
 }
+
+const NAV_LINKS: NavLink[] = [
+  { label: "Home", href: "#home" },
+  { label: "Projects", href: "#projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Experience and Skills", href: "#experience" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
+];
+
+// Sidebar dots replace the Blog link with a Featured Posts section anchor.
+const SIDEBAR_LINKS: NavLink[] = NAV_LINKS.map((link) =>
+  link.href === "/blog"
+    ? { label: "Featured Posts", href: "#featured-posts" }
+    : link,
+);
+
+const SECTION_IDS: string[] = [
+  ...NAV_LINKS.filter((link) => link.href.startsWith("#")).map((link) =>
+    link.href.substring(1),
+  ),
+  "featured-posts",
+];
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -16,33 +42,18 @@ const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredDot, setHoveredDot] = useState<number | null>(null);
 
-  const isHomePage = !location.pathname.startsWith("/blog");
+  // Strict: only the landing page. /blog and unmatched (NotFound) paths are not "home",
+  // so the sidebar dots and section observer stay dormant there.
+  const isHomePage = location.pathname === "/";
 
-  const navLinks: NavLink[] = [
-    { label: "Home", href: "#home" },
-    { label: "Projects", href: "#projects" },
-    { label: "Blog", href: "/blog" },
-    { label: "Experience and Skills", href: "#experience" },
-    { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
-  ];
-
-  // Sidebar dots: third dot is "Featured Posts" and scrolls to section (not Blog page)
-  const sidebarLinks: NavLink[] = navLinks.map((link, i) =>
-    i === 2 ? { label: "Featured Posts", href: "#featured-posts" } : link,
+  // Gate observer to home: prevents stale hash writes from leaking onto /blog
+  const activeSection = useActiveSection(
+    SECTION_IDS,
+    HEADER_OFFSET,
+    isHomePage,
   );
+  useHashSync(activeSection, isHomePage);
 
-  const sectionIds = [
-    ...navLinks
-      .filter((link) => link.href.startsWith("#"))
-      .map((link) => link.href.substring(1)),
-    "featured-posts",
-  ];
-  const formatHash = useCallback(
-    (id: string) => (id === "featured-posts" ? "#/featured-posts" : `#${id}`),
-    [],
-  );
-  const activeSection = useActiveSection(sectionIds, 80, formatHash); // 80px offset for header
   const displayActiveSection = isHomePage ? activeSection : null;
   const isBlogActive =
     location.pathname.startsWith("/blog") ||
@@ -50,6 +61,7 @@ const Header: React.FC = () => {
 
   const isLinkActive = (link: NavLink) => {
     if (link.href === "/blog") return isBlogActive;
+    if (!link.href.startsWith("#")) return false;
     return displayActiveSection === link.href.substring(1);
   };
 
@@ -65,10 +77,9 @@ const Header: React.FC = () => {
   const scrollToSection = useCallback((elementId: string) => {
     const element = document.getElementById(elementId);
     if (element) {
-      const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition =
-        elementPosition + window.pageYOffset - headerOffset;
+        elementPosition + window.pageYOffset - HEADER_OFFSET;
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth",
@@ -78,32 +89,31 @@ const Header: React.FC = () => {
     return false;
   }, []);
 
-  // When navigating from blog to home with a scroll target, wait for DOM then scroll
+  const { scrollWhenReady, cancelPolling } =
+    useScrollWhenReady(scrollToSection);
+
+  // When location.state carries a scrollTo target (e.g. nav back from /blog),
+  // wait for the DOM then scroll, and clear the state so refresh doesn't re-fire.
   useEffect(() => {
     const scrollTo = (location.state as { scrollTo?: string } | null)?.scrollTo;
-    if (!scrollTo || !location.pathname.startsWith("/")) return;
+    if (!scrollTo) return;
+    scrollWhenReady(scrollTo, () => {
+      void navigate(".", { replace: true, state: {} });
+    });
+  }, [location.state, navigate, scrollWhenReady]);
 
-    const attemptScroll = () => {
-      if (scrollToSection(scrollTo)) {
-        void navigate(".", { replace: true, state: {} });
-        return true;
-      }
-      return false;
-    };
-
-    if (attemptScroll()) return;
-    let attempts = 0;
-    const id = setInterval(() => {
-      if (attemptScroll() || ++attempts > 40) clearInterval(id);
-    }, 50);
-    return () => clearInterval(id);
-  }, [location.pathname, location.state, navigate, scrollToSection]);
-
-  // Direct navigation to #/featured-posts: scroll to section (path stays /featured-posts so URL is correct)
+  // Direct visit with a section hash (e.g. /#featured-posts): scroll with header offset.
+  // Safe to re-run on every pathname/hash change — useHashSync writes the hash via raw
+  // history.replaceState, so observer-driven hash changes never flow through useLocation
+  // and won't retrigger this effect.
+  // Accepts the old HashRouter shape `/#/section` by stripping a leading slash inside
+  // the hash, so bookmarks from the prior layout still scroll to the right section.
   useEffect(() => {
-    if (location.pathname !== "/featured-posts") return;
-    scrollToSection("featured-posts");
-  }, [location.pathname, scrollToSection]);
+    if (location.pathname !== "/" || !location.hash) return;
+    const id = location.hash.replace(/^#\/?/, "");
+    if (!id) return;
+    scrollWhenReady(id);
+  }, [location.pathname, location.hash, scrollWhenReady]);
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -111,13 +121,14 @@ const Header: React.FC = () => {
   ) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
+    cancelPolling();
 
     if (href.startsWith("/")) {
       void navigate(href);
       return;
     }
     const elementId = href.substring(1);
-    if (location.pathname.startsWith("/blog")) {
+    if (location.pathname !== "/") {
       void navigate("/", { state: { scrollTo: elementId } });
     } else {
       scrollToSection(elementId);
@@ -151,7 +162,7 @@ const Header: React.FC = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
-              {navLinks.map((link) => (
+              {NAV_LINKS.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
@@ -224,7 +235,7 @@ const Header: React.FC = () => {
           }`}
         >
           <nav className="px-4 py-6 space-y-4">
-            {navLinks.map((link) => (
+            {NAV_LINKS.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
@@ -275,7 +286,7 @@ const Header: React.FC = () => {
       {isHomePage && (
         <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
           <nav className="flex flex-col items-center gap-4">
-            {sidebarLinks.map((link, i) => {
+            {SIDEBAR_LINKS.map((link, i) => {
               const isActive =
                 link.href === "#featured-posts"
                   ? displayActiveSection === "featured-posts"
