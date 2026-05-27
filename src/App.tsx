@@ -9,6 +9,7 @@ import Hero from "./components/Hero";
 import Experience from "./components/Experience";
 import TechnicalSkills from "./components/TechnicalSkills";
 import Footer from "./components/Footer";
+import LegacyHashRedirect from "./components/LegacyHashRedirect";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -56,6 +57,7 @@ function App() {
         />
       </Helmet>
       <BrowserRouter>
+        <LegacyHashRedirect />
         <Header />
         <AnimatePresence mode="wait">
           <Suspense fallback={null}>
