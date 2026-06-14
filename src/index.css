@@ -1,15 +1,54 @@
 @import "tailwindcss";
 
-:root {
-  padding: 2rem;
+/* Make Tailwind's `dark:` variant follow the active theme, not the raw OS
+   preference. Mirrors the palette resolution below exactly: dark applies when
+   the visitor picked dark (data-theme="dark"), or — absent a saved choice —
+   whenever the OS isn't set to light. Without this, `dark:` defaults to
+   @media (prefers-color-scheme: dark) and ignores the in-app toggle. */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media not (prefers-color-scheme: light) {
+    &:where(:root:not([data-theme]), :root:not([data-theme]) *) {
+      @slot;
+    }
+  }
+}
 
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+/* Register the editorial palette + type as Tailwind tokens so utilities like
+   bg-paper / text-ink / text-accent / font-display resolve through the CSS
+   variables below — which means they switch with the color scheme for free. */
+@theme {
+  --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-rule: var(--rule);
+}
+
+:root {
+  /* Warm editorial palette. Dark is the default theme. */
+  --paper: #1b1714;
+  --surface: #221d18;
+  --ink: #ece3d6;
+  --muted: #a99e8e;
+  --accent: #d98a63;
+  --accent-soft: rgba(217, 138, 99, 0.14);
+  --rule: rgba(236, 227, 214, 0.12);
+
+  font-family: var(--font-sans);
+  line-height: 1.6;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: dark;
+  color: var(--ink);
+  background-color: var(--paper);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,16 +56,71 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Light palette. Applies when the visitor picks light via the toggle
+   (data-theme="light"), or — absent a saved choice — when their OS prefers
+   light. An inline script in index.html sets data-theme before first paint,
+   so there's no flash. Warm paper, not stark white. */
+:root[data-theme="light"] {
+  --paper: #f6f1e7;
+  --surface: #fbf7ef;
+  --ink: #2a2521;
+  --muted: #6f6557;
+  --accent: #b1502f;
+  --accent-soft: rgba(177, 80, 47, 0.1);
+  --rule: rgba(42, 37, 33, 0.12);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --paper: #f6f1e7;
+    --surface: #fbf7ef;
+    --ink: #2a2521;
+    --muted: #6f6557;
+    --accent: #b1502f;
+    --accent-soft: rgba(177, 80, 47, 0.1);
+    --rule: rgba(42, 37, 33, 0.12);
+    color-scheme: light;
+  }
+}
+
 html {
   /* So native anchor jumps (e.g. landing on /#projects) don't fire under the header.
      --header-offset is set from JS at startup (see src/main.tsx); the fallback
      matches HEADER_OFFSET so this still works if the JS hasn't run yet. */
   scroll-padding-top: var(--header-offset, 80px);
+  background-color: var(--paper);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* Fraunces is variable — opt into its softer, slightly characterful axes so it
+   reads as a deliberate choice rather than a default serif. */
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 40;
+}
+
+/* One quiet, opacity-only fade on mount — no translate, no per-element stagger.
+   Gated behind prefers-reduced-motion so motion-sensitive visitors get a static
+   page (content is fully visible without the animation class taking effect). */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in {
+    animation: fadeIn 0.4s ease-out both;
+  }
 }
 
 .scrollbar-hide {
@@ -35,19 +129,6 @@ body {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
 
 /* Shiki dual-theme: site defaults to dark, swap to dark variables */
@@ -60,12 +141,20 @@ body {
   background-color: transparent !important;
 }
 
+:root[data-theme="light"] .shiki {
+  background-color: var(--shiki-light-bg) !important;
+}
+:root[data-theme="light"] .shiki code,
+:root[data-theme="light"] .shiki span {
+  color: var(--shiki-light) !important;
+  background-color: transparent !important;
+}
 @media (prefers-color-scheme: light) {
-  .shiki {
+  :root:not([data-theme]) .shiki {
     background-color: var(--shiki-light-bg) !important;
   }
-  .shiki code,
-  .shiki span {
+  :root:not([data-theme]) .shiki code,
+  :root:not([data-theme]) .shiki span {
     color: var(--shiki-light) !important;
     background-color: transparent !important;
   }
@@ -82,33 +171,39 @@ body {
 .prose p:first-child {
   margin-top: 0;
 }
+/* Headings in post bodies use the display serif + ink, matching the rest of
+   the site. Colors reference the theme vars so they switch with the scheme. */
 .prose h1 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
   font-size: 1.875rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 2rem;
   margin-bottom: 1rem;
-  color: rgb(243 244 246);
+  color: var(--ink);
 }
 .prose h2 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
   font-size: 1.5rem;
   font-weight: 600;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
-  color: rgb(243 244 246);
+  color: var(--ink);
 }
 .prose h3 {
   font-size: 1.25rem;
   font-weight: 600;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
-  color: rgb(243 244 246);
+  color: var(--ink);
 }
 .prose h4 {
   font-size: 1.125rem;
   font-weight: 600;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-  color: rgb(243 244 246);
+  color: var(--ink);
 }
 .prose strong {
   font-weight: 700;
@@ -117,22 +212,22 @@ body {
   font-style: italic;
 }
 .prose a {
-  color: #a78bfa;
+  color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 .prose a:hover {
-  color: #c4b5fd;
+  opacity: 0.8;
 }
 .prose blockquote {
-  border-left: 4px solid #6b7280;
+  border-left: 3px solid var(--accent);
   padding-left: 1rem;
   margin: 1.5rem 0;
-  color: #9ca3af;
+  color: var(--muted);
   font-style: italic;
 }
 .prose hr {
-  border-color: #374151;
+  border-color: var(--rule);
   margin: 2rem 0;
 }
 .prose ul {
@@ -147,21 +242,4 @@ body {
 }
 .prose li {
   margin: 0.25rem 0;
-}
-@media (prefers-color-scheme: light) {
-  .prose h1,
-  .prose h2,
-  .prose h3,
-  .prose h4 {
-    color: #1f2937;
-  }
-  .prose a {
-    color: #7c3aed;
-  }
-  .prose a:hover {
-    color: #6d28d9;
-  }
-  .prose blockquote {
-    color: #6b7280;
-  }
 }

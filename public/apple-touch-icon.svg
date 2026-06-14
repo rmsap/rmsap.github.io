@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+  <rect width="180" height="180" fill="#1b1714" />
+  <text
+    x="90"
+    y="122"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="92"
+    font-weight="600"
+    letter-spacing="2"
+    fill="#d98a63"
+  >RS</text>
+</svg>

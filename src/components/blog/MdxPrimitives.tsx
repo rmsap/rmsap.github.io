@@ -70,13 +70,13 @@ export function ShikiCodeBlock({
   };
 
   return (
-    <div className="my-4 rounded-lg border border-gray-700 overflow-hidden">
+    <div className="my-4 rounded-lg border border-rule overflow-hidden">
       {displayName && (
-        <div className="flex items-center justify-between px-4 py-2 bg-gray-800/80 border-b border-gray-700 text-xs text-gray-400">
+        <div className="flex items-center justify-between px-4 py-2 bg-surface border-b border-rule text-xs text-muted">
           <span className="font-medium">{displayName}</span>
           <button
             onClick={handleCopy}
-            className="hover:text-gray-200 transition-colors cursor-pointer"
+            className="hover:text-ink transition-colors cursor-pointer"
             aria-label="Copy code"
           >
             {copied ? "Copied!" : "Copy"}
@@ -99,7 +99,10 @@ export function InlineCode(props: ComponentPropsWithoutRef<"code">) {
     props.className.includes("language-");
   if (isBlock) return <code {...props} />;
   return (
-    <code className="bg-gray-700 px-1.5 py-0.5 rounded text-sm" {...props} />
+    <code
+      className="bg-paper text-ink px-1.5 py-0.5 rounded text-sm"
+      {...props}
+    />
   );
 }
 
@@ -111,7 +114,7 @@ export function Callout({
   type?: "info" | "warn" | "tip";
 }) {
   const styles = {
-    info: "border-blue-500 bg-blue-500/10",
+    info: "border-accent bg-accent-soft",
     warn: "border-yellow-500 bg-yellow-500/10",
     tip: "border-green-500 bg-green-500/10",
   };

@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Filter, ChevronDown } from "lucide-react";
 import { getAllPosts, getAllTags } from "../../utils/blogLoader";
+import { SITE_NAME, BLOG_TITLE, BLOG_DESCRIPTION } from "../../constants/site";
 import BlogSearch from "./BlogSearch";
 import TagFilter from "./TagFilter";
 import PageTransition from "./PageTransition";
@@ -24,12 +25,6 @@ export default function BlogIndex() {
   );
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const sortDropdownRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
-  const [headerVisible, setHeaderVisible] = useState(false);
-  const [visibleCards, setVisibleCards] = useState<Set<string>>(
-    () => new Set(),
-  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -77,30 +72,6 @@ export default function BlogIndex() {
     setVisibleCount((n) => Math.min(n + POSTS_PER_PAGE, displayPosts.length));
   }, [displayPosts.length]);
 
-  // Scroll animation: header and cards float in when in view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute("data-id");
-            if (id === "blog-header") {
-              setHeaderVisible(true);
-            } else if (id) {
-              setVisibleCards((prev) => new Set(prev).add(id));
-            }
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
-    );
-    if (headerRef.current) observer.observe(headerRef.current);
-    Object.values(cardRefs.current).forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-    return () => observer.disconnect();
-  }, [visibleCount, displayPosts.length]);
-
   // Infinite scroll: load more when sentinel enters viewport
   useEffect(() => {
     if (!hasMore) return;
@@ -119,35 +90,19 @@ export default function BlogIndex() {
   return (
     <PageTransition>
       <Helmet>
-        <title>Blog — Ryan Saperstein</title>
-        <meta
-          name="description"
-          content="Thoughts on software engineering, React Native, and building products."
-        />
+        <title>{`${BLOG_TITLE} — ${SITE_NAME}`}</title>
+        <meta name="description" content={BLOG_DESCRIPTION} />
       </Helmet>
-      <div className="max-w-5xl mx-auto py-12 px-4">
-        <div
-          ref={headerRef}
-          data-id="blog-header"
-          className={`transition-all duration-700 ${
-            headerVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-8"
-          }`}
-        >
-          <h1 className="text-3xl font-bold mb-2 pb-1 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+      <div className="max-w-5xl mx-auto pt-24 pb-12 px-4">
+        <div>
+          <h1 className="text-3xl font-display font-medium mb-2 pb-1 text-ink">
             Blog
           </h1>
-          <p className="text-lg text-purple-400 font-medium mb-1">
-            Notes to Self
-          </p>
-          <p className="text-gray-400 mb-5">
-            Thoughts on software engineering, learning in public, and everything
-            in between
-          </p>
+          <p className="text-lg text-accent font-medium mb-1">{BLOG_TITLE}</p>
+          <p className="text-muted mb-5">{BLOG_DESCRIPTION}</p>
 
           <div className="space-y-5">
-            <div className="flex flex-wrap items-center gap-4 rounded-lg border border-gray-600 bg-gray-800/30 px-4 py-3">
+            <div className="flex flex-wrap items-center gap-4 rounded-lg border border-rule bg-surface px-4 py-3">
               <div className="min-w-0 flex-1">
                 <BlogSearch posts={allPosts} onFilter={setSearchFiltered} />
               </div>
@@ -155,7 +110,7 @@ export default function BlogIndex() {
                 <button
                   type="button"
                   onClick={() => setSortDropdownOpen((open) => !open)}
-                  className="flex items-center gap-2 text-xs px-3 py-2 rounded-lg border border-gray-600 text-gray-400 hover:border-gray-400 hover:text-gray-300 transition-colors"
+                  className="flex items-center gap-2 text-xs px-3 py-2 rounded-lg border border-rule text-muted hover:border-accent/40 hover:text-ink transition-colors"
                   aria-expanded={sortDropdownOpen}
                   aria-haspopup="listbox"
                   aria-label="Sort posts"
@@ -171,7 +126,7 @@ export default function BlogIndex() {
                 </button>
                 {sortDropdownOpen && (
                   <ul
-                    className="absolute right-0 top-full mt-1 min-w-[140px] py-1 rounded-lg border border-gray-600 bg-[#242424] shadow-lg z-10"
+                    className="absolute right-0 top-full mt-1 min-w-[140px] py-1 rounded-lg border border-rule bg-surface shadow-lg z-10"
                     role="listbox"
                   >
                     <li role="option" aria-selected={sortOrder === "newest"}>
@@ -183,8 +138,8 @@ export default function BlogIndex() {
                         }}
                         className={`w-full text-left text-xs px-3 py-2 flex items-center gap-2 transition-colors ${
                           sortOrder === "newest"
-                            ? "bg-purple-500/15 text-purple-400"
-                            : "text-gray-400 hover:bg-gray-700 hover:text-gray-200"
+                            ? "bg-accent-soft text-accent"
+                            : "text-muted hover:bg-paper hover:text-ink"
                         }`}
                       >
                         Newest first
@@ -199,8 +154,8 @@ export default function BlogIndex() {
                         }}
                         className={`w-full text-left text-xs px-3 py-2 flex items-center gap-2 transition-colors ${
                           sortOrder === "oldest"
-                            ? "bg-purple-500/15 text-purple-400"
-                            : "text-gray-400 hover:bg-gray-700 hover:text-gray-200"
+                            ? "bg-accent-soft text-accent"
+                            : "text-muted hover:bg-paper hover:text-ink"
                         }`}
                       >
                         Oldest first
@@ -225,36 +180,23 @@ export default function BlogIndex() {
         </div>
 
         {displayPosts.length === 0 && (
-          <p className="text-gray-400 mt-6">No posts found.</p>
+          <p className="text-muted mt-6">No posts found.</p>
         )}
 
         {displayPosts.length > 0 && (
-          <p className="text-sm text-gray-400 mt-4">
+          <p className="text-sm text-muted mt-4">
             Showing {postsToShow.length} of {displayPosts.length} posts
           </p>
         )}
 
-        <div className="flex flex-wrap justify-center gap-6 mt-6">
-          {postsToShow.map((p, index) => (
+        <div className="grid gap-6 sm:grid-cols-2 mt-6">
+          {postsToShow.map((p) => (
             <Link
               key={p.slug}
-              ref={(el) => {
-                cardRefs.current[p.slug] = el;
-              }}
-              data-id={p.slug}
               to={`/blog/${p.slug}`}
-              className={`block w-full lg:w-[calc(50%-0.75rem)] border rounded-lg overflow-hidden h-full flex flex-col transition-all duration-700 hover:-translate-y-1 ${
-                visibleCards.has(p.slug)
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              } ${tagAreaHoveredSlug === p.slug ? "border-gray-600" : "hover:border-purple-500 border-gray-600"}`}
-              style={{
-                transitionDelay: visibleCards.has(p.slug)
-                  ? `${Math.min(index * 80, 400)}ms`
-                  : "0ms",
-              }}
+              className={`flex flex-col h-full border rounded-lg overflow-hidden transition-colors ${tagAreaHoveredSlug === p.slug ? "border-rule" : "hover:border-accent border-rule"}`}
             >
-              <div className="aspect-video w-full bg-gray-700/50 shrink-0 overflow-hidden">
+              <div className="aspect-video w-full bg-surface shrink-0 overflow-hidden">
                 {p.thumbnail ? (
                   <img
                     src={p.thumbnail}
@@ -263,7 +205,7 @@ export default function BlogIndex() {
                   />
                 ) : (
                   <div
-                    className="w-full h-full flex items-center justify-center text-gray-500"
+                    className="w-full h-full flex items-center justify-center text-muted"
                     aria-hidden
                   >
                     <span className="text-4xl font-light">📄</span>
@@ -271,18 +213,18 @@ export default function BlogIndex() {
                 )}
               </div>
               <div className="p-5 flex flex-col flex-1">
-                <h2 className="text-xl font-semibold mb-1">{p.title}</h2>
-                <div className="flex items-center gap-3 text-sm text-gray-400">
+                <h2 className="text-xl font-display font-medium mb-1 text-ink">
+                  {p.title}
+                </h2>
+                <div className="flex items-center gap-3 text-sm text-muted">
                   <time>{p.date}</time>
                   <span>·</span>
                   <span>{p.readingTime} min read</span>
                 </div>
-                <p className="mt-2 text-gray-300 line-clamp-2">
-                  {p.description}
-                </p>
+                <p className="mt-2 text-muted line-clamp-2">{p.description}</p>
                 {p.tags.length > 0 && (
                   <div
-                    className="flex flex-wrap gap-2 mt-3 w-fit"
+                    className="flex flex-wrap gap-2 mt-auto pt-3 w-fit"
                     onClick={(e) => e.stopPropagation()}
                     onMouseEnter={() => setTagAreaHoveredSlug(p.slug)}
                     onMouseLeave={() => setTagAreaHoveredSlug(null)}
@@ -298,8 +240,8 @@ export default function BlogIndex() {
                         }}
                         className={`text-xs px-3 py-1 rounded-full border transition-colors text-left ${
                           activeTag === tag
-                            ? "border-purple-500 bg-purple-500/15 text-purple-400"
-                            : "border-gray-600 text-gray-400 hover:border-purple-500 hover:text-purple-400"
+                            ? "border-accent bg-accent-soft text-accent"
+                            : "border-rule text-muted hover:border-accent hover:text-accent"
                         }`}
                       >
                         {tag.charAt(0).toUpperCase() + tag.slice(1)}
@@ -318,7 +260,7 @@ export default function BlogIndex() {
             <button
               type="button"
               onClick={loadMore}
-              className="px-6 py-2.5 rounded-lg border border-gray-600 text-gray-200 hover:border-purple-500 hover:text-purple-400 transition-colors"
+              className="px-6 py-2.5 rounded-lg border border-rule text-ink hover:border-accent hover:text-accent transition-colors"
             >
               Load more
             </button>

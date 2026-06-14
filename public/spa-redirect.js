@@ -13,6 +13,9 @@
         return s.replace(/~and~/g, "&");
       })
       .join("?");
+    // Tell main.tsx not to hydrate: the served HTML is the prerendered
+    // homepage, but the rewritten URL is a different route.
+    window.__SPA_PATH_REWRITTEN__ = true;
     window.history.replaceState(
       null,
       "",
@@ -36,6 +39,8 @@
       : rest
         ? "/#" + rest
         : "/";
+    // Same as above: served homepage markup no longer matches the URL.
+    window.__SPA_PATH_REWRITTEN__ = true;
     window.history.replaceState(null, "", target);
   }
 })(window.location);

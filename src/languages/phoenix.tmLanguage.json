@@ -20,17 +20,13 @@
           "name": "comment.block.documentation.phoenix",
           "begin": "/\\*\\*(?!/)",
           "end": "\\*/",
-          "patterns": [
-            { "include": "#comments" }
-          ]
+          "patterns": [{ "include": "#comments" }]
         },
         {
           "name": "comment.block.phoenix",
           "begin": "/\\*",
           "end": "\\*/",
-          "patterns": [
-            { "include": "#comments" }
-          ]
+          "patterns": [{ "include": "#comments" }]
         },
         {
           "name": "comment.line.double-slash.phoenix",
@@ -57,7 +53,9 @@
               "name": "meta.interpolation.phoenix",
               "begin": "\\{",
               "beginCaptures": {
-                "0": { "name": "punctuation.section.interpolation.begin.phoenix" }
+                "0": {
+                  "name": "punctuation.section.interpolation.begin.phoenix"
+                }
               },
               "end": "\\}",
               "endCaptures": {

@@ -13,9 +13,9 @@ export default function PostNav({ prev, next }: Props) {
       {prev ? (
         <Link
           to={`/blog/${prev.slug}`}
-          className="flex-1 border rounded p-4 hover:border-blue-500 transition-colors text-left"
+          className="flex-1 border border-rule rounded p-4 hover:border-accent/40 transition-colors text-left"
         >
-          <span className="text-xs text-gray-400">← Older</span>
+          <span className="text-xs text-muted">← Older</span>
           <p className="font-medium mt-1">{prev.title}</p>
         </Link>
       ) : (
@@ -24,9 +24,9 @@ export default function PostNav({ prev, next }: Props) {
       {next ? (
         <Link
           to={`/blog/${next.slug}`}
-          className="flex-1 border rounded p-4 hover:border-blue-500 transition-colors text-right"
+          className="flex-1 border border-rule rounded p-4 hover:border-accent/40 transition-colors text-right"
         >
-          <span className="text-xs text-gray-400">Newer →</span>
+          <span className="text-xs text-muted">Newer →</span>
           <p className="font-medium mt-1">{next.title}</p>
         </Link>
       ) : (

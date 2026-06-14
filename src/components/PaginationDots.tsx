@@ -17,9 +17,7 @@ export const PaginationDots: React.FC<PaginationDotsProps> = ({
         key={i}
         onClick={() => onSelect(i)}
         className={`h-2 rounded-full transition-all ${
-          i === current
-            ? "w-8 bg-purple-600"
-            : "w-2 bg-gray-400 hover:bg-gray-500"
+          i === current ? "w-8 bg-accent" : "w-2 bg-muted/50 hover:bg-muted"
         }`}
         aria-label={`Go to page ${i + 1}`}
       />

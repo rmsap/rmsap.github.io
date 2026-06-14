@@ -63,8 +63,8 @@ export default function TableOfContents() {
   if (headings.length < 2) return null;
 
   return (
-    <nav className="toc border-l border-gray-700 pl-4 mb-8 text-sm">
-      <p className="font-semibold text-gray-300 mb-2">On this page</p>
+    <nav className="toc border-l border-rule pl-4 mb-8 text-sm">
+      <p className="font-semibold text-ink mb-2">On this page</p>
       <ul className="space-y-1">
         {headings.map((h) => (
           <li key={h.id} style={{ paddingLeft: h.level === 3 ? "1rem" : 0 }}>
@@ -85,8 +85,8 @@ export default function TableOfContents() {
               }}
               className={`block py-0.5 transition-colors cursor-pointer ${
                 activeId === h.id
-                  ? "text-purple-400 font-medium"
-                  : "text-gray-400 hover:text-gray-200"
+                  ? "text-accent font-medium"
+                  : "text-muted hover:text-ink"
               }`}
             >
               {h.text}

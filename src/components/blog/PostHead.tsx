@@ -1,8 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import type { BlogPostMeta } from "../../types/blog";
-
-const SITE_URL = "https://rmsap.github.io";
-const SITE_NAME = "Ryan Saperstein";
+import { SITE_URL, SITE_NAME } from "../../constants/site";
 
 interface Props {
   post: BlogPostMeta;
@@ -16,9 +14,9 @@ export default function PostHead({ post }: Props) {
     : undefined;
   return (
     <Helmet>
-      <title>
-        {post.title} — {SITE_NAME}
-      </title>
+      {/* Template string, not JSX interpolation — React only stringifies a
+          single <title> child. */}
+      <title>{`${post.title} — ${SITE_NAME}`}</title>
       <meta name="description" content={post.description} />
       <link rel="canonical" href={url} />
 

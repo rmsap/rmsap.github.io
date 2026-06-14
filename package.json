@@ -8,7 +8,7 @@
     "predeploy": "npm run build",
     "deploy": "npm run build && wrangler deploy",
     "dev": "vite",
-    "build": "tsc -b && tsx scripts/generateRss.ts && vite build && tsx scripts/prerenderBlog.ts",
+    "build": "tsc -b && tsx scripts/generateRss.ts && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && tsx scripts/prerender.ts",
     "lint": "eslint .",
     "preview": "npm run build && wrangler dev",
     "new-post": "tsx scripts/newPost.ts"
@@ -21,7 +21,6 @@
     "@tailwindcss/vite": "^4.1.13",
     "@types/mdast": "^4.0.4",
     "firebase": "^12.10.0",
-    "framer-motion": "^12.35.2",
     "lucide-react": "^0.542.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

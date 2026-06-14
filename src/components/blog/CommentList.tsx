@@ -39,36 +39,32 @@ export default function CommentList({ postSlug }: Props) {
   }, [postSlug]);
 
   if (loading)
-    return <p className="text-gray-500 text-sm italic">Loading comments...</p>;
+    return <p className="text-muted text-sm italic">Loading comments...</p>;
   if (comments.length === 0)
-    return (
-      <p className="text-gray-500 text-sm">No comments yet. Be the first!</p>
-    );
+    return <p className="text-muted text-sm">No comments yet. Be the first!</p>;
 
   return (
     <div className="space-y-4">
-      <p className="text-sm font-medium text-gray-400">
+      <p className="text-sm font-medium text-muted">
         {comments.length} comment{comments.length !== 1 ? "s" : ""}
       </p>
       {comments.map((c) => (
         <div
           key={c.id}
-          className="rounded-lg border border-gray-700 bg-gray-800/50 p-4"
+          className="rounded-lg border border-rule bg-surface p-4"
         >
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-purple-600/30 flex items-center justify-center text-xs font-semibold text-purple-400">
+              <div className="w-7 h-7 rounded-full bg-accent-soft flex items-center justify-center text-xs font-semibold text-accent">
                 {c.authorName.charAt(0).toUpperCase()}
               </div>
-              <span className="font-medium text-gray-200 text-sm">
+              <span className="font-medium text-ink text-sm">
                 {c.authorName}
               </span>
             </div>
-            <time className="text-xs text-gray-500">
-              {timeAgo(c.createdAt)}
-            </time>
+            <time className="text-xs text-muted">{timeAgo(c.createdAt)}</time>
           </div>
-          <p className="whitespace-pre-wrap text-sm text-gray-300 leading-relaxed pl-9">
+          <p className="whitespace-pre-wrap text-sm text-muted leading-relaxed pl-9">
             {c.body}
           </p>
         </div>

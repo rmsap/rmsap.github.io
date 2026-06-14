@@ -162,7 +162,7 @@
     "id": "image-processor",
     "title": "Image Processing Application",
     "description": "Advanced image manipulation tool with custom filters and effects",
-    "longDescription": "Built a comprehensive image processing application that enables users to load, save, and manipulate images with various operations including flipping, resizing, and applying custom filters.",
+    "longDescription": "Built an image processing application that lets users load, save, and transform images with operations like flipping, resizing, and custom filters.",
     "technologies": [
       "Java",
       "Java Swing",

@@ -10,9 +10,9 @@ function PostCard({ post }: { post: BlogPostMeta }) {
   return (
     <Link
       to={`/blog/${post.slug}`}
-      className="group flex flex-col h-full rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl hover:border-purple-500 dark:hover:border-purple-500 transition-all duration-300 w-full"
+      className="group flex flex-col h-full rounded-xl overflow-hidden border border-rule bg-surface hover:border-accent/50 transition-all duration-300 w-full"
     >
-      <div className="aspect-video w-full bg-gray-700/50 shrink-0 overflow-hidden">
+      <div className="aspect-video w-full bg-paper shrink-0 overflow-hidden">
         {post.thumbnail ? (
           <img
             src={post.thumbnail}
@@ -21,7 +21,7 @@ function PostCard({ post }: { post: BlogPostMeta }) {
           />
         ) : (
           <div
-            className="w-full h-full flex items-center justify-center text-gray-500"
+            className="w-full h-full flex items-center justify-center text-muted"
             aria-hidden
           >
             <span className="text-4xl font-light">📄</span>
@@ -29,23 +29,21 @@ function PostCard({ post }: { post: BlogPostMeta }) {
         )}
       </div>
       <div className="p-5 flex flex-col flex-1 text-left">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors mb-1">
+        <h3 className="text-xl font-semibold text-ink group-hover:text-accent transition-colors mb-1">
           {post.title}
         </h3>
-        <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
+        <div className="flex items-center gap-3 text-sm text-muted">
           <time>{post.date}</time>
           <span>·</span>
           <span>{post.readingTime} min read</span>
         </div>
-        <p className="mt-2 text-gray-600 dark:text-gray-300 line-clamp-2">
-          {post.description}
-        </p>
+        <p className="mt-2 text-muted line-clamp-2">{post.description}</p>
         {post.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-3">
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-xs px-3 py-1 rounded-full border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400"
+                className="text-xs px-3 py-1 rounded-full border border-rule text-muted"
               >
                 {tag.charAt(0).toUpperCase() + tag.slice(1)}
               </span>
@@ -103,10 +101,10 @@ export default function FeaturedPosts() {
     >
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         <div className="text-center mb-12 w-full">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          <h2 className="font-display text-4xl lg:text-5xl font-medium mb-6 text-ink">
             Featured Posts
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-lg text-muted max-w-2xl mx-auto">
             Latest writing on software, product, and building in public
           </p>
         </div>
@@ -138,7 +136,7 @@ export default function FeaturedPosts() {
               <button
                 type="button"
                 onClick={prev}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-4 w-10 h-10 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-purple-600 hover:border-purple-500 transition-colors z-10"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-4 w-10 h-10 rounded-full bg-surface border border-rule shadow-lg flex items-center justify-center text-muted hover:text-accent hover:border-accent/50 transition-colors z-10"
                 aria-label="Previous post"
               >
                 <ChevronLeft size={24} />
@@ -146,7 +144,7 @@ export default function FeaturedPosts() {
               <button
                 type="button"
                 onClick={next}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-4 w-10 h-10 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-purple-600 hover:border-purple-500 transition-colors z-10"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-4 w-10 h-10 rounded-full bg-surface border border-rule shadow-lg flex items-center justify-center text-muted hover:text-accent hover:border-accent/50 transition-colors z-10"
                 aria-label="Next post"
               >
                 <ChevronRight size={24} />
@@ -158,7 +156,7 @@ export default function FeaturedPosts() {
         <div className="text-center mt-8">
           <Link
             to="/blog"
-            className="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 font-medium hover:underline"
+            className="inline-flex items-center gap-2 text-accent font-medium hover:underline"
           >
             View all posts
             <ChevronRight size={18} />

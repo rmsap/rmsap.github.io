@@ -1,7 +1,7 @@
 {
   "header": {
     "title": "About Me",
-    "subtitle": "Summa Cum Laude Computer Science graduate from Northeastern University with a passion for building innovative solutions and leading technical teams"
+    "subtitle": "Northeastern CS grad, now building mobile apps at Playbook Sports. Nine years on from the middle-school robotics team that started it."
   },
   "profile": {
     "image": "/graduationPhoto.jpg",
@@ -9,22 +9,25 @@
   },
   "stats": [
     {
-      "icon": "Award",
-      "value": "3.93",
-      "label": "GPA (Summa Cum Laude)",
-      "color": "purple"
+      "icon": "Code2",
+      "value": "9+",
+      "label": "Years Coding"
     },
     {
-      "icon": "Users",
-      "value": "6+",
-      "label": "Team Members Led",
-      "color": "blue"
+      "icon": "Smartphone",
+      "value": "4",
+      "label": "Apps Shipped"
+    },
+    {
+      "icon": "PenLine",
+      "value": "5",
+      "label": "Blog Posts"
     }
   ],
   "bio": [
-    "My journey into programming began in eighth grade when I joined my middle school's robotics team. What started as curiosity evolved into a 9+ year passion that has taken me from building Arduino projects to leading engineering teams at cutting-edge tech companies.",
-    "At Northeastern University, I graduated Summa Cum Laude with a B.S. in Computer Science and a concentration in Artificial Intelligence. My coursework spanned from fundamental algorithms to advanced machine learning, preparing me for the complex challenges I've tackled in my professional roles.",
-    "I'm currently a Mobile App Developer at Playbook Sports, building an all-in-one sports management app for leagues, coaches, and parents. I've also gained hands-on experience through co-ops at VMware and the Broad Institute of MIT and Harvard, my role as Tech Lead at Generate Product Development, and my own software consultancy delivering mobile solutions for non-profit organizations."
+    "I started programming in eighth grade on my middle school's robotics team. What began as curiosity turned into nine years of building things, from Arduino projects to leading engineering teams.",
+    "At Northeastern I earned a B.S. in Computer Science with an AI concentration, graduating Summa Cum Laude, with coursework spanning algorithms through machine learning.",
+    "Today I'm a Software Developer at Playbook Sports, building an all-in-one sports management app for leagues, coaches, and parents. Before that: co-ops at VMware and the Broad Institute of MIT and Harvard, Tech Lead at Generate Product Development, and my own consultancy building mobile apps for non-profits."
   ],
   "journey": [
     {
@@ -45,7 +48,7 @@
     {
       "icon": "Briefcase",
       "title": "Professional Experience",
-      "description": "Mobile App Developer at Playbook Sports; Tech Lead at Generate; Co-op at Broad Institute & VMware"
+      "description": "Software Developer at Playbook Sports; Tech Lead at Generate; Co-op at Broad Institute & VMware"
     }
   ]
 }

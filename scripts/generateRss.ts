@@ -5,23 +5,31 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import matter from "gray-matter";
+import {
+  SITE_URL,
+  SITE_NAME,
+  BLOG_TITLE,
+  BLOG_DESCRIPTION,
+} from "../src/constants/site";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const SITE_URL = "https://rmsap.github.io";
-const AUTHOR = { name: "Ryan Saperstein", link: SITE_URL };
+const AUTHOR = { name: SITE_NAME, link: SITE_URL };
 
 const feed = new Feed({
-  title: "Notes to Self",
-  description:
-    "Thoughts on software engineering, learning in public, and everything in between.",
+  title: BLOG_TITLE,
+  description: BLOG_DESCRIPTION,
   id: SITE_URL,
   link: `${SITE_URL}/blog`,
   language: "en",
-  copyright: `© ${new Date().getFullYear()} Ryan Saperstein`,
+  copyright: `© ${new Date().getFullYear()} ${SITE_NAME}`,
   author: AUTHOR,
 });
 
+// Frontmatter is parsed with gray-matter here instead of reusing
+// src/utils/blogLoader.ts: this script runs before `vite build`, so the
+// loader's import.meta.glob over compiled MDX isn't available yet (the
+// prerenderer, which runs after the SSR build, does reuse the loader).
 const postsDir = path.resolve(__dirname, "../src/posts");
 const files = fs.readdirSync(postsDir).filter((f) => f.endsWith(".mdx"));
 

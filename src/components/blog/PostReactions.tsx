@@ -86,13 +86,13 @@ export default function PostReactions({ postSlug }: Props) {
             text-sm transition-all
             ${
               userReactions.has(emoji)
-                ? "border-blue-500 bg-blue-500/15 scale-105"
-                : "border-gray-600 hover:border-gray-400"
+                ? "border-accent bg-accent-soft scale-105"
+                : "border-rule hover:border-accent/40"
             }`}
         >
           <span>{emoji}</span>
           {(counts[emoji] ?? 0) > 0 && (
-            <span className="text-gray-300">{counts[emoji]}</span>
+            <span className="text-muted">{counts[emoji]}</span>
           )}
         </button>
       ))}

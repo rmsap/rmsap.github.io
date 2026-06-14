@@ -5,6 +5,7 @@ import { HEADER_OFFSET } from "../constants/layout";
 import { useActiveSection } from "../hooks/useActiveSection";
 import { useHashSync } from "../hooks/useHashSync";
 import { useScrollWhenReady } from "../hooks/useScrollWhenReady";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavLink {
   label: string;
@@ -140,8 +141,8 @@ const Header: React.FC = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-white/95 dark:bg-[#242424]/95 backdrop-blur-md shadow-lg dark:shadow-gray-900/50"
-            : "bg-white/80 dark:bg-[#242424]/80 backdrop-blur-sm"
+            ? "bg-paper/90 backdrop-blur-md border-b border-rule"
+            : "bg-paper/70 backdrop-blur-sm border-b border-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -153,10 +154,10 @@ const Header: React.FC = () => {
                 className="group relative inline-block"
                 onClick={(e) => handleNavClick(e, "#home")}
               >
-                <span className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent hover:from-purple-700 hover:to-blue-700 dark:hover:from-purple-300 dark:hover:to-blue-300 transition-all duration-300">
+                <span className="font-display text-2xl lg:text-3xl font-medium text-ink transition-colors duration-200">
                   Ryan Saperstein
                 </span>
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-600 group-hover:w-full transition-all duration-300"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
               </a>
             </div>
 
@@ -167,13 +168,13 @@ const Header: React.FC = () => {
                   key={link.label}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`relative py-2 text-sm font-medium transition-colors duration-300 hover:text-purple-600 group ${
-                    isLinkActive(link) ? "text-purple-600" : "text-[#646cff]"
+                  className={`relative py-2 text-sm font-medium transition-colors duration-200 hover:text-accent group ${
+                    isLinkActive(link) ? "text-accent" : "text-muted"
                   }`}
                 >
                   {link.label}
                   <span
-                    className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-purple-600 to-blue-600 transform origin-left transition-transform duration-300 ${
+                    className={`absolute bottom-0 left-0 w-full h-0.5 bg-accent transform origin-left transition-transform duration-300 ${
                       isLinkActive(link)
                         ? "scale-x-100"
                         : "scale-x-0 group-hover:scale-x-100"
@@ -190,7 +191,7 @@ const Header: React.FC = () => {
                   href="https://github.com/rmsap"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 text-gray-600 hover:text-purple-600 transition-colors duration-300 hover:-translate-y-0.5 transform"
+                  className="p-2 text-muted hover:text-accent transition-colors duration-200"
                   aria-label="GitHub"
                 >
                   <Github size={20} />
@@ -199,26 +200,26 @@ const Header: React.FC = () => {
                   href="http://www.linkedin.com/in/ryansaperstein"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 text-gray-600 hover:text-purple-600 transition-colors duration-300 hover:-translate-y-0.5 transform"
+                  className="p-2 text-muted hover:text-accent transition-colors duration-200"
                   aria-label="LinkedIn"
                 >
                   <Linkedin size={20} />
                 </a>
+                <ThemeToggle />
               </div>
               <a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, "#contact")}
-                className="relative px-6 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-full overflow-hidden group hover:shadow-lg transform transition-all duration-300 hover:-translate-y-0.5"
+                className="px-5 py-2.5 bg-accent text-paper font-medium rounded-md hover:opacity-90 transition-opacity duration-200"
               >
-                <span className="relative z-10">Get in Touch</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                Get in Touch
               </a>
             </div>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-md text-gray-700 hover:text-purple-600 hover:bg-gray-100 transition-colors duration-300"
+              className="lg:hidden p-2 rounded-md text-ink hover:text-accent hover:bg-surface transition-colors duration-200"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -228,7 +229,7 @@ const Header: React.FC = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`lg:hidden absolute top-full left-0 right-0 bg-white/95 dark:bg-[#242424]/95 backdrop-blur-md shadow-xl transition-all duration-300 transform ${
+          className={`lg:hidden absolute top-full left-0 right-0 bg-paper/95 backdrop-blur-md border-b border-rule shadow-xl transition-all duration-300 transform ${
             isMobileMenuOpen
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-full pointer-events-none"
@@ -240,23 +241,23 @@ const Header: React.FC = () => {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className={`block px-4 py-3 text-base font-medium rounded-lg transition-all duration-300 ${
+                className={`block px-4 py-3 text-base font-medium rounded-lg transition-colors duration-200 ${
                   isLinkActive(link)
-                    ? "bg-gradient-to-r from-purple-50 to-blue-50 text-purple-600"
-                    : "text-gray-700 hover:bg-gray-50 hover:text-purple-600"
+                    ? "bg-accent-soft text-accent"
+                    : "text-ink hover:bg-surface hover:text-accent"
                 }`}
               >
                 {link.label}
               </a>
             ))}
 
-            <div className="pt-4 border-t border-gray-200">
+            <div className="pt-4 border-t border-rule">
               <div className="flex items-center justify-center space-x-4 mb-4">
                 <a
                   href="https://github.com/rmsap"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 text-gray-600 hover:text-purple-600 transition-colors duration-300"
+                  className="p-2 text-muted hover:text-accent transition-colors duration-200"
                   aria-label="GitHub"
                 >
                   <Github size={24} />
@@ -265,16 +266,17 @@ const Header: React.FC = () => {
                   href="http://www.linkedin.com/in/ryansaperstein"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 text-gray-600 hover:text-purple-600 transition-colors duration-300"
+                  className="p-2 text-muted hover:text-accent transition-colors duration-200"
                   aria-label="LinkedIn"
                 >
                   <Linkedin size={24} />
                 </a>
+                <ThemeToggle />
               </div>
               <a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, "#contact")}
-                className="block w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-full hover:shadow-lg transform transition-all duration-300 text-center"
+                className="block w-full px-6 py-3 bg-accent text-paper font-medium rounded-md hover:opacity-90 transition-opacity duration-200 text-center"
               >
                 Get in Touch
               </a>
@@ -304,15 +306,12 @@ const Header: React.FC = () => {
                 >
                   {/* Tooltip */}
                   <span
-                    className="absolute left-8 px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap pointer-events-none transition-all duration-200"
+                    className="absolute left-8 px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap pointer-events-none transition-all duration-200 bg-accent-soft text-accent border border-accent/30"
                     style={{
                       opacity: isHovered ? 1 : 0,
                       transform: isHovered
                         ? "translateX(0)"
                         : "translateX(-8px)",
-                      background: "rgba(139, 92, 246, 0.15)",
-                      color: "#c4b5fd",
-                      border: "1px solid rgba(139, 92, 246, 0.3)",
                     }}
                   >
                     {link.label}
@@ -326,25 +325,22 @@ const Header: React.FC = () => {
                     {/* Active ring */}
                     {isActive && (
                       <span
-                        className="absolute rounded-full"
-                        style={{
-                          width: 20,
-                          height: 20,
-                          border: "2px solid rgba(139, 92, 246, 0.4)",
-                        }}
+                        className="absolute rounded-full border-2 border-accent/40"
+                        style={{ width: 20, height: 20 }}
                       />
                     )}
                     {/* Dot itself */}
                     <span
-                      className="rounded-full transition-all duration-300"
+                      className={`rounded-full transition-all duration-300 ${
+                        isActive
+                          ? "bg-accent"
+                          : isHovered
+                            ? "bg-accent/60"
+                            : "bg-accent/25"
+                      }`}
                       style={{
                         width: isActive ? 10 : isHovered ? 8 : 6,
                         height: isActive ? 10 : isHovered ? 8 : 6,
-                        backgroundColor: isActive
-                          ? "#a78bfa"
-                          : isHovered
-                            ? "rgba(167, 139, 250, 0.6)"
-                            : "rgba(167, 139, 250, 0.25)",
                       }}
                     />
                   </span>

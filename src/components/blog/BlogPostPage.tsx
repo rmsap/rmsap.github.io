@@ -25,9 +25,11 @@ export default function BlogPostPage() {
 
   if (!post) {
     return (
-      <div className="max-w-3xl mx-auto py-12 text-center">
-        <h1 className="text-2xl mb-4">Post not found</h1>
-        <Link to="/blog" className="text-purple-500 hover:underline">
+      <div className="max-w-3xl mx-auto pt-24 pb-12 text-center">
+        <h1 className="font-display text-2xl font-medium text-ink mb-4">
+          Post not found
+        </h1>
+        <Link to="/blog" className="text-accent hover:underline">
           ← Back to blog
         </Link>
       </div>
@@ -40,14 +42,16 @@ export default function BlogPostPage() {
   return (
     <PageTransition>
       <PostHead post={meta} />
-      <article className="max-w-4xl mx-auto py-12 px-4">
-        <Link to="/blog" className="text-purple-500 hover:underline text-sm">
+      <article className="max-w-4xl mx-auto pt-24 pb-12 px-4">
+        <Link to="/blog" className="text-accent hover:underline text-sm">
           ← Back to blog
         </Link>
 
         <header className="mt-4 mb-8">
-          <h1 className="text-3xl font-bold mb-2">{meta.title}</h1>
-          <div className="flex items-center gap-3 text-sm text-gray-400">
+          <h1 className="font-display text-3xl font-medium text-ink mb-2">
+            {meta.title}
+          </h1>
+          <div className="flex items-center gap-3 text-sm text-muted">
             <time>{meta.date}</time>
             <span>·</span>
             <span>{meta.readingTime} min read</span>
@@ -58,8 +62,8 @@ export default function BlogPostPage() {
                 <Link
                   key={tag}
                   to={`/blog?tag=${tag}`}
-                  className="text-xs bg-gray-700 text-gray-200 px-2 py-1 rounded
-                             hover:bg-gray-600 transition-colors"
+                  className="text-xs bg-accent-soft text-accent px-2 py-1 rounded
+                             hover:bg-accent hover:text-paper transition-colors"
                 >
                   {tag.charAt(0).toUpperCase() + tag.slice(1)}
                 </Link>
@@ -81,12 +85,14 @@ export default function BlogPostPage() {
 
             <PostReactions postSlug={meta.slug} />
 
-            <hr className="my-10 border-gray-700" />
+            <hr className="my-10 border-rule" />
 
             <PostNav prev={prev} next={next} />
 
-            <section className="mt-10 rounded-xl border border-gray-700 bg-gray-800/30 p-6 sm:p-8">
-              <h2 className="text-2xl font-bold mb-6">Discussion</h2>
+            <section className="mt-10 rounded-xl border border-rule bg-surface p-6 sm:p-8">
+              <h2 className="font-display text-2xl font-medium text-ink mb-6">
+                Discussion
+              </h2>
               <CommentList postSlug={meta.slug} />
               <CommentForm postSlug={meta.slug} />
             </section>

@@ -14,12 +14,10 @@ function StatsCard({
   colorClass,
 }: StatsCardProps) {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+    <div className="bg-surface rounded-xl p-4 border border-rule hover:border-accent/40 hover:-translate-y-1 transition-all duration-300">
       <IconComponent className={`w-8 h-8 ${colorClass} mb-2`} />
-      <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-        {value}
-      </p>
-      <p className="text-sm text-gray-600 dark:text-gray-400">{label}</p>
+      <p className="font-display text-2xl font-medium text-ink">{value}</p>
+      <p className="text-sm text-muted">{label}</p>
     </div>
   );
 }

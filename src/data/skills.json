@@ -1,41 +1,68 @@
 {
-  "proficient": [
-    "Java",
-    "Python",
-    "JavaScript",
-    "TypeScript",
-    "React",
-    "React Native",
-    "Git",
-    "Linux",
-    "Racket",
-    "HTML/CSS"
-  ],
-  "familiar": [
-    "Clojure",
-    "Scala",
-    "C",
-    "Kubernetes",
-    "PostgreSQL",
-    "MySQL",
-    "MongoDB",
-    "Arduino"
-  ],
-  "interested": [
-    "Go",
-    "Rust",
-    "Machine Learning",
-    "Neural Networks",
-    "NLP",
-    "Robotics"
-  ],
-  "soft": [
-    "Team Leadership",
-    "Agile/Scrum",
-    "Technical Communication",
-    "Problem Solving",
-    "Continous Learner",
-    "Detail Oriented",
-    "Cross-functional Collaboration"
+  "categories": [
+    {
+      "label": "Languages",
+      "icon": "Code2",
+      "items": [
+        "TypeScript",
+        "JavaScript",
+        "Python",
+        "Rust",
+        "Go",
+        "SQL",
+        "Java",
+        "Scala"
+      ]
+    },
+    {
+      "label": "Frontend",
+      "icon": "MonitorSmartphone",
+      "items": [
+        "React",
+        "React Native",
+        "Redux",
+        "React Query",
+        "Next.js",
+        "HTML/CSS"
+      ]
+    },
+    {
+      "label": "Backend & Data",
+      "icon": "Server",
+      "items": [
+        "Django",
+        "Django Channels",
+        "Node",
+        "REST",
+        "WebSockets",
+        "PostgreSQL",
+        "MongoDB"
+      ]
+    },
+    {
+      "label": "Infrastructure & Tooling",
+      "icon": "Cloud",
+      "items": [
+        "Docker",
+        "Kubernetes",
+        "AWS",
+        "GCP",
+        "Azure",
+        "Git",
+        "GitHub Actions",
+        "Linux"
+      ]
+    },
+    {
+      "label": "Compilers & Systems",
+      "icon": "Cpu",
+      "items": [
+        "Cranelift",
+        "WebAssembly",
+        "LSP tooling",
+        "SSA IR",
+        "Tracing GC"
+      ]
+    }
   ]
 }

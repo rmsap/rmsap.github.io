@@ -1,44 +1,45 @@
 [
   {
     "company": "Playbook Sports",
-    "role": "Mobile App Developer",
+    "role": "Software Developer",
     "period": "Nov 2025 - Present",
     "logo": "/playbookLogo.png",
     "highlights": [
-      "Build and maintain an all-in-one sports management app for leagues, coaches, and parents",
-      "Improved in-app chat: implemented message reactions, archiving, and muting",
-      "Implemented calendar subscriptions through ICS feeds",
-      "Improved push notification reliability and specificity"
+      "Rebuilt the production real-time chat end to end (Django/Channels backend, typed React Native client), collapsing 3 message types, 3 WebSocket consumers, and ~20 REST endpoints into 1 schema, 1 consumer, and 11 endpoints, backed by 300+ tests where there were almost none",
+      "Shipped the rewrite behind a one-hour maintenance-window cutover with ID-pinned backfill, additive-then-FK-swap migrations, and legacy data kept as a rollback safety net",
+      "Closed two production security gaps in one release: a magic-link token exposure (redesigned around server-signed, 15-minute tokens) and a public S3 bucket (replaced with per-user scoped access)",
+      "Moved deep-link routing from the client into a Django service, cutting ~200 lines of app-side logic so link changes ship without an app-store release"
     ],
     "location": "Hoboken, NJ",
     "technologies": [
       "React Native",
-      "Django",
       "TypeScript",
-      "JavaScript",
+      "Django",
+      "Django Channels",
       "Python",
       "PostgreSQL",
-      "Heroku",
-      "GitHub Actions"
+      "WebSockets",
+      "AWS S3"
     ]
   },
   {
     "company": "Generate Product Development",
-    "role": "Tech Lead",
+    "role": "Tech Lead, Frontend",
     "period": "Aug 2024 - Dec 2024",
     "logo": "/generateLogo.png",
     "highlights": [
-      "Led a team of 6 engineers on mobile app development",
-      "Implemented CI/CD through GitHub Actions",
-      "Planned software architecture and managed sprint tickets"
+      "Co-led a six-engineer team shipping an MVP mobile app from zero for an early-stage founder; owned all frontend architecture across a React Native/TypeScript codebase",
+      "Designed the navigation, component, and data-fetching patterns the team built every screen against: an auth-aware root navigator plus a typed React Query hook layer centralizing auth, caching, and loading state",
+      "Patterns held up through six engineers and full MVP delivery, with no major refactors as scope grew"
     ],
     "location": "Boston, MA",
     "technologies": [
       "React Native",
       "TypeScript",
+      "React Query",
       "Go",
-      "GitHub Actions",
-      "RESTful APIs"
+      "REST",
+      "GitHub Actions"
     ]
   },
   {
@@ -47,20 +48,11 @@
     "period": "Jan 2024 - Jun 2024",
     "logo": "/broadLogo.jpeg",
     "highlights": [
-      "Implemented support for new WDL spec in execution engine",
-      "Discovered and fixed critical bugs in integration testing framework",
-      "Developed front-end features based on user feedback"
+      "Added support for a new revision of the WDL spec (the language biologists use to define genomic pipelines) in Cromwell, the Broad's open-source Scala workflow engine",
+      "After a bug I caused reached production undetected, traced it to a years-old TODO that capped the integration test framework's type coverage to strings and ints; rewrote the framework to support complex types and backfilled coverage"
     ],
     "location": "Cambridge, MA",
-    "technologies": [
-      "React",
-      "TypeScript",
-      "Scala",
-      "PostgreSQL",
-      "GCP",
-      "Azure",
-      "WDL"
-    ]
+    "technologies": ["Scala", "React", "TypeScript", "PostgreSQL", "GCP", "WDL"]
   },
   {
     "company": "VMware",
@@ -68,9 +60,8 @@
     "period": "Jan 2023 - Dec 2023",
     "logo": "/vmwareLogo.webp",
     "highlights": [
-      "Developed workflow debugging tool for log analysis",
-      "Enhanced VMware Cloud Director platform",
-      "Worked with RESTful APIs and PostgreSQL databases"
+      "Built a CLI tool that parses customer log bundles (hundreds of thousands of lines) into a queryable, filterable interface, cutting ticket-debugging time from days to hours",
+      "Contributed features to the VMware Cloud Director platform, working across RESTful APIs and PostgreSQL"
     ],
     "location": "Boston, MA",
     "technologies": ["Java", "PostgreSQL", "RESTful APIs", "Git", "Jenkins"]
@@ -80,9 +71,8 @@
     "role": "Owner & Software Developer",
     "period": "Mar 2022 - Present",
     "highlights": [
-      "Built two mobile apps for NJ non-profit: Help App and RecoverWE",
-      "Full-stack development with React Native, Python, and SQL",
-      "Delivered accessible resources to community users"
+      "Co-built two production React Native apps for a NJ non-profit over a four-year engagement; shaped the roadmap with non-technical stakeholders and jointly owned architecture and delivery",
+      "Shipped to iOS and Android, with 2,000+ downloads across 6 counties"
     ],
     "location": "Remote",
     "technologies": ["React Native", "JavaScript", "Python", "SQL", "AWS"]

@@ -1,29 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Single theme-color, kept in sync with the active theme by the inline
+         script below and the in-app toggle. -->
+    <meta name="theme-color" content="#1b1714" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ryan Saperstein</title>
+    <!-- Editorial type: Fraunces (display serif) + Inter (body). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
     <!-- Static OG/Twitter tags for the homepage. Crawlers don't execute JS,
          so react-helmet-async additions won't reach them — these have to live
-         in the served HTML. Per-blog-post tags are injected by
-         scripts/prerenderBlog.ts on top of this shell. -->
-    <meta name="description" content="Mobile App Developer at Playbook Sports. Northeastern grad with experience at the Broad Institute and VMware — building scalable, impactful software." />
+         in the served HTML. Per-page tags and rendered body content are
+         injected by scripts/prerender.ts on top of this shell. -->
+    <meta
+      name="description"
+      content="Software Developer at Playbook Sports, building an all-in-one app for youth sports leagues. On the side, building Phoenix, a programming language written from scratch in Rust. Northeastern grad, previously at the Broad Institute and VMware."
+    />
     <link rel="canonical" href="https://rmsap.github.io/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Ryan Saperstein" />
     <meta property="og:title" content="Ryan Saperstein" />
-    <meta property="og:description" content="Mobile App Developer at Playbook Sports. Northeastern grad with experience at the Broad Institute and VMware — building scalable, impactful software." />
+    <meta
+      property="og:description"
+      content="Software Developer at Playbook Sports, building an all-in-one app for youth sports leagues. On the side, building Phoenix, a programming language written from scratch in Rust. Northeastern grad, previously at the Broad Institute and VMware."
+    />
     <meta property="og:url" content="https://rmsap.github.io/" />
-    <meta property="og:image" content="https://rmsap.github.io/ryanPhoto.jpg" />
+    <meta property="og:image" content="https://rmsap.github.io/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Ryan Saperstein, software engineer building Phoenix, a programming language in Rust"
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Ryan Saperstein" />
-    <meta name="twitter:description" content="Mobile App Developer at Playbook Sports. Northeastern grad with experience at the Broad Institute and VMware — building scalable, impactful software." />
-    <meta name="twitter:image" content="https://rmsap.github.io/ryanPhoto.jpg" />
+    <meta
+      name="twitter:description"
+      content="Software Developer at Playbook Sports, building an all-in-one app for youth sports leagues. On the side, building Phoenix, a programming language written from scratch in Rust. Northeastern grad, previously at the Broad Institute and VMware."
+    />
+    <meta name="twitter:image" content="https://rmsap.github.io/og.png" />
+    <meta
+      name="twitter:image:alt"
+      content="Ryan Saperstein, software engineer building Phoenix, a programming language in Rust"
+    />
+    <!-- Static (not Helmet) so feed discovery finds it in <head> on every
+         prerendered page; scripts/prerender.ts preserves it when swapping
+         page-specific meta. -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Ryan Saperstein's Blog"
+      href="/rss.xml"
+    />
     <!-- Must run before React mounts; see public/spa-redirect.js.
          Served verbatim from public/ — do not move under src/ or Vite will rewrite the path. -->
     <script src="/spa-redirect.js"></script>
+    <!-- Apply the saved (or OS-preferred) color theme before first paint so
+         there's no flash of the wrong theme. The toggle persists "theme". -->
+    <script>
+      (function () {
+        try {
+          var t =
+            localStorage.getItem("theme") ||
+            (matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light");
+          document.documentElement.dataset.theme = t;
+          var m = document.querySelector('meta[name="theme-color"]');
+          if (m)
+            m.setAttribute("content", t === "light" ? "#f6f1e7" : "#1b1714");
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

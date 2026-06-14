@@ -24,9 +24,19 @@ export default function CommentForm({ postSlug }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [honeypot, setHoneypot] = useState("");
-  const [challenge, setChallenge] = useState(generateChallenge);
+  // null until mount: this component is prerendered at build time
+  // (scripts/prerender.ts), so generating the challenge at render scope would
+  // bake one random question into the static HTML and hydrate a different one.
+  const [challenge, setChallenge] = useState<{
+    question: string;
+    answer: number;
+  } | null>(null);
   const [captchaInput, setCaptchaInput] = useState("");
   const mountTime = useRef(Date.now());
+
+  useEffect(() => {
+    setChallenge(generateChallenge());
+  }, []);
 
   useEffect(() => {
     mountTime.current = Date.now();
@@ -46,7 +56,7 @@ export default function CommentForm({ postSlug }: Props) {
       setError("That was a bit fast — please take a moment before posting.");
       return;
     }
-    if (parseInt(captchaInput, 10) !== challenge.answer) {
+    if (!challenge || parseInt(captchaInput, 10) !== challenge.answer) {
       setError("Incorrect answer. Please try again.");
       setChallenge(generateChallenge());
       setCaptchaInput("");
@@ -75,10 +85,8 @@ export default function CommentForm({ postSlug }: Props) {
   }
 
   return (
-    <div className="mt-6 pt-6 border-t border-gray-700">
-      <h3 className="text-lg font-semibold mb-4 text-gray-200">
-        Leave a Comment
-      </h3>
+    <div className="mt-6 pt-6 border-t border-rule">
+      <h3 className="text-lg font-semibold mb-4 text-ink">Leave a Comment</h3>
       {error && (
         <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
           {error}
@@ -100,7 +108,7 @@ export default function CommentForm({ postSlug }: Props) {
           placeholder="Your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="rounded-lg border border-gray-600 bg-gray-800/50 px-4 py-2.5 text-sm text-gray-200 placeholder-gray-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 transition-colors"
+          className="rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm text-ink placeholder-muted focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-colors"
           maxLength={50}
         />
         <div
@@ -130,21 +138,21 @@ export default function CommentForm({ postSlug }: Props) {
             onChange={(e) =>
               setBody(e.target.value.slice(0, MAX_COMMENT_LENGTH))
             }
-            className="w-full rounded-lg border border-gray-600 bg-gray-800/50 px-4 py-2.5 text-sm text-gray-200 placeholder-gray-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 transition-colors min-h-[120px] resize-y"
+            className="w-full rounded-lg border border-rule bg-paper px-4 py-2.5 text-sm text-ink placeholder-muted focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-colors min-h-[120px] resize-y"
             maxLength={MAX_COMMENT_LENGTH}
           />
           <p
-            className="text-xs text-gray-500 mt-1.5 text-right"
+            className="text-xs text-muted mt-1.5 text-right"
             aria-live="polite"
           >
             {body.length}/{MAX_COMMENT_LENGTH}
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <label className="text-sm text-gray-400">
+          <label className="text-sm text-muted">
             What is{" "}
-            <span className="font-mono font-bold text-gray-200">
-              {challenge.question}
+            <span className="font-mono font-bold text-ink">
+              {challenge?.question}
             </span>
             ?
           </label>
@@ -153,7 +161,7 @@ export default function CommentForm({ postSlug }: Props) {
             inputMode="numeric"
             value={captchaInput}
             onChange={(e) => setCaptchaInput(e.target.value)}
-            className="w-16 rounded-lg border border-gray-600 bg-gray-800/50 px-3 py-2 text-sm text-center text-gray-200 placeholder-gray-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500 transition-colors"
+            className="w-16 rounded-lg border border-rule bg-paper px-3 py-2 text-sm text-center text-ink placeholder-muted focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-colors"
             maxLength={3}
             placeholder="?"
           />
@@ -164,10 +172,11 @@ export default function CommentForm({ postSlug }: Props) {
             submitting ||
             !name.trim() ||
             !body.trim() ||
+            !challenge ||
             !captchaInput ||
             body.length > MAX_COMMENT_LENGTH
           }
-          className="self-start px-5 py-2.5 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="self-start px-5 py-2.5 rounded-lg bg-accent text-paper text-sm font-medium hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
         >
           {submitting ? "Posting..." : "Post Comment"}
         </button>
