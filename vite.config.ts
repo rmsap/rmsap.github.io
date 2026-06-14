@@ -11,6 +11,8 @@ import { bundledLanguages } from "shiki";
 import { remarkReadingTime } from "./src/utils/remarkReadingTime";
 import phoenixGrammar from "./src/languages/phoenix.tmLanguage.json";
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 const phoenixLang = {
   ...phoenixGrammar,
   aliases: ["phoenix"],
@@ -18,36 +20,32 @@ const phoenixLang = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    mdx({
-      providerImportSource: "@mdx-js/react",
-      remarkPlugins: [
-        remarkGfm,
-        remarkSmartypants,
-        remarkFrontmatter,
-        remarkMdxFrontmatter,
-        remarkReadingTime,
-      ],
-      rehypePlugins: [
-        [
-          rehypeShiki,
-          {
-            themes: { light: "github-light", dark: "github-dark" },
-            langs: [...Object.keys(bundledLanguages), phoenixLang],
-            transformers: [
-              {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                pre(this: any, node: { properties: Record<string, unknown> }) {
-                  // @shikijs/rehype strips the language class — preserve it as a data attribute
-                  node.properties["data-language"] = this.options.lang;
-                },
+  plugins: [mdx({
+    providerImportSource: "@mdx-js/react",
+    remarkPlugins: [
+      remarkGfm,
+      remarkSmartypants,
+      remarkFrontmatter,
+      remarkMdxFrontmatter,
+      remarkReadingTime,
+    ],
+    rehypePlugins: [
+      [
+        rehypeShiki,
+        {
+          themes: { light: "github-light", dark: "github-dark" },
+          langs: [...Object.keys(bundledLanguages), phoenixLang],
+          transformers: [
+            {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              pre(this: any, node: { properties: Record<string, unknown> }) {
+                // @shikijs/rehype strips the language class — preserve it as a data attribute
+                node.properties["data-language"] = this.options.lang;
               },
-            ],
-          },
-        ],
+            },
+          ],
+        },
       ],
-    }),
-    react(),
-    tailwindcss(),
-  ],
+    ],
+  }), react(), tailwindcss(), cloudflare()],
 });

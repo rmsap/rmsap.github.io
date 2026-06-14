@@ -6,11 +6,11 @@
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "npm run build && wrangler deploy",
     "dev": "vite",
     "build": "tsc -b && tsx scripts/generateRss.ts && vite build && tsx scripts/prerenderBlog.ts",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "npm run build && wrangler dev",
     "new-post": "tsx scripts/newPost.ts"
   },
   "dependencies": {
@@ -36,6 +36,7 @@
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.40.2",
     "@eslint/js": "^9.33.0",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
@@ -54,6 +55,7 @@
     "tsx": "^4.19.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.39.1",
-    "vite": "^7.1.2"
+    "vite": "^7.1.2",
+    "wrangler": "^4.100.0"
   }
 }
