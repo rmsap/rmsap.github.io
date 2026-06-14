@@ -3,8 +3,8 @@
 //
 // Renders every route (/, /blog, /blog/<slug>) to static HTML via the SSR
 // bundle and writes dist/<route>/index.html with page-specific Open Graph +
-// Twitter tags injected into <head>. GitHub Pages serves these as real 200
-// responses, so crawlers (LinkedIn, Slack, iMessage, etc.) that don't run
+// Twitter tags injected into <head>. The static host (Cloudflare Pages) serves
+// these as real 200 responses, so crawlers (LinkedIn, Slack, iMessage, etc.) that don't run
 // JavaScript see the right metadata AND the full page content. The React app
 // hydrates over the markup for human visitors (see src/main.tsx), so the SPA
 // behaviour is unchanged.

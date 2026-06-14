@@ -1,6 +1,6 @@
 # Ryan Saperstein — Personal Portfolio
 
-A single-page portfolio site built with React, TypeScript, Vite, and Tailwind CSS. Hosted on GitHub Pages at **https://rmsap.github.io**.
+A single-page portfolio site built with React, TypeScript, Vite, and Tailwind CSS. Hosted on Cloudflare Pages at **https://ryansaperstein.com**.
 
 ## Tech stack
 
@@ -68,7 +68,7 @@ Preview serves the production build locally (default [http://localhost:4173](htt
 | `npm run dev` | Start Vite dev server with HMR       |
 | `npm run build` | Type-check and build for production |
 | `npm run preview` | Serve the `dist` build locally    |
-| `npm run deploy` | Build and deploy to GitHub Pages (`gh-pages` branch) |
+| `npm run deploy:redirect` | Publish the `redirect/` page to the `gh-pages` branch (forwards `rmsap.github.io` → `ryansaperstein.com`) |
 | `npm run lint` | Run ESLint                          |
 
 ## Project structure
@@ -108,19 +108,27 @@ src/
 
 Asset paths (e.g. logos, photos) are relative to the `public/` folder (e.g. `/playbookLogo.png` → `public/playbookLogo.png`).
 
-## Deployment (GitHub Pages)
+## Deployment (Cloudflare Pages)
 
-This repo is set up as a **GitHub user/org site** (`rmsap.github.io`), so the site is served from the root: **https://rmsap.github.io**.
+The live site is hosted on **Cloudflare Pages** at **https://ryansaperstein.com**. Cloudflare builds directly from the GitHub repo on push — there's no manual deploy step.
 
-To deploy:
+Cloudflare Pages project settings:
+
+- **Build command:** `npm run build`
+- **Build output directory:** `dist`
+- **Environment variables:** every `VITE_*` key from `.env` must be set in the Pages project (Settings → Environment variables) — these are inlined at build time, so the contact form (`VITE_WEB3FORMS_ACCESS_KEY`) and Firebase (`VITE_FIREBASE_*`) break if they're missing.
+
+SPA deep links and prerendered blog pages are served as real files; unknown paths fall through to `public/404.html`, which Cloudflare serves and which bootstraps the app (see `public/spa-redirect.js`).
+
+### Old GitHub Pages domain
+
+`rmsap.github.io` is kept alive on GitHub Pages purely to redirect old links to the new domain. The redirect page lives in `redirect/`; publish it to the `gh-pages` branch with:
 
 ```bash
-npm run deploy
+npm run deploy:redirect
 ```
 
-This runs `tsc -b && vite build` and then publishes the `dist/` output to the `gh-pages` branch. GitHub Pages serves the site from that branch.
-
-**Note:** If you ever switch to a **project** site (e.g. `username.github.io/repo-name`), add `base: '/repo-name/'` in `vite.config.ts` so assets and routing work correctly.
+Make sure the repo's **Settings → Pages → Custom domain** is left empty so it serves at `rmsap.github.io` (not trying to claim `ryansaperstein.com`).
 
 ## License
 

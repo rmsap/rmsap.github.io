@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { doc, getDoc, setDoc, increment, onSnapshot } from "firebase/firestore";
-import { db, ensureAuth } from "../../firebase";
+import { getDb, ensureAuth } from "../../firebase";
 
 const EMOJIS = ["👍", "🔥", "💡", "❤️", "🎉"];
 
@@ -20,7 +20,7 @@ export default function PostReactions({ postSlug }: Props) {
 
   // Subscribe to reaction counts
   useEffect(() => {
-    const ref = doc(db, "blog_reactions", postSlug);
+    const ref = doc(getDb(), "blog_reactions", postSlug);
     return onSnapshot(ref, (snap) => {
       setCounts(
         snap.exists() ? (snap.data() as unknown as Record<string, number>) : {},
@@ -31,7 +31,7 @@ export default function PostReactions({ postSlug }: Props) {
   // Load which emojis this user already reacted with
   useEffect(() => {
     if (!uid) return;
-    void getDoc(doc(db, "blog_reactions", postSlug, "users", uid)).then(
+    void getDoc(doc(getDb(), "blog_reactions", postSlug, "users", uid)).then(
       (snap) => {
         if (snap.exists()) {
           const data = snap.data() as { emojis?: string[] };
@@ -62,11 +62,11 @@ export default function PostReactions({ postSlug }: Props) {
 
     try {
       await setDoc(
-        doc(db, "blog_reactions", postSlug),
+        doc(getDb(), "blog_reactions", postSlug),
         { [emoji]: increment(delta) },
         { merge: true },
       );
-      await setDoc(doc(db, "blog_reactions", postSlug, "users", uid), {
+      await setDoc(doc(getDb(), "blog_reactions", postSlug, "users", uid), {
         emojis: Array.from(updatedSet),
       });
     } catch {

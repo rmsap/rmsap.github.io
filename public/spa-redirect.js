@@ -1,28 +1,12 @@
-// Single-Page Apps for GitHub Pages
-// https://github.com/rafgraph/spa-github-pages
-// Decodes the redirect written by 404.html back into a real path before React mounts.
-// Must stay encoding-compatible with public/404.html; edit them together.
+// Migrate legacy HashRouter URLs into BrowserRouter paths before React mounts.
+// This is purely client-side — the `#hash` never reaches the server — so it's
+// host-independent and runs the same on any host.
+//
+// Until the move to Cloudflare this file also decoded the spa-github-pages
+// 404.html redirect (https://github.com/rafgraph/spa-github-pages). Cloudflare
+// serves index.html for unmatched paths natively (see wrangler.jsonc
+// `not_found_handling`), so that half — and public/404.html — were removed.
 (function (l) {
-  // No-op when not coming from the 404.html redirect — direct loads of index.html
-  // (e.g. landing on `/` or `/#projects`) have no `?/...` query and should be left alone.
-  if (l.search[1] === "/") {
-    var decoded = l.search
-      .slice(1)
-      .split("&")
-      .map(function (s) {
-        return s.replace(/~and~/g, "&");
-      })
-      .join("?");
-    // Tell main.tsx not to hydrate: the served HTML is the prerendered
-    // homepage, but the rewritten URL is a different route.
-    window.__SPA_PATH_REWRITTEN__ = true;
-    window.history.replaceState(
-      null,
-      "",
-      l.pathname.slice(0, -1) + decoded + l.hash,
-    );
-  }
-
   // Migrate legacy HashRouter URLs (the app used HashRouter before commit 69163b1).
   // Links printed on already-distributed résumés look like `rmsap.github.io/#/blog/slug`.
   // Those load index.html at `/`, so BrowserRouter sees path `/` and shows the homepage

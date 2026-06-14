@@ -8,7 +8,7 @@ import {
   serverTimestamp,
   Timestamp,
 } from "firebase/firestore";
-import { db, ensureAuth } from "../firebase";
+import { getDb, ensureAuth } from "../firebase";
 import type { Comment } from "../types/blog";
 
 const COMMENTS_COL = "blog_comments";
@@ -31,7 +31,7 @@ export function subscribeToComments(
   callback: (comments: Comment[]) => void,
 ): () => void {
   const q = query(
-    collection(db, COMMENTS_COL),
+    collection(getDb(), COMMENTS_COL),
     where("postSlug", "==", postSlug),
     where("approved", "==", true),
     orderBy("createdAt", "asc"),
@@ -73,7 +73,7 @@ export async function addComment(
     );
   }
   const uid = await ensureAuth();
-  await addDoc(collection(db, COMMENTS_COL), {
+  await addDoc(collection(getDb(), COMMENTS_COL), {
     postSlug,
     authorName: authorName.trim(),
     authorUid: uid,

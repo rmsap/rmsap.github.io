@@ -2,13 +2,16 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portfolio",
   "compatibility_date": "2026-06-14",
-  "observability": {
-    "enabled": true
-  },
+  // Static-assets-only deploy (no Worker script). `npm run build` already
+  // prerenders every route into ./dist; wrangler just uploads it. Having this
+  // file present stops `wrangler deploy` from running its no-config auto-setup,
+  // which otherwise injects @cloudflare/vite-plugin and re-runs the build —
+  // that rebuild emits the SSR entry as dist-ssr/assets/entry-server-[hash].js
+  // instead of dist-ssr/entry-server.js and breaks scripts/prerender.ts.
   "assets": {
+    "directory": "./dist",
+    // Serve the SPA shell for paths with no prerendered file; prerendered
+    // routes (dist/blog/<slug>/index.html) still match and are served directly.
     "not_found_handling": "single-page-application"
-  },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+  }
 }
