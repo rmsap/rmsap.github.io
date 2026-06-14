@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moved to ryansaperstein.com</title>
+    <!-- This page lives on the orphan `redirect` branch, which GitHub Pages
+         serves directly at rmsap.github.io (Settings → Pages → Source =
+         `redirect` / root). The site itself now lives on Cloudflare Pages at
+         https://ryansaperstein.com; GitHub Pages keeps serving rmsap.github.io
+         purely to forward old links (printed résumés, shared URLs, search
+         results) to the new domain.
+
+         The script preserves the path, query, and hash so deep links survive —
+         e.g. rmsap.github.io/blog/some-post -> ryansaperstein.com/blog/some-post,
+         and legacy hash links (rmsap.github.io/#/blog/some-post) are forwarded
+         verbatim, then migrated by the app's own spa-redirect.js on arrival.
+         404.html is an identical copy so GitHub Pages forwards deep paths too. -->
+    <link rel="canonical" href="https://ryansaperstein.com/" />
+    <meta name="robots" content="noindex" />
+    <script>
+      (function () {
+        var l = window.location;
+        l.replace(
+          "https://ryansaperstein.com" + l.pathname + l.search + l.hash,
+        );
+      })();
+    </script>
+    <meta
+      http-equiv="refresh"
+      content="0; url=https://ryansaperstein.com/"
+    />
+  </head>
+  <body>
+    <p>
+      This site has moved to
+      <a href="https://ryansaperstein.com/">ryansaperstein.com</a>.
+    </p>
+  </body>
+</html>
