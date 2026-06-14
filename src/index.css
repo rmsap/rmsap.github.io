@@ -89,6 +89,11 @@ html {
      matches HEADER_OFFSET so this still works if the JS hasn't run yet. */
   scroll-padding-top: var(--header-offset, 80px);
   background-color: var(--paper);
+  /* Guardrail against accidental horizontal scroll on mobile (e.g. the Featured
+     Posts carousel's translated peek cards spilling past the viewport). `clip`
+     stops the scroll WITHOUT creating a scroll container, so unlike
+     `overflow: hidden` it doesn't break position: sticky or vertical scrolling. */
+  overflow-x: clip;
 }
 
 body {
@@ -96,6 +101,7 @@ body {
   min-height: 100vh;
   background-color: var(--paper);
   color: var(--ink);
+  overflow-x: clip;
 }
 
 /* Fraunces is variable — opt into its softer, slightly characterful axes so it

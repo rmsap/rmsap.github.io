@@ -11,8 +11,6 @@ import { defineConfig } from "vite";
 import phoenixGrammar from "./src/languages/phoenix.tmLanguage.json";
 import { remarkReadingTime } from "./src/utils/remarkReadingTime";
 
-import { cloudflare } from "@cloudflare/vite-plugin";
-
 const phoenixLang = {
   ...phoenixGrammar,
   aliases: ["phoenix"],
@@ -54,6 +52,5 @@ export default defineConfig({
     }),
     react(),
     tailwindcss(),
-    cloudflare(),
   ],
 });
