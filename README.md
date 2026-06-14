@@ -68,7 +68,6 @@ Preview serves the production build locally (default [http://localhost:4173](htt
 | `npm run dev` | Start Vite dev server with HMR       |
 | `npm run build` | Type-check and build for production |
 | `npm run preview` | Serve the `dist` build locally    |
-| `npm run deploy:redirect` | Publish the `redirect/` page to the `gh-pages` branch (forwards `rmsap.github.io` → `ryansaperstein.com`) |
 | `npm run lint` | Run ESLint                          |
 
 ## Project structure
@@ -122,13 +121,21 @@ SPA deep links and prerendered blog pages are served as real files; unknown path
 
 ### Old GitHub Pages domain
 
-`rmsap.github.io` is kept alive on GitHub Pages purely to redirect old links to the new domain. The redirect page lives in `redirect/`; publish it to the `gh-pages` branch with:
+`rmsap.github.io` is kept alive on GitHub Pages purely to forward old links (printed résumés, shared URLs, search results) to the new domain.
+
+The redirect is **not built from this branch** — it lives on its own orphan `redirect` branch containing only `index.html` + `404.html` (a meta-refresh / JS redirect that preserves path, query, and hash). GitHub Pages serves that branch directly, so there's no build step or dependency in `main`.
+
+GitHub repo settings: **Settings → Pages → Source = Deploy from a branch → `redirect` / `(root)`**, and leave **Custom domain** empty so it serves at `rmsap.github.io` (not trying to claim `ryansaperstein.com`).
+
+To edit the redirect later:
 
 ```bash
-npm run deploy:redirect
+git switch redirect      # the orphan branch
+# edit index.html / 404.html
+git commit -am "Update redirect"
+git push
+git switch main
 ```
-
-Make sure the repo's **Settings → Pages → Custom domain** is left empty so it serves at `rmsap.github.io` (not trying to claim `ryansaperstein.com`).
 
 ## License
 

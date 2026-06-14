@@ -73,7 +73,9 @@ function emptyRoot(html: string): string {
   throw new Error("Could not find #root's closing </div> in shell");
 }
 
-const shell = emptyRoot(fs.readFileSync(shellPath, "utf-8"));
+const shell = stripPrerenderMarker(
+  emptyRoot(fs.readFileSync(shellPath, "utf-8")),
+);
 
 function escapeAttr(v: string): string {
   return v
@@ -134,6 +136,27 @@ function injectHead(shellHtml: string, metaBlock: string): string {
   return stripHomepageMeta(shellHtml).replace(
     "</head>",
     `${metaBlock}\n  </head>`,
+  );
+}
+
+// Stamp the page with the route it was prerendered for. The client (src/main.tsx)
+// hydrates only when this matches the current path; Cloudflare's SPA fallback
+// serves the homepage markup ("/") for unmatched paths, so the mismatch tells the
+// client to render fresh instead of hydrating homepage markup onto a 404 route.
+// A classic inline script so it runs before the deferred app module sets up React.
+function injectPrerenderMarker(html: string, route: string): string {
+  return html.replace(
+    "</head>",
+    `    <script>window.__PRERENDERED_PATH__ = ${JSON.stringify(route)};</script>\n  </head>`,
+  );
+}
+
+// Remove a previously-injected marker so re-running prerender against an already
+// prerendered dist/index.html (read back as the shell) doesn't stack duplicates.
+function stripPrerenderMarker(html: string): string {
+  return html.replace(
+    /\n?\s*<script>window\.__PRERENDERED_PATH__[^<]*<\/script>/g,
+    "",
   );
 }
 
@@ -246,6 +269,7 @@ for (const route of getStaticPaths()) {
       appHtml,
     );
   }
+  pageHtml = injectPrerenderMarker(pageHtml, route);
   const outFile =
     route === "/"
       ? path.join(distDir, "index.html")
