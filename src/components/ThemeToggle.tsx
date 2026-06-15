@@ -20,7 +20,7 @@ export default function ThemeToggle() {
     }
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta)
-      meta.setAttribute("content", next === "light" ? "#f6f1e7" : "#1b1714");
+      meta.setAttribute("content", next === "light" ? "#f2f5f9" : "#0f141c");
   };
 
   return (

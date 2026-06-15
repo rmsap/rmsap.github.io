@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
-  <rect width="180" height="180" fill="#1b1714" />
+  <rect width="180" height="180" fill="#0f141c" />
   <text
     x="90"
     y="122"
@@ -8,6 +8,6 @@
     font-size="92"
     font-weight="600"
     letter-spacing="2"
-    fill="#d98a63"
+    fill="#6ea7e6"
   >RS</text>
 </svg>

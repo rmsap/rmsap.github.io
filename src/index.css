@@ -33,14 +33,14 @@
 }
 
 :root {
-  /* Warm editorial palette. Dark is the default theme. */
-  --paper: #1b1714;
-  --surface: #221d18;
-  --ink: #ece3d6;
-  --muted: #a99e8e;
-  --accent: #d98a63;
-  --accent-soft: rgba(217, 138, 99, 0.14);
-  --rule: rgba(236, 227, 214, 0.12);
+  /* Cool slate + blue editorial palette. Dark is the default theme. */
+  --paper: #0f141c;
+  --surface: #18202b;
+  --ink: #e7ecf3;
+  --muted: #92a0b4;
+  --accent: #6ea7e6;
+  --accent-soft: rgba(110, 167, 230, 0.15);
+  --rule: rgba(231, 236, 243, 0.12);
 
   font-family: var(--font-sans);
   line-height: 1.6;
@@ -59,26 +59,26 @@
 /* Light palette. Applies when the visitor picks light via the toggle
    (data-theme="light"), or — absent a saved choice — when their OS prefers
    light. An inline script in index.html sets data-theme before first paint,
-   so there's no flash. Warm paper, not stark white. */
+   so there's no flash. Warm ivory paper, gently-lifted cards. */
 :root[data-theme="light"] {
-  --paper: #f6f1e7;
-  --surface: #fbf7ef;
-  --ink: #2a2521;
-  --muted: #6f6557;
-  --accent: #b1502f;
-  --accent-soft: rgba(177, 80, 47, 0.1);
-  --rule: rgba(42, 37, 33, 0.12);
+  --paper: #f7f4ec;
+  --surface: #fcf9f1;
+  --ink: #16202e;
+  --muted: #586577;
+  --accent: #2563b8;
+  --accent-soft: rgba(37, 99, 184, 0.1);
+  --rule: rgba(22, 32, 46, 0.12);
   color-scheme: light;
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) {
-    --paper: #f6f1e7;
-    --surface: #fbf7ef;
-    --ink: #2a2521;
-    --muted: #6f6557;
-    --accent: #b1502f;
-    --accent-soft: rgba(177, 80, 47, 0.1);
-    --rule: rgba(42, 37, 33, 0.12);
+    --paper: #f7f4ec;
+    --surface: #fcf9f1;
+    --ink: #16202e;
+    --muted: #586577;
+    --accent: #2563b8;
+    --accent-soft: rgba(37, 99, 184, 0.1);
+    --rule: rgba(22, 32, 46, 0.12);
     color-scheme: light;
   }
 }

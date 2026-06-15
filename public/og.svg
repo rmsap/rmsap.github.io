@@ -1,20 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#1b1714" />
-  <rect x="24" y="24" width="1152" height="582" rx="18" fill="none" stroke="#ece3d6" stroke-opacity="0.10" stroke-width="2" />
+  <rect width="1200" height="630" fill="#0f141c" />
+  <rect x="24" y="24" width="1152" height="582" rx="18" fill="none" stroke="#e7ecf3" stroke-opacity="0.10" stroke-width="2" />
 
   <!-- Monogram, matching the favicon/footer -->
-  <rect x="80" y="78" width="76" height="76" rx="16" fill="none" stroke="#d98a63" stroke-width="2" />
-  <text x="118" y="131" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="600" fill="#d98a63">RS</text>
+  <rect x="80" y="78" width="76" height="76" rx="16" fill="none" stroke="#6ea7e6" stroke-width="2" />
+  <text x="118" y="131" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="600" fill="#6ea7e6">RS</text>
 
   <!-- Name -->
-  <text x="78" y="372" font-family="Georgia, 'Times New Roman', serif" font-size="104" font-weight="600" fill="#ece3d6">Ryan Saperstein</text>
+  <text x="78" y="372" font-family="Georgia, 'Times New Roman', serif" font-size="104" font-weight="600" fill="#e7ecf3">Ryan Saperstein</text>
 
   <!-- Subtitle -->
-  <text x="82" y="438" font-family="'DejaVu Sans', sans-serif" font-size="36" fill="#a99e8e">Software Engineer  ·  building Phoenix, a language in Rust</text>
+  <text x="82" y="438" font-family="'DejaVu Sans', sans-serif" font-size="36" fill="#92a0b4">Software Engineer  ·  building Phoenix, a language in Rust</text>
 
   <!-- Accent rule -->
-  <rect x="84" y="478" width="120" height="4" rx="2" fill="#d98a63" />
+  <rect x="84" y="478" width="120" height="4" rx="2" fill="#6ea7e6" />
 
   <!-- URL -->
-  <text x="80" y="566" font-family="'DejaVu Sans', sans-serif" font-size="28" fill="#d98a63">ryansaperstein.com</text>
+  <text x="80" y="566" font-family="'DejaVu Sans', sans-serif" font-size="28" fill="#6ea7e6">ryansaperstein.com</text>
 </svg>
