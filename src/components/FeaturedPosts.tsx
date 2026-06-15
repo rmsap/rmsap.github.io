@@ -97,7 +97,7 @@ export default function FeaturedPosts() {
   return (
     <section
       id="featured-posts"
-      className="min-h-0 scroll-mt-20 pb-20 px-4 sm:px-6 lg:px-8 text-center"
+      className="min-h-0 scroll-mt-20 pb-20 px-4 sm:px-6 lg:px-8 text-center overflow-x-clip"
     >
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         <div className="text-center mb-12 w-full">
