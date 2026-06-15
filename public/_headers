@@ -1,0 +1,14 @@
+# Cloudflare Pages response headers. Applies on Pages only (not vite dev / GitHub Pages).
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  # Report-only: logs violations to the browser console without blocking anything.
+  # script-src uses 'unsafe-inline' because the prerender injects a per-page inline
+  # marker (window.__PRERENDERED_PATH__) whose hash differs per route, so a single
+  # static hash can't cover it. To enforce a strict (no-unsafe-inline) policy later:
+  # externalize the theme-init script and replace that marker with a non-script
+  # mechanism, then switch to hashes. connect-src covers Firebase + Web3Forms.
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.googleapis.com https://api.web3forms.com; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self'
