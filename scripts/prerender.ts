@@ -278,3 +278,23 @@ for (const route of getStaticPaths()) {
   fs.writeFileSync(outFile, pageHtml);
   console.log(`✅ prerendered ${route}`);
 }
+
+// Emit sitemap.xml covering every prerendered route (blog posts carry <lastmod>).
+const sitemapXml =
+  '<?xml version="1.0" encoding="UTF-8"?>\n' +
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+  getStaticPaths()
+    .map((route) => {
+      const loc = route === "/" ? `${SITE_URL}/` : `${SITE_URL}${route}`;
+      const slug = route.startsWith("/blog/")
+        ? route.replace("/blog/", "")
+        : null;
+      const lastmod = slug ? postsBySlug.get(slug)?.date : undefined;
+      return `  <url>\n    <loc>${loc}</loc>${
+        lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ""
+      }\n  </url>`;
+    })
+    .join("\n") +
+  "\n</urlset>\n";
+fs.writeFileSync(path.join(distDir, "sitemap.xml"), sitemapXml);
+console.log("✅ sitemap.xml");
