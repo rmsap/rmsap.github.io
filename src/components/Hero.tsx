@@ -1,4 +1,4 @@
-import { Github, Linkedin, Download } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 import { SOCIAL_LINKS } from "../constants/socialLinks";
 
 function Hero() {
@@ -49,16 +49,8 @@ function Hero() {
               </p>
             </div>
 
-            {/* CTA + Social Links */}
+            {/* Social Links */}
             <div className="flex flex-wrap items-center gap-5 pt-1">
-              <a
-                href="/RyanSapersteinResume.pdf"
-                download
-                className="inline-flex items-center gap-2 px-6 py-3 border border-ink text-ink font-medium rounded-md hover:bg-ink hover:text-paper transition-colors duration-200"
-              >
-                <Download className="w-4 h-4" />
-                Resume
-              </a>
               <div className="flex items-center gap-2">
                 <a
                   href={SOCIAL_LINKS.github}

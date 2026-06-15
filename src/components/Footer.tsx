@@ -9,15 +9,6 @@ function Footer() {
       <p>© 2026 Ryan Saperstein • Built with React & TypeScript</p>
       <p className="mt-2">
         <a
-          href="/RyanSapersteinResume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-accent transition-colors"
-        >
-          Resume
-        </a>
-        {" • "}
-        <a
           href={SOCIAL_LINKS.github}
           target="_blank"
           rel="noopener noreferrer"
