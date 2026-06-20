@@ -1,0 +1,142 @@
+---
+title: "All Tests Passed. The Code Still Didn't Work."
+date: "2026-06-20"
+description: "A passing test can lie about what it checks and where it runs. I caught it doing both."
+tags: ["phoenix", "rust", "testing", "programming languages"]
+thumbnail: "all-tests-passed-thumbnail.svg"
+---
+
+Every test was green. The generated client and server didn't even compile.
+
+Phoenix Gen takes a schema written in the Phoenix language and generates a client and server
+in TypeScript, Python, or Go, plus an OpenAPI spec, and it had hundreds of passing tests.
+So when the code it produced wouldn't compile, let alone lint or style cleanly, I went looking
+for the test that had let me down. But none of them had. What they actually checked was that
+the generated code, as text, matched the snapshot I expected. Not a single one of them had ever
+compiled that code, let alone run it or shown it to a linter.
+
+That bug is why I stopped trusting green checkmarks at face value, and why Phoenix Gen now has
+two test harnesses that it didn't have then.
+
+## Valid isn't correct
+
+I fixed the bugs that surfaced when I was using Phoenix Gen, but how many more bugs were hidden
+beneath the surface? I needed a more concrete way to verify it was emitting code that would actually
+work, so I built a compile-and-lint harness. This harness ran the generation to emit actual code,
+and then ran real linting and compilation on it, like tsc, eslint, and prettier for TypeScript.
+This surfaced a batch of bugs, which I fixed.
+
+Then, I wrote what this harness _couldn't_ do:
+
+```
+This harness proves the generated code compiles, type-checks, lints,
+and is formatted — NOT that it behaves correctly at runtime. A client
+that builds a wrong URL, a server that mis-coerces a query param, an
+inverted constraint, or an off-by-one in path substitution would all
+still pass here. Nothing is executed, and the client/server pair is
+never checked for mutual consistency.
+
+... "green here" means "valid + clean," not "correct."
+```
+
+Tomorrow's me won't give this harness more trust than it deserves. And that last clause,
+about the client/server pair never being tested, turned out not to be hypothetical.
+
+## Clean isn't consistent
+
+I manually tested the code again. This time, it looked pretty, but the generated clients and generated
+servers didn't agree. Each half worked in isolation, but the two couldn't talk to each other.
+
+So I wrote a roundtrip test harness that generated a client and server and actually ran them,
+confirming that they agreed on the same contract. This harness runs data through the client and
+server, ensuring that data round-trips correctly (the happy path), that error variants are mapped
+to the correct HTTP status, and that invalid bodies are rejected by the server before they reach
+the handler. Each target runs its own generated client against its own generated server;
+cross-target testing (i.e., a TypeScript client and a Python server) is a hole I haven't covered
+yet. I decided that the combinatorial explosion cost more than writing new features to make
+the tool better.
+
+The tests were always green. But my code still didn't work, at least not at first. I went from
+snapshot tests to compile-and-lint to roundtrip, and missing any one of them would have made passing mean much less.
+In the end, I could always find the right answer. Either the generated code compiled or it didn't.
+But testing the generator eventually boils down to testing the language under it. And a language has
+no answer key. That's where "right" stops being something I can look up and starts being something I
+have to decide.
+
+## The oracle isn't always right
+
+Does `print(-0.0)` write `0`, `0.0`, `-0`, or `-0.0` to `stdout`? Phoenix has answered that two
+different ways. At first it dropped the sign. Now it keeps it. Neither answer was more
+correct than the other. I picked one, shipped it, and then I shipped the other.
+
+That's one of the most fun parts of building a language. There's no Stack Overflow post that gives you
+the answer and no LLM that can design it for you. 
+
+I am the spec.
+
+Which sounds freeing, until you try to write a test. What do I even assert against
+in a situation like that? `assert_eq!(output, "-0.0")` is just my opinion written again
+in a new spot. The test passes, but my opinion could be wrong.
+
+So, each Phoenix test program is run five ways: five independent backends, from a
+simple interpreter up to native and WebAssembly compilers. This is differential
+testing. (it started as three; when I added the fourth and fifth backends I dropped
+the number from the harness name entirely -- `backend-matrix`, not
+`five-backend-matrix` -- so I wouldn't have to rename it again.)
+
+When you have no oracle, no authority you can ask if the output is right, agreement between
+independent implementations becomes the oracle.
+
+I don't ask the code "Did you print what I said you
+should?" I ask all five backends "Did you print the same thing?" If they disagree, at least
+one of them is wrong, regardless of what the "correct" answer is. 
+And so I wrote another comment at the top of the backend-matrix test harness:
+
+```
+A divergence here indicates a real backend bug, not a test issue.
+```
+
+When a specific output matters, I still need to write the `assert_eq!(output, "-0.0")` test,
+accepting that it's only as right as I am. Oracle-by-consensus doesn't save me when the backends
+share a lexer, parser, and semantic analysis. A shared bug means they all print `0.0` when I
+documented it as `-0.0`, and CI stays green while I'm none the wiser. Agreement is the best oracle
+I have, but it can still be unanimously, silently wrong.
+
+## Passing isn't shipping
+
+So far, all I've focused on is what my tests ask. I never stopped to ask _where_ they run.
+
+Rust compiles in two ways: a debug build for fast iteration and an optimized release build.
+If you curled the Phoenix binary from GitHub, you'd get the release build. But my CI
+only ever ran in debug. I never ran any tests on the build that users actually download.
+
+I had a check in my code to verify that one function wouldn't write past its allocated space;
+if violated, a user's code could corrupt its own memory with no warning. It was guarded by a
+`debug_assert_eq!`, an assertion that fires only in debug builds. It's a useful
+diagnostic when the code has a safe fallback for release. There was even a test asserting
+the `debug_assert_eq!` fired, so I trusted the invariant held.
+
+The test passed, and CI was green. But it only ever proved the invariant held in debug, the
+profile users never run. In release, the `debug_assert_eq!` compiled to nothing, and the check
+the test thought it was verifying wasn't there at all.
+
+The fix was just one line. I had to change `debug_assert_eq!` to `assert_eq!`. The reason this
+bug survived wasn't that it was hard. It survived because every green checkmark was reporting on
+a binary nobody downloads.
+
+## Three thousand tests later
+
+CI now matches the build users download, but only on the OS I develop on. macOS, Windows, and
+Linux can format floats and lay out memory differently, so I extended the install smoke
+test across all three. It's still lopsided: Linux runs 3,000 tests, while Windows and macOS just run "Hello,
+World." On those machines, green means the binary starts. That's it.
+
+So after 3,000 tests, they still can't promise my code works in a stranger's hands. 
+A test can lie about what it checks. It can also lie about where it checks it. 
+And it can be scrupulously honest about both while still checking against the wrong answer. 
+All three still pass.
+
+But I still trust my tests, and it's not because they're green. It's because a test suite that
+argues, in the margins, about what it can't prove is one that's been taken seriously. Those arguments
+weren't for a reviewer or a user. They were for the version of me who'll come back in a few months,
+see all green, and almost believe it.

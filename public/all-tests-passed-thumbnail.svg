@@ -1,0 +1,98 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c111b"/>
+      <stop offset="1" stop-color="#080b12"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141a24"/>
+      <stop offset="1" stop-color="#0f141d"/>
+    </linearGradient>
+    <style>
+      text { font-family: 'SF Mono','JetBrains Mono','Roboto Mono',ui-monospace,Menlo,monospace; }
+      .corner { fill:#566173; font-size:15px; letter-spacing:3px; }
+      .foot   { fill:#566173; font-size:14px; letter-spacing:3px; }
+      .footT  { fill:#8b95a5; font-size:14px; letter-spacing:3px; }
+      .bar    { fill:#7b8696; font-size:15px; }
+      .sum    { fill:#e6edf3; font-size:19px; }
+      .row    { fill:#c4ccd6; font-size:17px; }
+      .muted  { fill:#5b6573; font-size:15px; }
+      .green  { fill:#3fb950; }
+      .amber  { fill:#e0a008; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- corner labels -->
+  <text class="corner" x="40" y="48">// CI</text>
+  <text class="corner" x="1160" y="48" text-anchor="end">// ALL CHECKS PASSED</text>
+
+  <!-- panel -->
+  <rect x="180" y="150" width="840" height="362" rx="12" fill="url(#panel)" stroke="#232b38" stroke-width="1"/>
+
+  <!-- window bar -->
+  <circle cx="208" cy="180" r="5.5" fill="#3a414c"/>
+  <circle cx="227" cy="180" r="5.5" fill="#3a414c"/>
+  <circle cx="246" cy="180" r="5.5" fill="#3a414c"/>
+  <text class="bar" x="600" y="185" text-anchor="middle">ci pipeline · phoenix-gen</text>
+  <line x1="180" y1="208" x2="1020" y2="208" stroke="#232b38" stroke-width="1"/>
+
+  <!-- summary line -->
+  <g transform="translate(216,243)">
+    <polyline points="0,1 5,7 14,-5" fill="none" stroke="#3fb950" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="sum" x="28" y="6">All checks have passed</text>
+    <text class="muted" x="262" y="6">3,000 passing · 0 failing</text>
+  </g>
+  <line x1="216" y1="268" x2="984" y2="268" stroke="#1c232f" stroke-width="1"/>
+
+  <!-- check rows -->
+  <!-- row 1 -->
+  <g transform="translate(216,303)">
+    <polyline points="0,0 4.2,5 12,-4.5" fill="none" stroke="#3fb950" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="row" x="26" y="5">snapshot tests</text>
+    <text class="muted" x="768" y="5" text-anchor="end">text matches</text>
+  </g>
+  <!-- row 2 -->
+  <g transform="translate(216,339)">
+    <polyline points="0,0 4.2,5 12,-4.5" fill="none" stroke="#3fb950" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="row" x="26" y="5">compile &amp; lint</text>
+    <text class="muted" x="768" y="5" text-anchor="end">valid + clean</text>
+  </g>
+  <!-- row 3 -->
+  <g transform="translate(216,375)">
+    <polyline points="0,0 4.2,5 12,-4.5" fill="none" stroke="#3fb950" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="row" x="26" y="5">roundtrip</text>
+    <text class="muted" x="768" y="5" text-anchor="end">client ⇄ server</text>
+  </g>
+  <!-- row 4 -->
+  <g transform="translate(216,411)">
+    <polyline points="0,0 4.2,5 12,-4.5" fill="none" stroke="#3fb950" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="row" x="26" y="5">backend-matrix</text>
+    <text class="muted" x="768" y="5" text-anchor="end">5 backends agree</text>
+  </g>
+  <!-- row 5 -->
+  <g transform="translate(216,447)">
+    <polyline points="0,0 4.2,5 12,-4.5" fill="none" stroke="#3fb950" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="row" x="26" y="5">install smoke test</text>
+  </g>
+  <!-- row 5 expansion: the lie -->
+  <g transform="translate(252,481)">
+    <text class="muted" x="0" y="5">└</text>
+    <text class="row" x="26" y="5" fill="#9aa4b2">Linux</text>
+    <text class="row" x="92" y="5" fill="#c4ccd6">3,000</text>
+    <polyline points="158,0 162,5 170,-4.5" fill="none" stroke="#3fb950" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="muted" x="190" y="5">·</text>
+    <text class="row" x="214" y="5" fill="#9aa4b2">macOS</text>
+    <text class="row" x="290" y="5" fill="#e0a008" font-weight="bold">1</text>
+    <polyline points="312,0 316,5 324,-4.5" fill="none" stroke="#e0a008" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text class="muted" x="344" y="5">·</text>
+    <text class="row" x="368" y="5" fill="#9aa4b2">Windows</text>
+    <text class="row" x="468" y="5" fill="#e0a008" font-weight="bold">1</text>
+    <polyline points="490,0 494,5 502,-4.5" fill="none" stroke="#e0a008" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- footer -->
+  <text class="foot" x="40" y="598">CHECKS · PROFILE · PLATFORM</text>
+  <text class="footT" x="1160" y="598" text-anchor="end">ALL TESTS PASSED</text>
+</svg>
