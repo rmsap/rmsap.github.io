@@ -13,6 +13,8 @@ import {
   Book,
 } from "lucide-react";
 import Carousel from "./Carousel";
+import Image from "./Image";
+import { toManifestKey } from "../utils/imageManifest";
 import projectsData from "../data/projects.json";
 import { PaginationDots } from "./PaginationDots";
 
@@ -117,9 +119,11 @@ function Projects() {
                 {/* Project Image */}
                 {project.images ? (
                   <div className="aspect-video bg-accent-soft overflow-hidden">
-                    <img
-                      src={project.images[0]}
+                    <Image
+                      name={toManifestKey(project.images[0])}
+                      fallbackSrc={project.images[0]}
                       alt={project.title}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
@@ -337,9 +341,12 @@ function Projects() {
                           autoplay={false}
                         />
                       ) : (
-                        <img
-                          src={selectedProject.images[0]}
+                        <Image
+                          name={toManifestKey(selectedProject.images[0])}
+                          fallbackSrc={selectedProject.images[0]}
                           alt={selectedProject.title}
+                          priority
+                          sizes="(max-width: 768px) 100vw, 768px"
                           className="w-full h-full object-cover"
                           onError={(e) => {
                             e.currentTarget.style.display = "none";

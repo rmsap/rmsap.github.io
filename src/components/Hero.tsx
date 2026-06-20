@@ -1,5 +1,7 @@
 import { Github, Linkedin } from "lucide-react";
 import { SOCIAL_LINKS } from "../constants/socialLinks";
+import Image from "./Image";
+import { toManifestKey } from "../utils/imageManifest";
 
 function Hero() {
   return (
@@ -79,11 +81,13 @@ function Hero() {
             <div className="relative w-full max-w-md mx-auto">
               {/* Offset editorial frame instead of a gradient glow */}
               <div className="absolute -bottom-4 -right-4 w-full h-full rounded-lg border border-accent/40"></div>
-              <img
-                src="/ryanPhoto.jpg"
+              <Image
+                name={toManifestKey("/ryanPhoto.jpg")}
+                fallbackSrc="/ryanPhoto.jpg"
+                priority
+                sizes="28rem"
                 className="relative rounded-lg w-full shadow-xl"
                 alt="Ryan Saperstein"
-                loading="lazy"
               />
             </div>
           </div>

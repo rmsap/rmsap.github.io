@@ -2,11 +2,19 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getAllPosts } from "../utils/blogLoader";
+import { toManifestKey } from "../utils/imageManifest";
+import Image from "./Image";
 import type { BlogPostMeta } from "../types/blog";
 
 const FEATURED_COUNT = 3;
 
-function PostCard({ post }: { post: BlogPostMeta }) {
+function PostCard({
+  post,
+  priority = false,
+}: {
+  post: BlogPostMeta;
+  priority?: boolean;
+}) {
   return (
     <Link
       to={`/blog/${post.slug}`}
@@ -14,9 +22,12 @@ function PostCard({ post }: { post: BlogPostMeta }) {
     >
       <div className="aspect-video w-full bg-paper shrink-0 overflow-hidden">
         {post.thumbnail ? (
-          <img
-            src={post.thumbnail}
+          <Image
+            name={toManifestKey(post.thumbnail)}
+            fallbackSrc={post.thumbnail}
             alt=""
+            priority={priority}
+            sizes="(max-width: 640px) 85vw, 400px"
             className="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
@@ -122,7 +133,7 @@ export default function FeaturedPosts() {
                 className="absolute inset-0 transition-all duration-500 ease-in-out"
                 style={getCardStyle(index)}
               >
-                <PostCard post={post} />
+                <PostCard post={post} priority={index === 0} />
               </div>
             ))}
             {/* Invisible spacer so the container has height */}

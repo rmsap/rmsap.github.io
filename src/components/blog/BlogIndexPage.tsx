@@ -3,7 +3,9 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Filter, ChevronDown } from "lucide-react";
 import { getAllPosts, getAllTags } from "../../utils/blogLoader";
+import { toManifestKey } from "../../utils/imageManifest";
 import { SITE_NAME, BLOG_TITLE, BLOG_DESCRIPTION } from "../../constants/site";
+import Image from "../Image";
 import BlogSearch from "./BlogSearch";
 import TagFilter from "./TagFilter";
 import PageTransition from "./PageTransition";
@@ -190,7 +192,7 @@ export default function BlogIndex() {
         )}
 
         <div className="grid gap-6 sm:grid-cols-2 mt-6">
-          {postsToShow.map((p) => (
+          {postsToShow.map((p, index) => (
             <Link
               key={p.slug}
               to={`/blog/${p.slug}`}
@@ -198,9 +200,12 @@ export default function BlogIndex() {
             >
               <div className="aspect-video w-full bg-surface shrink-0 overflow-hidden">
                 {p.thumbnail ? (
-                  <img
-                    src={p.thumbnail}
+                  <Image
+                    name={toManifestKey(p.thumbnail)}
+                    fallbackSrc={p.thumbnail}
                     alt=""
+                    priority={index === 0}
+                    sizes="(max-width: 640px) 100vw, 480px"
                     className="block w-full h-full object-cover"
                   />
                 ) : (

@@ -1,0 +1,529 @@
+{
+  "communication": {
+    "width": 1600,
+    "height": 1295,
+    "widths": [
+      400,
+      800,
+      1200,
+      1600
+    ],
+    "avif": {
+      "400": "/img/communication-400.8119cb6a.avif",
+      "800": "/img/communication-800.62ef3225.avif",
+      "1200": "/img/communication-1200.fe0b7e47.avif",
+      "1600": "/img/communication-1600.13ee8da1.avif"
+    },
+    "webp": {
+      "400": "/img/communication-400.74453ef8.webp",
+      "800": "/img/communication-800.85e14b8f.webp",
+      "1200": "/img/communication-1200.dc810999.webp",
+      "1600": "/img/communication-1600.36f4942e.webp"
+    }
+  },
+  "dataDiagram": {
+    "width": 1600,
+    "height": 709,
+    "widths": [
+      400,
+      800,
+      1200,
+      1600
+    ],
+    "avif": {
+      "400": "/img/dataDiagram-400.d1d9a249.avif",
+      "800": "/img/dataDiagram-800.9b4033da.avif",
+      "1200": "/img/dataDiagram-1200.ccabb1c2.avif",
+      "1600": "/img/dataDiagram-1600.58d08cf3.avif"
+    },
+    "webp": {
+      "400": "/img/dataDiagram-400.974ba5f6.webp",
+      "800": "/img/dataDiagram-800.71205460.webp",
+      "1200": "/img/dataDiagram-1200.96fad7ce.webp",
+      "1600": "/img/dataDiagram-1600.ff6339a5.webp"
+    }
+  },
+  "game-state-example": {
+    "width": 400,
+    "height": 401,
+    "widths": [
+      400
+    ],
+    "avif": {
+      "400": "/img/game-state-example-400.f4490ef6.avif"
+    },
+    "webp": {
+      "400": "/img/game-state-example-400.75d83d51.webp"
+    }
+  },
+  "graduationPhoto": {
+    "width": 800,
+    "height": 1200,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/graduationPhoto-400.01bb83e4.avif",
+      "800": "/img/graduationPhoto-800.3a94b648.avif"
+    },
+    "webp": {
+      "400": "/img/graduationPhoto-400.7814bc14.webp",
+      "800": "/img/graduationPhoto-800.9ad84096.webp"
+    }
+  },
+  "help_app_description_sample": {
+    "width": 800,
+    "height": 1644,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/help_app_description_sample-400.adb9a367.avif",
+      "800": "/img/help_app_description_sample-800.8434718c.avif"
+    },
+    "webp": {
+      "400": "/img/help_app_description_sample-400.e9540263.webp",
+      "800": "/img/help_app_description_sample-800.b8a9ecab.webp"
+    }
+  },
+  "help_app_drugs_alcohol": {
+    "width": 800,
+    "height": 1644,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/help_app_drugs_alcohol-400.90d7fc3e.avif",
+      "800": "/img/help_app_drugs_alcohol-800.ece2c606.avif"
+    },
+    "webp": {
+      "400": "/img/help_app_drugs_alcohol-400.f2346c7b.webp",
+      "800": "/img/help_app_drugs_alcohol-800.e0e706e9.webp"
+    }
+  },
+  "help_app_home": {
+    "width": 800,
+    "height": 1644,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/help_app_home-400.1e173b15.avif",
+      "800": "/img/help_app_home-800.c5feb74f.avif"
+    },
+    "webp": {
+      "400": "/img/help_app_home-400.855d448c.webp",
+      "800": "/img/help_app_home-800.a9c46f1a.webp"
+    }
+  },
+  "help_app_logo": {
+    "width": 800,
+    "height": 391,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/help_app_logo-400.4c89fd52.avif",
+      "800": "/img/help_app_logo-800.cbfc73ad.avif"
+    },
+    "webp": {
+      "400": "/img/help_app_logo-400.2adbd407.webp",
+      "800": "/img/help_app_logo-800.5b1188ed.webp"
+    }
+  },
+  "help_app_prescription_drug": {
+    "width": 800,
+    "height": 1644,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/help_app_prescription_drug-400.aec1fcb0.avif",
+      "800": "/img/help_app_prescription_drug-800.3238e720.avif"
+    },
+    "webp": {
+      "400": "/img/help_app_prescription_drug-400.032c5133.webp",
+      "800": "/img/help_app_prescription_drug-800.38713ce5.webp"
+    }
+  },
+  "help_app_screen_sample": {
+    "width": 800,
+    "height": 1644,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/help_app_screen_sample-400.f4ec22c9.avif",
+      "800": "/img/help_app_screen_sample-800.a4594a57.avif"
+    },
+    "webp": {
+      "400": "/img/help_app_screen_sample-400.2f46bf27.webp",
+      "800": "/img/help_app_screen_sample-800.134ef59a.webp"
+    }
+  },
+  "image_processor": {
+    "width": 1600,
+    "height": 817,
+    "widths": [
+      400,
+      800,
+      1200,
+      1600
+    ],
+    "avif": {
+      "400": "/img/image_processor-400.e0a82e1b.avif",
+      "800": "/img/image_processor-800.918d3ced.avif",
+      "1200": "/img/image_processor-1200.19c1cf28.avif",
+      "1600": "/img/image_processor-1600.531ed036.avif"
+    },
+    "webp": {
+      "400": "/img/image_processor-400.289c5206.webp",
+      "800": "/img/image_processor-800.d70c9a3d.webp",
+      "1200": "/img/image_processor-1200.40aeaa29.webp",
+      "1600": "/img/image_processor-1600.c68361b5.webp"
+    }
+  },
+  "image_processor_koala_downscaled": {
+    "width": 1600,
+    "height": 851,
+    "widths": [
+      400,
+      800,
+      1200,
+      1600
+    ],
+    "avif": {
+      "400": "/img/image_processor_koala_downscaled-400.f809cf95.avif",
+      "800": "/img/image_processor_koala_downscaled-800.0450a0c7.avif",
+      "1200": "/img/image_processor_koala_downscaled-1200.09b0ef54.avif",
+      "1600": "/img/image_processor_koala_downscaled-1600.92c0dafb.avif"
+    },
+    "webp": {
+      "400": "/img/image_processor_koala_downscaled-400.b2ba429b.webp",
+      "800": "/img/image_processor_koala_downscaled-800.c54cde34.webp",
+      "1200": "/img/image_processor_koala_downscaled-1200.042ad7a8.webp",
+      "1600": "/img/image_processor_koala_downscaled-1600.e5b2dd9f.webp"
+    }
+  },
+  "image_processor_koala_flipped": {
+    "width": 1600,
+    "height": 851,
+    "widths": [
+      400,
+      800,
+      1200,
+      1600
+    ],
+    "avif": {
+      "400": "/img/image_processor_koala_flipped-400.42110456.avif",
+      "800": "/img/image_processor_koala_flipped-800.acfd9453.avif",
+      "1200": "/img/image_processor_koala_flipped-1200.5a32a371.avif",
+      "1600": "/img/image_processor_koala_flipped-1600.b56e5bfa.avif"
+    },
+    "webp": {
+      "400": "/img/image_processor_koala_flipped-400.6daa43d6.webp",
+      "800": "/img/image_processor_koala_flipped-800.7240f5db.webp",
+      "1200": "/img/image_processor_koala_flipped-1200.b7a70f91.webp",
+      "1600": "/img/image_processor_koala_flipped-1600.f59122b5.webp"
+    }
+  },
+  "image_processor_no_image": {
+    "width": 1600,
+    "height": 853,
+    "widths": [
+      400,
+      800,
+      1200,
+      1600
+    ],
+    "avif": {
+      "400": "/img/image_processor_no_image-400.fdcd8164.avif",
+      "800": "/img/image_processor_no_image-800.d377e627.avif",
+      "1200": "/img/image_processor_no_image-1200.6337fe49.avif",
+      "1600": "/img/image_processor_no_image-1600.7d714a5f.avif"
+    },
+    "webp": {
+      "400": "/img/image_processor_no_image-400.58d4296c.webp",
+      "800": "/img/image_processor_no_image-800.fb9daf62.webp",
+      "1200": "/img/image_processor_no_image-1200.fd30a61e.webp",
+      "1600": "/img/image_processor_no_image-1600.807655ba.webp"
+    }
+  },
+  "observer": {
+    "width": 1600,
+    "height": 1003,
+    "widths": [
+      400,
+      800,
+      1200,
+      1600
+    ],
+    "avif": {
+      "400": "/img/observer-400.3bb82ddc.avif",
+      "800": "/img/observer-800.5e8d185c.avif",
+      "1200": "/img/observer-1200.4c730c58.avif",
+      "1600": "/img/observer-1600.e87a8b7a.avif"
+    },
+    "webp": {
+      "400": "/img/observer-400.27f608b6.webp",
+      "800": "/img/observer-800.7e068051.webp",
+      "1200": "/img/observer-1200.01490b2a.webp",
+      "1600": "/img/observer-1600.f9dfc26a.webp"
+    }
+  },
+  "oneSchemaFourLanguages": {
+    "width": 1200,
+    "height": 630,
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "avif": {
+      "400": "/img/oneSchemaFourLanguages-400.d16536e5.avif",
+      "800": "/img/oneSchemaFourLanguages-800.0a3b98de.avif",
+      "1200": "/img/oneSchemaFourLanguages-1200.a3ed6356.avif"
+    },
+    "webp": {
+      "400": "/img/oneSchemaFourLanguages-400.d754d610.webp",
+      "800": "/img/oneSchemaFourLanguages-800.ac323798.webp",
+      "1200": "/img/oneSchemaFourLanguages-1200.c1ed13ef.webp"
+    }
+  },
+  "phxDyn": {
+    "width": 1600,
+    "height": 1108,
+    "widths": [
+      400,
+      800,
+      1200,
+      1600
+    ],
+    "avif": {
+      "400": "/img/phxDyn-400.fbbca226.avif",
+      "800": "/img/phxDyn-800.aa8f2217.avif",
+      "1200": "/img/phxDyn-1200.2d1bcaf2.avif",
+      "1600": "/img/phxDyn-1600.904a36e4.avif"
+    },
+    "webp": {
+      "400": "/img/phxDyn-400.a80f6d65.webp",
+      "800": "/img/phxDyn-800.dd352d33.webp",
+      "1200": "/img/phxDyn-1200.aa9ba876.webp",
+      "1600": "/img/phxDyn-1600.99858559.webp"
+    }
+  },
+  "phxSchema": {
+    "width": 1600,
+    "height": 1111,
+    "widths": [
+      400,
+      800,
+      1200,
+      1600
+    ],
+    "avif": {
+      "400": "/img/phxSchema-400.3127c68c.avif",
+      "800": "/img/phxSchema-800.af96e251.avif",
+      "1200": "/img/phxSchema-1200.d1dd1802.avif",
+      "1600": "/img/phxSchema-1600.35abe3b5.avif"
+    },
+    "webp": {
+      "400": "/img/phxSchema-400.715d3643.webp",
+      "800": "/img/phxSchema-800.3ea24b4c.webp",
+      "1200": "/img/phxSchema-1200.b82ca949.webp",
+      "1600": "/img/phxSchema-1600.5fccbfd8.webp"
+    }
+  },
+  "recover_we_about": {
+    "width": 800,
+    "height": 1644,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/recover_we_about-400.6abdec79.avif",
+      "800": "/img/recover_we_about-800.121f6287.avif"
+    },
+    "webp": {
+      "400": "/img/recover_we_about-400.b7ea5d3a.webp",
+      "800": "/img/recover_we_about-800.444a5785.webp"
+    }
+  },
+  "recover_we_home": {
+    "width": 800,
+    "height": 1644,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/recover_we_home-400.db5ff3b0.avif",
+      "800": "/img/recover_we_home-800.5a0ebf00.avif"
+    },
+    "webp": {
+      "400": "/img/recover_we_home-400.138aebf4.webp",
+      "800": "/img/recover_we_home-800.fe12f7d2.webp"
+    }
+  },
+  "recover_we_logo": {
+    "width": 800,
+    "height": 391,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/recover_we_logo-400.b5b56f5a.avif",
+      "800": "/img/recover_we_logo-800.953fa5f2.avif"
+    },
+    "webp": {
+      "400": "/img/recover_we_logo-400.7257f1a7.webp",
+      "800": "/img/recover_we_logo-800.f33631b9.webp"
+    }
+  },
+  "recover_we_one_resource": {
+    "width": 800,
+    "height": 1644,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/recover_we_one_resource-400.d2b78c4c.avif",
+      "800": "/img/recover_we_one_resource-800.10929742.avif"
+    },
+    "webp": {
+      "400": "/img/recover_we_one_resource-400.fa2cf432.webp",
+      "800": "/img/recover_we_one_resource-800.24a4b3ed.webp"
+    }
+  },
+  "recover_we_table": {
+    "width": 800,
+    "height": 1644,
+    "widths": [
+      400,
+      800
+    ],
+    "avif": {
+      "400": "/img/recover_we_table-400.d2e47e29.avif",
+      "800": "/img/recover_we_table-800.3759ac42.avif"
+    },
+    "webp": {
+      "400": "/img/recover_we_table-400.b10acb43.webp",
+      "800": "/img/recover_we_table-800.fa31f4ea.webp"
+    }
+  },
+  "ryanPhoto": {
+    "width": 1200,
+    "height": 1223,
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "avif": {
+      "400": "/img/ryanPhoto-400.603abaf4.avif",
+      "800": "/img/ryanPhoto-800.75d5c7d3.avif",
+      "1200": "/img/ryanPhoto-1200.8f24865b.avif"
+    },
+    "webp": {
+      "400": "/img/ryanPhoto-400.2469fc46.webp",
+      "800": "/img/ryanPhoto-800.7c1f73cf.webp",
+      "1200": "/img/ryanPhoto-1200.eba941b3.webp"
+    }
+  },
+  "scaling_function": {
+    "width": 400,
+    "height": 294,
+    "widths": [
+      400
+    ],
+    "avif": {
+      "400": "/img/scaling_function-400.ac48f9e4.avif"
+    },
+    "webp": {
+      "400": "/img/scaling_function-400.4fce67d8.webp"
+    }
+  },
+  "siglo": {
+    "width": 1200,
+    "height": 480,
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "avif": {
+      "400": "/img/siglo-400.bb8aef3c.avif",
+      "800": "/img/siglo-800.6c99b877.avif",
+      "1200": "/img/siglo-1200.3fda3657.avif"
+    },
+    "webp": {
+      "400": "/img/siglo-400.9451c7cd.webp",
+      "800": "/img/siglo-800.8c9ab341.webp",
+      "1200": "/img/siglo-1200.be90005b.webp"
+    }
+  },
+  "siglo_math": {
+    "width": 1600,
+    "height": 1200,
+    "widths": [
+      400,
+      800,
+      1200,
+      1600
+    ],
+    "avif": {
+      "400": "/img/siglo_math-400.f9cf3f1d.avif",
+      "800": "/img/siglo_math-800.16ed23aa.avif",
+      "1200": "/img/siglo_math-1200.c4201f89.avif",
+      "1600": "/img/siglo_math-1600.81d7f9d4.avif"
+    },
+    "webp": {
+      "400": "/img/siglo_math-400.57f08f0d.webp",
+      "800": "/img/siglo_math-800.a24b7194.webp",
+      "1200": "/img/siglo_math-1200.a4afeec8.webp",
+      "1600": "/img/siglo_math-1600.bad16f6d.webp"
+    }
+  },
+  "state-machine": {
+    "width": 1200,
+    "height": 987,
+    "widths": [
+      400,
+      800,
+      1200
+    ],
+    "avif": {
+      "400": "/img/state-machine-400.bbe8b3dd.avif",
+      "800": "/img/state-machine-800.f812744a.avif",
+      "1200": "/img/state-machine-1200.87327dc1.avif"
+    },
+    "webp": {
+      "400": "/img/state-machine-400.24400149.webp",
+      "800": "/img/state-machine-800.2f360bc0.webp",
+      "1200": "/img/state-machine-1200.78ce3863.webp"
+    }
+  },
+  "why-am-i-making-a-blog-thumbnail": {
+    "width": 400,
+    "height": 400,
+    "widths": [
+      400
+    ],
+    "avif": {
+      "400": "/img/why-am-i-making-a-blog-thumbnail-400.6415c40f.avif"
+    },
+    "webp": {
+      "400": "/img/why-am-i-making-a-blog-thumbnail-400.5cb3b5c7.webp"
+    }
+  }
+}

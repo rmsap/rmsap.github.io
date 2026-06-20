@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PaginationDots } from "./PaginationDots";
+// Aliased so it reads clearly against the global DOM `Image` constructor.
+import OptimizedImage from "./Image";
+import { toManifestKey } from "../utils/imageManifest";
 
 interface CarouselProps {
   images: string[];
@@ -23,23 +26,11 @@ const Carousel: React.FC<CarouselProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoplay);
-  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
   const minSwipeDistance = 50;
-
-  // Preload images
-  useEffect(() => {
-    images.forEach((src, index) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        setLoadedImages((prev) => new Set(prev).add(index));
-      };
-    });
-  }, [images]);
 
   const goToNext = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -147,14 +138,17 @@ const Carousel: React.FC<CarouselProps> = ({
                   : "translateX(0)",
             }}
           >
-            {loadedImages.has(index) && (
-              <img
-                src={image}
-                alt={`Slide ${index + 1}`}
-                className="w-full h-full object-contain select-none"
-                draggable={false}
-              />
-            )}
+            <OptimizedImage
+              name={toManifestKey(image)}
+              fallbackSrc={image}
+              alt={`Slide ${index + 1}`}
+              // Eager-load the current slide and its immediate neighbors so
+              // next/prev navigation doesn't lazy-fetch on demand.
+              priority={Math.abs(index - currentIndex) <= 1}
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="w-full h-full object-contain select-none"
+              draggable={false}
+            />
           </div>
         ))}
 

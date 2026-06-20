@@ -11,7 +11,8 @@
     "build": "tsc -b && tsx scripts/generateRss.ts && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && tsx scripts/prerender.ts",
     "lint": "eslint .",
     "preview": "npm run build && wrangler dev",
-    "new-post": "tsx scripts/newPost.ts"
+    "new-post": "tsx scripts/newPost.ts",
+    "optimize-images": "node scripts/optimizeImages.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

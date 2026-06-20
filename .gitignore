@@ -6,6 +6,10 @@ dist-ssr/
 public/rss.xml
 public/feed.json
 
+# Full-res photo masters 
+# Only the optimized variants in public/img/ + src/data/imageManifest.json are committed.
+src/images/
+
 # wrangler files
 .wrangler
 .dev.vars*

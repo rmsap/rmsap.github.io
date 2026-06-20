@@ -1,11 +1,31 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { Link } from "react-router-dom";
+import Image from "../Image";
+import { toManifestKey } from "../../utils/imageManifest";
 import { Callout, InlineCode, ShikiCodeBlock } from "./MdxPrimitives";
+
+// Markdown `![alt](my-photo)` or `![alt](/my-photo.jpg)` both resolve to the
+// manifest key "my-photo". <Image> serves optimized variants when the key is in
+// the manifest and otherwise falls back to a plain lazy <img> on the original
+// src, so SVGs, external URLs, and legacy images all just work.
+const IMG_CLASS = "rounded-lg my-6 w-full h-auto";
 
 export const mdxComponents = {
   pre: ShikiCodeBlock,
   code: InlineCode,
   Callout,
+  img: ({ src, alt, className, ...props }: ComponentPropsWithoutRef<"img">) => {
+    const ref = typeof src === "string" ? src : "";
+    return (
+      <Image
+        name={toManifestKey(ref)}
+        fallbackSrc={ref}
+        alt={alt ?? ""}
+        {...props}
+        className={className ?? IMG_CLASS}
+      />
+    );
+  },
   a: ({
     href,
     children,

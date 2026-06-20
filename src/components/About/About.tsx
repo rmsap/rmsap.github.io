@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import Interests from "./Interests";
 import StatsCard from "./StatsCard";
+import Image from "../Image";
+import { toManifestKey } from "../../utils/imageManifest";
 import aboutData from "../../data/aboutData.json";
 import Timeline from "./Timeline";
 import { getAllPosts } from "../../utils/blogLoader";
@@ -66,11 +68,12 @@ function About() {
           <div className="order-2 lg:order-1 space-y-8">
             <div className="relative w-full max-w-md mx-auto lg:mx-0">
               <div className="absolute -bottom-4 -right-4 w-full h-full rounded-3xl border border-accent/40"></div>
-              <img
+              <Image
                 className="relative rounded-3xl w-full shadow-xl"
-                src={profile.image}
+                name={toManifestKey(profile.image)}
+                fallbackSrc={profile.image}
+                sizes="28rem"
                 alt={profile.imageAlt}
-                loading="lazy"
               />
             </div>
 
