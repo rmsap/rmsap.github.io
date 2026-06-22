@@ -9,6 +9,7 @@ const pub = path.resolve(__dirname, "../public");
 const jobs = [
   ["benefit-of-the-doubt-thumbnail.svg", "benefit-of-the-doubt-thumbnail.png"],
   ["push_notifications_thumbnail.svg", "push_notifications_thumbnail.png"],
+  ["all-tests-passed-thumbnail.svg", "all-tests-passed-thumbnail.png"],
 ];
 
 for (const [srcName, dstName] of jobs) {
