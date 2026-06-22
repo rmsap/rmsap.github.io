@@ -13,7 +13,7 @@ import {
   Book,
 } from "lucide-react";
 import Carousel from "./Carousel";
-import Image from "./Image";
+import Media from "./Media";
 import { toManifestKey } from "../utils/imageManifest";
 import projectsData from "../data/projects.json";
 import { PaginationDots } from "./PaginationDots";
@@ -44,6 +44,10 @@ interface Project {
 function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  // Which grid card is hovered — video cards only autoplay on hover so a grid
+  // full of clips doesn't decode them all at once. Touch users (no hover) get
+  // the poster and play in the modal instead.
+  const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null);
 
   const projects: Project[] = projectsData;
 
@@ -114,15 +118,36 @@ function Projects() {
               <div
                 key={project.id}
                 className="group relative bg-surface rounded-xl overflow-hidden border border-rule hover:border-accent/40 transition-colors cursor-pointer"
-                onClick={() => setSelectedProject(project)}
+                onClick={() => {
+                  // Clear the hover state when opening the modal: the modal
+                  // covers the card without moving the pointer, so onMouseLeave
+                  // won't fire, and a stale hovered id would auto-resume the
+                  // grid clip on modal close even though the user never
+                  // re-hovered. The modal renders its own <Media> meanwhile.
+                  setHoveredProjectId(null);
+                  setSelectedProject(project);
+                }}
+                onMouseEnter={() => setHoveredProjectId(project.id)}
+                onMouseLeave={() => setHoveredProjectId(null)}
               >
                 {/* Project Image */}
                 {project.images ? (
                   <div className="aspect-video bg-accent-soft overflow-hidden">
-                    <Image
+                    <Media
                       name={toManifestKey(project.images[0])}
                       fallbackSrc={project.images[0]}
                       alt={project.title}
+                      // Don't keep a grid clip playing once a modal is open —
+                      // the modal renders its own <Media> for the same source,
+                      // so this would decode the clip twice.
+                      active={
+                        hoveredProjectId === project.id && !selectedProject
+                      }
+                      // The whole card is the click target (it opens the modal),
+                      // so don't let a reduced-motion clip show controls that
+                      // would swallow that click — show the poster instead and
+                      // let users play it in the modal.
+                      allowControls={false}
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       onError={(e) => {
@@ -341,7 +366,7 @@ function Projects() {
                           autoplay={false}
                         />
                       ) : (
-                        <Image
+                        <Media
                           name={toManifestKey(selectedProject.images[0])}
                           fallbackSrc={selectedProject.images[0]}
                           alt={selectedProject.title}

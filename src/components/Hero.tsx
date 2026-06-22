@@ -33,7 +33,7 @@ function Hero() {
             <p className="text-base lg:text-lg text-muted leading-relaxed max-w-xl">
               Northeastern grad, previously at the Broad Institute and VMware. I
               like software that holds up under real-world mess. On the side,
-              I'm building Phoenix, a programming language written from scratch
+              I’m building Phoenix, a programming language written from scratch
               in Rust.
             </p>
 
@@ -41,7 +41,7 @@ function Hero() {
             <div className="space-y-3 border-l-2 border-accent/40 pl-4">
               <p className="text-sm text-muted">
                 <span className="text-ink font-medium">Now</span>: building
-                Playbook's all-in-one platform for leagues, coaches, and
+                Playbook’s all-in-one platform for leagues, coaches, and
                 parents.
               </p>
               <p className="text-sm text-muted">

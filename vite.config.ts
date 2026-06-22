@@ -39,8 +39,10 @@ export default defineConfig({
             langs: [...Object.keys(bundledLanguages), phoenixLang],
             transformers: [
               {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                pre(this: any, node: { properties: Record<string, unknown> }) {
+                pre(
+                  this: { options: { lang: string } },
+                  node: { properties: Record<string, unknown> },
+                ) {
                   // @shikijs/rehype strips the language class — preserve it as a data attribute
                   node.properties["data-language"] = this.options.lang;
                 },

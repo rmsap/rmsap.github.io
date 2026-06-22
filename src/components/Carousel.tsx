@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PaginationDots } from "./PaginationDots";
-// Aliased so it reads clearly against the global DOM `Image` constructor.
-import OptimizedImage from "./Image";
+import Media from "./Media";
 import { toManifestKey } from "../utils/imageManifest";
 
 interface CarouselProps {
@@ -129,7 +128,15 @@ const Carousel: React.FC<CarouselProps> = ({
             className={`absolute inset-0 transition-all ${
               isDragging ? "duration-0" : "duration-1000"
             } ease-in-out ${
-              index === currentIndex ? "opacity-100" : "opacity-0"
+              // Non-current slides are faded out but still stacked at inset-0.
+              // Without pointer-events-none the last slide in DOM order sits on
+              // top of the visible one and would intercept clicks — which breaks
+              // a reduced-motion video slide's native controls (a later, hidden
+              // clip swallows clicks meant for the visible one). Gate pointer
+              // events to the active slide.
+              index === currentIndex
+                ? "opacity-100"
+                : "opacity-0 pointer-events-none"
             }`}
             style={{
               transform:
@@ -138,13 +145,15 @@ const Carousel: React.FC<CarouselProps> = ({
                   : "translateX(0)",
             }}
           >
-            <OptimizedImage
+            <Media
               name={toManifestKey(image)}
               fallbackSrc={image}
               alt={`Slide ${index + 1}`}
               // Eager-load the current slide and its immediate neighbors so
-              // next/prev navigation doesn't lazy-fetch on demand.
+              // next/prev navigation doesn't lazy-fetch on demand. For videos,
+              // only the current slide plays.
               priority={Math.abs(index - currentIndex) <= 1}
+              active={index === currentIndex}
               sizes="(max-width: 768px) 100vw, 768px"
               className="w-full h-full object-contain select-none"
               draggable={false}

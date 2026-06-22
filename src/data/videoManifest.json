@@ -1,0 +1,30 @@
+{
+  "siglo_excel_scrolling": {
+    "width": 646,
+    "height": 360,
+    "mp4": "/video/siglo_excel_scrolling.9908aced.mp4",
+    "webm": "/video/siglo_excel_scrolling.8e510929.webm",
+    "poster": "/video/siglo_excel_scrolling.1ad8b4f0.webp"
+  },
+  "siglo_slides": {
+    "width": 480,
+    "height": 300,
+    "mp4": "/video/siglo_slides.c7b50fe6.mp4",
+    "webm": "/video/siglo_slides.19ff5453.webm",
+    "poster": "/video/siglo_slides.c50ae159.webp"
+  },
+  "siglo_video": {
+    "width": 322,
+    "height": 180,
+    "mp4": "/video/siglo_video.26f115f3.mp4",
+    "webm": "/video/siglo_video.d38a1c4d.webm",
+    "poster": "/video/siglo_video.95a04484.webp"
+  },
+  "siglo_website": {
+    "width": 430,
+    "height": 240,
+    "mp4": "/video/siglo_website.c93fbf9e.mp4",
+    "webm": "/video/siglo_website.90219c07.webm",
+    "poster": "/video/siglo_website.0c873a10.webp"
+  }
+}

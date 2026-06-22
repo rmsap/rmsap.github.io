@@ -47,7 +47,9 @@ function Contact() {
           botcheck: "",
         }),
       });
-      const data = await res.json().catch(() => ({}));
+      const data = (await res.json().catch(() => ({}))) as {
+        success?: boolean;
+      };
       if (res.ok && data.success) {
         setFormStatus("success");
         setFormData({ name: "", email: "", message: "" });
@@ -83,11 +85,11 @@ function Contact() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="font-display text-4xl lg:text-5xl font-medium mb-6 text-ink">
-            Let's Connect
+            Let’s Connect
           </h2>
           <p className="text-lg text-muted max-w-2xl mx-auto">
             Whether you want to talk mobile, language design, or something
-            you're building, I'd like to hear from you. I read everything that
+            you’re building, I’d like to hear from you. I read everything that
             comes through.
           </p>
         </div>
@@ -107,9 +109,12 @@ function Contact() {
                 Send a message
               </h3>
               <p className="text-muted mb-4">
-                I'll get back to you as soon as I can
+                I’ll get back to you as soon as I can
               </p>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form
+                onSubmit={(e) => void handleSubmit(e)}
+                className="space-y-4"
+              >
                 <div>
                   <label
                     htmlFor="contact-name"
@@ -198,7 +203,7 @@ function Contact() {
                 {formStatus === "success" && (
                   <p className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                     <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                    Message sent. I'll be in touch soon!
+                    Message sent. I’ll be in touch soon!
                   </p>
                 )}
                 {formStatus === "error" && (
@@ -291,8 +296,8 @@ function Contact() {
         <div className="mt-20 text-center px-4">
           <blockquote className="relative">
             <p className="font-display text-lg text-muted italic mx-auto">
-              "Start by doing what's necessary; then do what's possible; and
-              suddenly you are doing the impossible"
+              “Start by doing what’s necessary; then do what’s possible; and
+              suddenly you are doing the impossible”
             </p>
           </blockquote>
         </div>

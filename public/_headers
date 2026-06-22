@@ -17,3 +17,7 @@
 # scripts/optimizeImages.mjs), so they're safe to cache forever.
 /img/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Optimized video variants are content-hashed too (scripts/optimizeVideos.mjs).
+/video/*
+  Cache-Control: public, max-age=31536000, immutable

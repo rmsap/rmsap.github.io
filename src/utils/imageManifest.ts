@@ -22,11 +22,24 @@ const manifest = manifestJson as Record<string, ManifestEntry>;
  * The extension is dropped, so `foo.svg` and `foo.png` collapse to the same key
  * `foo`. Optimizing a `foo.png` master would therefore also override a `foo.svg`
  * reference — keep distinct images on distinct basenames.
+ *
+ * Video master extensions (mp4/mov/m4v/webm, alongside gif) are dropped too, so
+ * a `/clip.mp4` reference resolves to the video-manifest key `clip`. Keep this in
+ * sync with `SOURCE_EXT` in scripts/optimizeVideos.mjs. Note videos share this
+ * flat key namespace with images, and <Media> checks the video manifest first —
+ * so a `foo.mp4` and a `foo.png` would both map to `foo` and resolve to the
+ * video. Keep stills and clips on distinct basenames too.
+ *
+ * One degradation caveat: if a video key isn't in the manifest yet (optimizer
+ * not run, or entry removed by hand), <Media> falls through to <Image>, which
+ * only degrades gracefully for raster stills — a raw `.mp4`/`.webm` would render
+ * as a broken <img>. The committed manifest plus the optimizer's missing-file
+ * warning guard against shipping that state.
  */
 export function toManifestKey(src: string): string {
   return src
     .replace(/^\//, "")
-    .replace(/\.(avif|webp|jpe?g|png|gif|svg)$/i, "");
+    .replace(/\.(avif|webp|jpe?g|png|gif|svg|mp4|mov|m4v|webm)$/i, "");
 }
 
 /** Variants for an optimized image, or undefined if the optimizer hasn't run for it. */

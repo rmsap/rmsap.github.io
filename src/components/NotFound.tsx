@@ -10,12 +10,12 @@ const NotFound = () => {
     >
       <div className="text-center max-w-md">
         <h1 className="font-display text-7xl font-medium mb-4 text-ink">404</h1>
-        <p className="text-lg mb-2 text-ink">This one didn't resolve.</p>
+        <p className="text-lg mb-2 text-ink">This one didn’t resolve.</p>
         <p className="text-muted mb-8">
           <code className="font-mono break-all text-accent">
             {location.pathname}
           </code>{" "}
-          isn't a page I've written — yet.
+          isn’t a page I’ve written — yet.
         </p>
         <div className="flex items-center justify-center gap-4">
           <Link

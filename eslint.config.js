@@ -8,7 +8,7 @@ import { globalIgnores } from "eslint/config";
 import react from "eslint-plugin-react";
 
 export default tseslint.config([
-  globalIgnores(["dist"]),
+  globalIgnores(["dist", "dist-ssr"]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
