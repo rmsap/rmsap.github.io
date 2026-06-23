@@ -1,6 +1,12 @@
 import { Helmet } from "react-helmet-async";
 import type { BlogPostMeta } from "../../types/blog";
-import { SITE_URL, SITE_NAME } from "../../constants/site";
+import {
+  SITE_URL,
+  SITE_NAME,
+  OG_IMAGE_WIDTH,
+  OG_IMAGE_HEIGHT,
+  ogImageUrl,
+} from "../../constants/site";
 
 interface Props {
   post: BlogPostMeta;
@@ -8,13 +14,9 @@ interface Props {
 
 export default function PostHead({ post }: Props) {
   const url = `${SITE_URL}/blog/${post.slug}`;
-  // Fall back to the site-wide OG card (public/og.png, also set in index.html)
-  // so posts without their own thumbnail/ogImage still share with an image.
-  // NOTE: these must be real, committed files under public/ — scrapers fetch the
-  // raw URL, not an optimized variant. If a thumbnail's master moves to the
-  // gitignored src/images/ pipeline, keep an OG-resolution copy in public/.
-  const imageSrc = post.ogImage ?? post.thumbnail ?? "og.png";
-  const imageUrl = `${SITE_URL}/${imageSrc.replace(/^\//, "")}`;
+  // Auto-generated per-post card, or an `ogImage` frontmatter override — see
+  // ogImageUrl. Kept in sync with the prerendered tags (scripts/prerender.ts).
+  const imageUrl = ogImageUrl(post);
   return (
     <Helmet>
       {/* Template string, not JSX interpolation — React only stringifies a
@@ -30,6 +32,14 @@ export default function PostHead({ post }: Props) {
       <meta property="og:url" content={url} />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:image" content={imageUrl} />
+      {/* Only the auto-generated card has known dimensions; an `ogImage`
+          override can be any size, so don't assert 1200x630 for it. */}
+      {!post.ogImage && (
+        <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+      )}
+      {!post.ogImage && (
+        <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+      )}
       <meta property="article:published_time" content={post.date} />
       {post.tags.map((tag) => (
         <meta property="article:tag" content={tag} key={tag} />

@@ -5,6 +5,8 @@ dist-ssr/
 .env.local
 public/rss.xml
 public/feed.json
+# Per-post OG cards, regenerated each build by scripts/generateOgImages.ts.
+public/og/
 
 # Full-res photo masters
 # Only the optimized variants in public/img/ + src/data/imageManifest.json are committed.

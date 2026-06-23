@@ -17,6 +17,9 @@ import {
   SITE_NAME,
   BLOG_TITLE,
   BLOG_DESCRIPTION,
+  OG_IMAGE_WIDTH,
+  OG_IMAGE_HEIGHT,
+  ogImageUrl,
 } from "../src/constants/site";
 import type { BlogPostMeta } from "../src/types/blog";
 
@@ -87,11 +90,9 @@ function escapeAttr(v: string): string {
 
 function buildMetaTags(slug: string, post: BlogPostMeta): string {
   const url = `${SITE_URL}/blog/${slug}`;
-  // Prefer ogImage (PNG/JPG) over thumbnail — LinkedIn/Slack/iMessage don't render SVG cards.
-  const imageSrc = post.ogImage ?? post.thumbnail;
-  const image = imageSrc
-    ? `${SITE_URL}/${imageSrc.replace(/^\//, "")}`
-    : undefined;
+  // Every post has an auto-generated card (or an `ogImage` override), so the
+  // image URL is always set — see ogImageUrl.
+  const image = ogImageUrl(post);
   const tags: string[] = [
     `<title>${escapeAttr(post.title)} — ${SITE_NAME}</title>`,
     `<meta name="description" content="${escapeAttr(post.description)}" />`,
@@ -106,10 +107,17 @@ function buildMetaTags(slug: string, post: BlogPostMeta): string {
     `<meta name="twitter:title" content="${escapeAttr(post.title)}" />`,
     `<meta name="twitter:description" content="${escapeAttr(post.description)}" />`,
   ];
-  if (image) {
-    tags.push(`<meta property="og:image" content="${image}" />`);
-    tags.push(`<meta name="twitter:image" content="${image}" />`);
+  tags.push(`<meta property="og:image" content="${image}" />`);
+  // Only the auto-generated card has known dimensions. An `ogImage` override can
+  // be any size, so don't assert 1200x630 for it — wrong width/height tags can
+  // mislead scrapers that crop/lay out from them.
+  if (!post.ogImage) {
+    tags.push(`<meta property="og:image:width" content="${OG_IMAGE_WIDTH}" />`);
+    tags.push(
+      `<meta property="og:image:height" content="${OG_IMAGE_HEIGHT}" />`,
+    );
   }
+  tags.push(`<meta name="twitter:image" content="${image}" />`);
   for (const tag of post.tags) {
     tags.push(`<meta property="article:tag" content="${escapeAttr(tag)}" />`);
   }
@@ -176,8 +184,8 @@ function buildIndexMetaTags(): string {
     `<meta property="og:url" content="${url}" />`,
     `<meta property="og:site_name" content="${SITE_NAME}" />`,
     `<meta property="og:image" content="${image}" />`,
-    `<meta property="og:image:width" content="1200" />`,
-    `<meta property="og:image:height" content="630" />`,
+    `<meta property="og:image:width" content="${OG_IMAGE_WIDTH}" />`,
+    `<meta property="og:image:height" content="${OG_IMAGE_HEIGHT}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${BLOG_TITLE}" />`,
     `<meta name="twitter:description" content="${BLOG_DESCRIPTION}" />`,
