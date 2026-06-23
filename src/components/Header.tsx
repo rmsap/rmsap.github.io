@@ -1,26 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, Github, Linkedin } from "lucide-react";
+import { Menu, X, Github, Linkedin, Search } from "lucide-react";
 import { HEADER_OFFSET } from "../constants/layout";
 import { useActiveSection } from "../hooks/useActiveSection";
 import { useHashSync } from "../hooks/useHashSync";
 import { useScrollWhenReady } from "../hooks/useScrollWhenReady";
+import { NAV_LINKS, type NavLink } from "../constants/nav";
 import ThemeToggle from "./ThemeToggle";
-
-interface NavLink {
-  label: string;
-  href: string;
-  isActive?: boolean;
-}
-
-const NAV_LINKS: NavLink[] = [
-  { label: "Home", href: "#home" },
-  { label: "Projects", href: "#projects" },
-  { label: "Blog", href: "/blog" },
-  { label: "Experience and Skills", href: "#experience" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
-];
 
 // Sidebar dots replace the Blog link with a Featured Posts section anchor.
 const SIDEBAR_LINKS: NavLink[] = NAV_LINKS.map((link) =>
@@ -36,7 +22,11 @@ const SECTION_IDS: string[] = [
   "featured-posts",
 ];
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onOpenSearch: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -64,6 +54,12 @@ const Header: React.FC = () => {
     if (link.href === "/blog") return isBlogActive;
     if (!link.href.startsWith("#")) return false;
     return displayActiveSection === link.href.substring(1);
+  };
+
+  // App owns the command palette; the button just asks it to open.
+  const openSearch = () => {
+    setIsMobileMenuOpen(false);
+    onOpenSearch();
   };
 
   useEffect(() => {
@@ -186,6 +182,14 @@ const Header: React.FC = () => {
 
             {/* Desktop CTA and Social Links */}
             <div className="hidden lg:flex items-center space-x-4">
+              <button
+                onClick={openSearch}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-rule text-muted hover:text-accent hover:border-accent/40 transition-colors text-sm"
+                aria-label="Search"
+              >
+                <Search size={16} />
+                <kbd className="hidden xl:inline text-xs">⌘K</kbd>
+              </button>
               <div className="flex items-center space-x-3">
                 <a
                   href="https://github.com/rmsap"
@@ -236,6 +240,13 @@ const Header: React.FC = () => {
           }`}
         >
           <nav className="px-4 py-6 space-y-4">
+            <button
+              onClick={openSearch}
+              className="flex w-full items-center gap-3 px-4 py-3 text-base font-medium rounded-lg text-ink hover:bg-surface hover:text-accent transition-colors duration-200"
+            >
+              <Search size={18} />
+              Search
+            </button>
             {NAV_LINKS.map((link) => (
               <a
                 key={link.label}

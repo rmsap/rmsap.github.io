@@ -11,6 +11,8 @@ import PostHead from "./PostHead";
 import PageTransition from "./PageTransition";
 import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
+import ReadingProgress from "./ReadingProgress";
+import BackToTop from "./BackToTop";
 import { useBlogAnalytics } from "../../hooks/useBlogAnalytics";
 
 export default function BlogPostPage() {
@@ -42,6 +44,8 @@ export default function BlogPostPage() {
   return (
     <PageTransition>
       <PostHead post={meta} />
+      <ReadingProgress />
+      <BackToTop />
       <article className="max-w-4xl mx-auto pt-24 pb-12 px-4">
         <Link to="/blog" className="text-accent hover:underline text-sm">
           ← Back to blog

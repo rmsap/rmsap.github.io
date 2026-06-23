@@ -15,6 +15,7 @@ import {
 import Carousel from "./Carousel";
 import Media from "./Media";
 import { toManifestKey } from "../utils/imageManifest";
+import { lockScroll, unlockScroll } from "../utils/scrollLock";
 import projectsData from "../data/projects.json";
 import { PaginationDots } from "./PaginationDots";
 
@@ -82,16 +83,12 @@ function Projects() {
     }
   };
 
-  // Prevent scroll while project modal is open
+  // Prevent scroll while project modal is open (reference-counted so it plays
+  // nice with any other overlay holding the same lock).
   useEffect(() => {
-    if (selectedProject) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+    if (!selectedProject) return;
+    lockScroll();
+    return unlockScroll;
   }, [selectedProject]);
 
   return (
