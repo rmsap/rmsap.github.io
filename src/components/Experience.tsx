@@ -44,6 +44,8 @@ function Experience() {
                         src={exp.logo}
                         alt={`${exp.company} logo`}
                         className="w-12 h-12 object-contain rounded-lg bg-paper p-1"
+                        loading="lazy"
+                        decoding="async"
                         onError={() => handleImageError(index)}
                       />
                     ) : (

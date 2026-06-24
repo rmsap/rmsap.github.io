@@ -22,8 +22,15 @@ interface MediaProps {
   style?: CSSProperties;
   /** Suppress native drag (e.g. carousel slides handle their own drag). */
   draggable?: ComponentProps<"img">["draggable"];
-  /** Eager-load (e.g. a hero clip or the visible carousel slide). */
+  /** The LCP element: eager-load at high priority (e.g. a hero clip or the visible carousel slide). */
   priority?: boolean;
+  /**
+   * Eager-load at the browser's default priority — for off-screen media worth
+   * prefetching (e.g. a carousel's neighbor slides) that shouldn't outrank the
+   * real LCP. For a clip this is the same as `priority` (preload the file, not
+   * just metadata); for an image it skips the high-priority preload.
+   */
+  eager?: boolean;
   /**
    * Typed for the <img>|<video> union so neither branch needs a cast when
    * forwarding. Handlers here only touch `currentTarget` (e.g. to hide the
@@ -68,6 +75,7 @@ export default function Media({
       className,
       style,
       priority,
+      eager,
       draggable,
       onError,
       onClick,
@@ -85,7 +93,9 @@ export default function Media({
         style={style}
         active={active}
         allowControls={allowControls}
-        priority={priority}
+        // A clip has no high-priority preload to dilute, so eager-prefetching a
+        // neighbor slide just means preload="auto" — same as priority for Video.
+        priority={priority || eager}
         // Carousel passes draggable={false} so slides handle their own drag;
         // honor it on the <video> too rather than dropping it.
         draggable={draggable}
@@ -94,5 +104,7 @@ export default function Media({
       />
     );
   }
+  // `eager` (and `priority`) ride along in `shared` to <Image>; only the video
+  // branch above pulls `eager` out explicitly to fold it into `priority`.
   return <Image {...shared} sizes={sizes} fallbackSrc={fallbackSrc} />;
 }

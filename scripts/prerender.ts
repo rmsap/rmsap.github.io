@@ -141,9 +141,12 @@ function stripHomepageMeta(html: string): string {
 }
 
 function injectHead(shellHtml: string, metaBlock: string): string {
+  // Function replacer: metaBlock is built from post titles/descriptions, which
+  // can contain a literal `$&`/`$\`` that a string replacement would read as a
+  // replacement-pattern token (mirrors liftPreloadsToHead's guard).
   return stripHomepageMeta(shellHtml).replace(
     "</head>",
-    `${metaBlock}\n  </head>`,
+    () => `${metaBlock}\n  </head>`,
   );
 }
 
@@ -202,6 +205,11 @@ function buildIndexMetaTags(): string {
 // and only there; the body itself is never touched. Hydration tolerates this:
 // React skips unrecognized nodes when matching root-level siblings and
 // re-acquires title/meta hoistables from the document head.
+//
+// Preload links in that block are deliberately kept (they have no <head>
+// equivalent); liftPreloadsToHead, running later on the assembled page, lifts
+// them into <head>. Both passes assume React emits hoistables as one leading
+// run — keep that assumption in sync if you touch either.
 const HOISTED_TAG = /^(?:<title>[^]*?<\/title>|<(?:meta|link)\b[^>]*?>)/;
 
 function stripHoistedHeadDuplicates(appHtml: string): string {
@@ -228,6 +236,68 @@ function injectBody(html: string, appHtml: string): string {
     appHtml +
     html.slice(i + ROOT_OPEN.length)
   );
+}
+
+// Counterpart to stripHoistedHeadDuplicates (which preserves these preloads in
+// the body); both walk the same leading run of React hoistables.
+//
+// React hoists resource links (e.g. an Image's priority preload via
+// ReactDOM.preload) to the very start of its rendered output, which injectBody
+// then drops just inside <body> after #root. A preload there is still found by
+// the scanner, but the canonical — and most reliably credited (Lighthouse's
+// "discoverable in initial document") — spot is <head>, ahead of the body.
+// Lift those leading preloads into the head; the body then starts directly with
+// app markup, which also hydrates cleanly since React re-acquires these
+// resources from the head on the client. We walk the whole contiguous run of
+// leading <link> hoistables and lift only the preloads, leaving any other link
+// (modulepreload, preconnect, …) in place — so a change to React's hoist
+// ordering can't strand a preload behind a non-preload link and silently leave
+// it in the body.
+const LEADING_LINK = /^\s*<link\b[^>]*>/;
+
+function liftPreloadsToHead(html: string): string {
+  const i = html.indexOf(ROOT_OPEN);
+  if (i === -1) return html;
+  const bodyStart = i + ROOT_OPEN.length;
+  let rest = html.slice(bodyStart);
+  const preloads: string[] = [];
+  let keptInBody = "";
+  let m: RegExpExecArray | null;
+  while ((m = LEADING_LINK.exec(rest))) {
+    const tag = m[0];
+    rest = rest.slice(tag.length);
+    // Leading \s anchors this to an attribute boundary (always ` rel=…` in a
+    // tag) so it can't match the literal inside some other attribute's value.
+    if (/\srel="preload"/.test(tag)) preloads.push(tag.trim());
+    else keptInBody += tag;
+  }
+  if (preloads.length === 0) return html;
+  const moved = preloads.map((l) => `    ${l}`).join("\n");
+  // Function replacer: a literal `$` in an image path (e.g. `$&`) must not be
+  // read as a replacement-pattern token.
+  return (
+    html.slice(0, bodyStart).replace("</head>", () => `${moved}\n  </head>`) +
+    keptInBody +
+    rest
+  );
+}
+
+// liftPreloadsToHead assumes React emits image preloads as one contiguous run
+// of <link> hoistables at the start of the body (just inside #root). If React
+// ever reorders hoistables so a preload trails a non-link node, it would be
+// stranded in the body — discoverable late and uncredited as an LCP preload,
+// but with no error. Assert the body carries no preload so that regression
+// fails the build instead of silently shipping a slow page. (App markup never
+// renders a rel="preload" link itself, so any match is a stranded hoistable.)
+function assertPreloadsLifted(route: string, html: string): void {
+  const i = html.indexOf(ROOT_OPEN);
+  if (i === -1) return;
+  const body = html.slice(i + ROOT_OPEN.length);
+  if (/<link\b[^>]*\srel="preload"/.test(body)) {
+    throw new Error(
+      `Rendered HTML for ${route} has a preload stranded in the body — React's hoistable ordering may have changed; update liftPreloadsToHead.`,
+    );
+  }
 }
 
 // React escapes text content (escapeTextForBrowser) — match it so marker
@@ -277,6 +347,8 @@ for (const route of getStaticPaths()) {
       appHtml,
     );
   }
+  pageHtml = liftPreloadsToHead(pageHtml);
+  assertPreloadsLifted(route, pageHtml);
   pageHtml = injectPrerenderMarker(pageHtml, route);
   const outFile =
     route === "/"

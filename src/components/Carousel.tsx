@@ -149,10 +149,13 @@ const Carousel: React.FC<CarouselProps> = ({
               name={toManifestKey(image)}
               fallbackSrc={image}
               alt={`Slide ${index + 1}`}
-              // Eager-load the current slide and its immediate neighbors so
-              // next/prev navigation doesn't lazy-fetch on demand. For videos,
-              // only the current slide plays.
-              priority={Math.abs(index - currentIndex) <= 1}
+              // The current slide is the LCP candidate: high-priority preload.
+              // Its immediate neighbors eager-load at default priority so
+              // next/prev navigation doesn't lazy-fetch on demand without their
+              // preloads outranking the current slide. For videos, only the
+              // current slide plays.
+              priority={index === currentIndex}
+              eager={Math.abs(index - currentIndex) === 1}
               active={index === currentIndex}
               sizes="(max-width: 768px) 100vw, 768px"
               className="w-full h-full object-contain select-none"

@@ -8,13 +8,7 @@ import type { BlogPostMeta } from "../types/blog";
 
 const FEATURED_COUNT = 3;
 
-function PostCard({
-  post,
-  priority = false,
-}: {
-  post: BlogPostMeta;
-  priority?: boolean;
-}) {
+function PostCard({ post }: { post: BlogPostMeta }) {
   return (
     <Link
       to={`/blog/${post.slug}`}
@@ -26,7 +20,6 @@ function PostCard({
             name={toManifestKey(post.thumbnail)}
             fallbackSrc={post.thumbnail}
             alt=""
-            priority={priority}
             sizes="(max-width: 640px) 85vw, 400px"
             className="block w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
@@ -133,7 +126,7 @@ export default function FeaturedPosts() {
                 className="absolute inset-0 transition-all duration-500 ease-in-out"
                 style={getCardStyle(index)}
               >
-                <PostCard post={post} priority={index === 0} />
+                <PostCard post={post} />
               </div>
             ))}
             {/* Invisible spacer so the container has height */}
