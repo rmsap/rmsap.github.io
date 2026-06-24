@@ -57,7 +57,7 @@ function Experience() {
 
                   {/* Company info */}
                   <div className="flex-1">
-                    <h4 className="font-semibold text-ink">{exp.company}</h4>
+                    <h3 className="font-semibold text-ink">{exp.company}</h3>
                     <p className="text-sm text-accent font-medium">
                       {exp.role}
                     </p>

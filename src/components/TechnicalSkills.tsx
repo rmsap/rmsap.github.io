@@ -40,10 +40,10 @@ function TechnicalSkills() {
             const Icon = iconMap[category.icon];
             return (
               <div key={category.label}>
-                <h4 className="font-semibold text-ink mb-3 flex items-center gap-2">
+                <h3 className="font-semibold text-ink mb-3 flex items-center gap-2">
                   {Icon && <Icon className="w-5 h-5 text-accent" />}
                   {category.label}
-                </h4>
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {category.items.map((skill) => (
                     <span
