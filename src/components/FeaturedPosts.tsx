@@ -77,13 +77,17 @@ export default function FeaturedPosts() {
     setActiveIndex((i) => (i + 1) % total);
   }
 
-  // Compute per-card style based on offset from active index
-  function getCardStyle(index: number) {
+  // Signed distance from the active card, wrapped for a circular feel.
+  function offsetFor(index: number) {
     let offset = index - activeIndex;
-    // Wrap around for circular feel
     if (offset > Math.floor(total / 2)) offset -= total;
     if (offset < -Math.floor(total / 2)) offset += total;
+    return offset;
+  }
 
+  // Compute per-card style based on offset from active index
+  function getCardStyle(index: number) {
+    const offset = offsetFor(index);
     const isFocused = offset === 0;
     const absOffset = Math.abs(offset);
 
@@ -125,6 +129,12 @@ export default function FeaturedPosts() {
                 key={post.slug}
                 className="absolute inset-0 transition-all duration-500 ease-in-out"
                 style={getCardStyle(index)}
+                // Off-center "peek" cards are dimmed (opacity + brightness) and
+                // already non-interactive (pointerEvents: none). Mark them inert
+                // so they leave the a11y tree and tab order too: otherwise their
+                // reduced-opacity text fails the contrast audit and their links
+                // are silent tab stops.
+                inert={offsetFor(index) !== 0}
               >
                 <PostCard post={post} />
               </div>
