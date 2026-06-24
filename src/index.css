@@ -1,5 +1,48 @@
 @import "tailwindcss";
 
+/* Self-hosted editorial type — replaces the render-blocking Google Fonts CDN
+   chain (preconnect + cross-origin CSS hop + gstatic woff2 hop) with same-origin
+   woff2 that index.html preloads. Both are variable; named "Fraunces"/"Inter" to
+   match the --font-display/--font-sans tokens below. unicode-range is the
+   fontsource "latin" subset (covers Latin-1 accents, curly quotes, en/em dashes).
+
+   Provenance: trimmed from @fontsource-variable/{fraunces,inter} (devDeps). To
+   regenerate, e.g. Fraunces (bake SOFT=40, drop WONK, keep opsz+wght variable):
+     python -m fontTools.varLib.instancer \
+       node_modules/@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2 \
+       SOFT=40 WONK=0 -o public/fonts/fraunces-variable-latin.woff2
+   Inter latin wght files are copied as-is. */
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/fraunces-variable-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-variable-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-variable-latin-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* Make Tailwind's `dark:` variant follow the active theme, not the raw OS
    preference. Mirrors the palette resolution below exactly: dark applies when
    the visitor picked dark (data-theme="dark"), or — absent a saved choice —
