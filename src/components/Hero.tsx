@@ -86,6 +86,9 @@ function Hero() {
                 fallbackSrc="/ryanPhoto.jpg"
                 priority
                 sizes="28rem"
+                // The slot is 448px; cap at the 800px variant so high-DPR
+                // devices don't pull the 1200px one (101KB -> 63KB) and slow LCP.
+                maxWidth={800}
                 className="relative rounded-lg w-full shadow-xl"
                 alt="Ryan Saperstein"
               />

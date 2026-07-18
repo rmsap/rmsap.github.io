@@ -22,6 +22,13 @@ interface ImageProps extends Omit<
   eager?: boolean;
   /** Path to use when `name` isn't optimized yet (e.g. a legacy /public image). */
   fallbackSrc?: string;
+  /**
+   * Cap the largest variant offered in srcset/preload. An above-the-fold image
+   * in a small fixed slot (e.g. the hero portrait, ~448px) otherwise pulls a
+   * 1200px+ variant at high DPR — wasted LCP bytes. Ignored if it would exclude
+   * every width.
+   */
+  maxWidth?: number;
 }
 
 function srcSet(dict: Record<string, string>, widths: number[]): string {
@@ -47,6 +54,7 @@ export default function Image({
   eager = false,
   className,
   fallbackSrc,
+  maxWidth,
   ...rest
 }: ImageProps) {
   const entry = getImage(name);
@@ -77,12 +85,19 @@ export default function Image({
     );
   }
 
+  // Widths actually offered — `maxWidth` trims the heavy top variants for small
+  // fixed slots, but never down to nothing.
+  const widths =
+    maxWidth && entry.widths.some((w) => w <= maxWidth)
+      ? entry.widths.filter((w) => w <= maxWidth)
+      : entry.widths;
+
   // Default <img src> for browsers that pick neither <source>. Prefer the
   // largest width, but tolerate a hand-edited manifest missing that exact key by
   // falling back to the largest width actually present in the webp dict.
   const defaultSrc =
-    entry.webp[Math.max(...entry.widths)] ??
-    entry.widths
+    entry.webp[Math.max(...widths)] ??
+    widths
       .filter((w) => entry.webp[w])
       .map((w) => entry.webp[w])
       .at(-1);
@@ -91,7 +106,7 @@ export default function Image({
   // the preload's imageSrcSet can't drift from what the <picture> actually
   // selects (a mismatch silently costs a second fetch instead of reusing the
   // preloaded resource).
-  const avifSrcSet = srcSet(entry.avif, entry.widths);
+  const avifSrcSet = srcSet(entry.avif, widths);
 
   // React 19 auto-preloads a standalone <img src>, but NOT an <img> nested in
   // <picture> — so a priority (above-the-fold LCP) responsive image is
@@ -120,7 +135,7 @@ export default function Image({
       <source type="image/avif" srcSet={avifSrcSet} sizes={sizes} />
       <source
         type="image/webp"
-        srcSet={srcSet(entry.webp, entry.widths)}
+        srcSet={srcSet(entry.webp, widths)}
         sizes={sizes}
       />
       <img

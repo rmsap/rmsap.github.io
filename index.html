@@ -13,13 +13,17 @@
          lives in src/index.css; preload the above-the-fold normal faces so text
          paints without the old cross-origin Google Fonts round-trip. crossorigin
          is required on font preloads (fonts fetch in CORS mode) to avoid a
-         double download. -->
+         double download. fetchpriority=low: the LCP element is the hero image,
+         and the text renders immediately in fallback faces (font-display: swap),
+         so the fonts must NOT compete with the high-priority image for the
+         initial bandwidth — they preload early but yield to the image. -->
     <link
       rel="preload"
       href="/fonts/fraunces-variable-latin.woff2"
       as="font"
       type="font/woff2"
       crossorigin
+      fetchpriority="low"
     />
     <link
       rel="preload"
@@ -27,6 +31,7 @@
       as="font"
       type="font/woff2"
       crossorigin
+      fetchpriority="low"
     />
     <!-- Static OG/Twitter tags for the homepage. Crawlers don't execute JS,
          so react-helmet-async additions won't reach them — these have to live
